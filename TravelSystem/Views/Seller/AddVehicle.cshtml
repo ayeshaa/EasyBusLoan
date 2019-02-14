@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model TravelSystem.Models.Vehicles
+@{
+    ViewData["Title"] = "Add Vehicles";
+}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-3 filter-by-block md-margin-bottom-60">
+            <partial name="~/Views/Shared/_PartialSellerMenu.cshtml" />
+        </div>
+        <div class="col-md-9">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-4 result-category">
+                    <h2>Add Vehicle</h2>
+
+                </div>
+                <div class="col-sm-8">
+
+                </div>
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory" style="padding:0px !important">
+                <div class="row illustration-v2 margin-bottom-30">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"]
+                        </div>
+                    }
+                    <div class="col-12">
+                        <form method="post" action="@Url.Action("AddVehicle","Seller")" enctype="multipart/form-data">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-12 well text-center">
+                                            <div class="col-md-6 col-centered">
+                                                <div class="reg-header">
+                                                </div>
+                                                <select class="form-control margin-bottom-20" name="VehicleTypeId">
+                                                    @foreach (var item in TempData["VehicleTypes"] as IEnumerable<TravelSystem.Models.VehicleTypes>)
+                                                    {
+                                                        <option value="@item.Id">@item.VehicleTypeName (@item.Description)</option>
+                                                    }
+
+                                                </select>
+                                                @Html.TextBoxFor(m => m.MakeYear, new { @placeholder = "Make*", @required = "required", @type = "date", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.Model, new { @placeholder = "Model*", @required = "required", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.Mileage, new { @placeholder = "Mileage*", @required = "required", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.PassengersSeats, new { @placeholder = "Passenger Count*", @required = "required", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.SalesPrice, new { @type = "number", @required = "required", @placeholder = "Sales Price*", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.Location, new { @placeholder = "Location of Bus*", @required = "required", @id = "autocomplete", @class = "form-control margin-bottom-20", @onFocus = "geolocate()", @onkeyup = "CheckError();" })
+                                                @Html.TextBoxFor(m => m.CityOrState, new { @placeholder = "City & State*", @required = "required", @class = "form-control margin-bottom-20" })
+                                                @Html.TextBoxFor(m => m.Vinnumber, new { @placeholder = "N/N Number*", @required = "required", @class = "form-control margin-bottom-20" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 text-center">
+                                        <div class="col-md-2 col-centered">
+                                            <div class="form-group">
+                                                <input type="file" class="btn btn-primary" multiple name="files" id="files" onchange="readURL(this);" accept="image/*" style="width:100%; text-align:center; margin-left:auto; margin-right:auto; padding:7px">
+                                            </div>
+
+                                        </div>
+                                        <input type="submit" class="btn btn-primary btn-lg margin-bottom-20" value="Add" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!--/end filter resilts-->
+
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->
+
+<script src="~/js/location.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvmA6K2UJ2o-xYy2flqy2-43aLmsgjQg&libraries=places&callback=initAutocomplete"
+        async defer></script>

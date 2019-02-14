@@ -1,0 +1,322 @@
+﻿@model TravelSystem.Models.AccountViewModels.RegisterViewModel
+@{
+    Layout = null;
+}
+
+<div class="container content-sm">
+    <div id="sucessMessageContainer">
+        <div class="row margin-top-20">
+            <div class="form-group">
+                <div class="col-xs-12 padding-top-20" style=" background-color: #eee;">
+                    <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                        <li class="active">
+                            <a href="#step-1">
+                                <h4 class="list-group-item-heading">Profile</h4>
+                                <p class="list-group-item-text"></p>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#step-2">
+                                <h4 class="list-group-item-heading">Seller Agrement</h4>
+                                <p class="list-group-item-text"></p>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#step-3">
+                                <h4 class="list-group-item-heading">Vehicle Details</h4>
+                                <p class="list-group-item-text"></p>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#step-4">
+                                <h4 class="list-group-item-heading">Upload picture</h4>
+                                <p class="list-group-item-text"></p>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#step-5">
+                                <h4 class="list-group-item-heading">Confirmation</h4>
+                                <p class="list-group-item-text"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm("Register", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "sky-form contact-style", role = "form", @id = "SellerRegForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="errorsValidation">
+
+            </div> 
+            <div class="row setup-content" id="step-1">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well text-center">
+
+
+                        <div class="col-md-6 mb-margin-bottom-30 col-centered">
+                            <input type="hidden" name="UserRole" id="UserRole" value="Seller" />
+
+
+
+                            <fieldset class="no-padding">
+                                <label></label>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <input type="hidden" name="IsSeller" value="true" />
+                                            @Html.TextBoxFor(m => m.FullName, new { @placeholder = "Full Name*", @id = "name", @class = "form-control" })
+                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.FullName, "")</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label></label>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12">
+                                        <div>
+                                            @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email*", @id = "email", @class = "form-control", })
+                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Email, "")</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label></label>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12 ">
+                                        <div>
+                                            @Html.PasswordFor(m => m.Password, new { @id = "user_password", @placeholder = "Password*", @type = "password", @class = "form-control" })
+                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Password, "")</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <label></label>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12 ">
+                                        <div>
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "Confirm Password*", @required = "required", @type = "password", @class = "form-control" })
+                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.ConfirmPassword, "")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+
+
+                        <button id="activate-step-2" class="btn btn-primary btn-lg" style=" margin-top: 20px;">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row setup-content" id="step-2">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well text-center">
+
+                        <h2>Setup your selling account</h2>
+                        <h3>Seller Agreement</h3>
+                        <div class="col-lg-12 checkbox">
+                            <label>
+                                <input type="checkbox" checked="checked" disabled="disabled">
+                                I agree to accept 4% Bus travel exchange <a href="#" class="color-green">Terms and Conditions</a>
+                            </label>
+                        </div>
+
+
+                        <button id="activate-step-3" class="btn btn-primary btn-lg">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row setup-content" id="step-3">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well text-center">
+
+                        <div class="col-md-6 col-centered">
+                            <div class="reg-header">
+                                <h2>Put the details of your vehicle</h2>
+                            </div>
+                            <select class="form-control margin-bottom-5" name="Vehicles[0].VehicleTypeId">
+                                @foreach (var item in TempData["VehicleTypes"] as IEnumerable<TravelSystem.Models.VehicleTypes>)
+                                {
+                                    <option value="@item.Id">@item.VehicleTypeName (@item.Description)</option>
+                                }
+
+                            </select>
+                            @*<input type="text" placeholder="Vehicle type*" class="form-control margin-bottom-20">*@
+                            @Html.TextBoxFor(m => m.Vehicles[0].MakeYear, new { @placeholder = "Make*", @type = "date", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].MakeYear, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].Model, new { @placeholder = "Model*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].Model, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].Mileage, new { @placeholder = "Mileage*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].Mileage, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].PassengersSeats, new { @placeholder = "Passenger Count*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].PassengersSeats, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].SalesPrice, new { @type = "number", @placeholder = "Sales Price*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].SalesPrice, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].Location, new { @placeholder = "Location of Bus*", @id = "autocomplete", @class = "form-control margin-bottom-5", @onFocus = "geolocate()" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].Location, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].CityOrState, new { @placeholder = "City & State*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].CityOrState, "")</span>
+                            @Html.TextBoxFor(m => m.Vehicles[0].Vinnumber, new { @placeholder = "N/N Number*", @class = "form-control margin-bottom-5" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Vehicles[0].Vinnumber, "")</span>
+
+                            <hr>
+
+                        </div>
+
+
+                        <button id="activate-step-4" class="btn btn-primary btn-lg">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row setup-content" id="step-4">
+                <div class="col-xs-12 well text-center">
+
+                    <h2 class="text-center">Upload Picture</h2>
+                    <h3 class="text-center">Minimum three pictures are required</h3>
+                    <div class="col-md-2 col-centered">
+                        <div class="form-group">
+
+                            <img src="~/assets/img/GoodPlaceHolder.png" class="img-responsive img-circle" alt="Product Image" id="imgProfile" width="100%" height="auto" style="margin-left:auto; margin-right:auto; align-content:center"><br>
+                            <input type="file" class="btn btn-primary" multiple name="files" id="files" onchange="readURL(this)" accept="image/*" style="width:100%; text-align:center; margin-left:auto; margin-right:auto; padding:7px">
+
+                        </div>
+
+                    </div>
+                    <button id="activate-step-5" class="btn btn-primary btn-lg">Next</button>
+                </div>
+            </div>
+
+            <div class="row setup-content" id="step-5">
+                <div class="col-xs-12">
+                    <div class="col-md-12 well ">
+                        <h2 class="text-center">4% charges reminder</h2>
+                        <div class="col-md-8 text-center">
+                            Please Sell Vehicle By clicking the button below
+
+                        </div>
+                        <div class="col-md-4">
+                            <a href=""><img class="full-width img-responsive" src="assets/images/inventory 1.png" alt=""></a>
+                        </div>
+                        <div class="col-md-12 well text-center">
+                            <img src="~/assets/img/30.gif" id="gif" style="display: block; margin: 0 auto; visibility: hidden;">
+                            <input id="SubmitSeller" type="submit" value="Sell My Vehicle" class="btn btn-primary btn-lg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/assets/plugins/jquery/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvmA6K2UJ2o-xYy2flqy2-43aLmsgjQg&libraries=places&callback=initAutocomplete"
+        async defer></script>
+<script src="~/js/location.js"></script>
+
+
+
+
+<script>
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imgProfile').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#files").change(function () {
+        readURL(this);
+    });
+</script>
+
+<script src="~/assets/plugins/jquery/jquery.min.js"></script>
+
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<script>
+    "use strict"
+    jQuery(document).ready(function () {
+        var validator = $("#SellerRegForm").validate();
+        var navListItems = $('ul.setup-panel li a'),
+            allWells = $('.setup-content');
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this).closest('li');
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.closest('li').removeClass('active');
+                $item.addClass('active');
+                allWells.hide();
+                $target.show();
+            }
+        });
+
+        $('ul.setup-panel li.active a').trigger('click');
+
+        // DEMO ONLY //
+        $('#activate-step-2').on('click', function (e) {
+            var count = 0;
+            var totalInputs = $('#step-1').find(':input').each(function () {
+                if (!validator.element(this)) {
+                    count += 1;
+                }
+            });
+            if (count === 0) {
+                $('ul.setup-panel li:eq(1)').removeClass('disabled');
+                $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+                $(this).remove();
+            }
+        })
+
+        $('#activate-step-3').on('click', function (e) {
+            $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+            $(this).remove();
+        })
+
+        $('#activate-step-4').on('click', function (e) {
+            var count = 0;
+            var totalInputs = $('#step-3').find(':input').each(function () {
+                if (!validator.element(this)) {
+                    count += 1;
+                }
+            });
+            if (count === 0) {
+                $('ul.setup-panel li:eq(3)').removeClass('disabled');
+                $('ul.setup-panel li a[href="#step-4"]').trigger('click');
+                $(this).remove();
+            }
+           
+        })
+
+        $('#activate-step-5').on('click', function (e) {
+            $('ul.setup-panel li:eq(4)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-5"]').trigger('click');
+            $(this).remove();
+        })
+    });
+
+
+</script>
+
+
+
+
+

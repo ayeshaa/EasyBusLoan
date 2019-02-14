@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TravelSystem.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "Sellers";
+}
+<!--=== Content Part ===-->
+<div class="content container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-4 result-category">
+                    <h2>Sellers</h2>
+                </div>
+                <div class="col-sm-8">
+
+                </div>
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory">
+                <div class="row illustration-v2 margin-bottom-30">
+
+
+                    @foreach (var item in Model)
+                    {
+                        
+                    <div class="col-md-3">
+                        <div class="product-img product-img-brd">
+                            <a href="@Url.Action("UserDetail","User",new{id=item.Id})"><img class="full-width img-responsive" style="width: 265px;height: 250px;" src="~/user.jpg" alt=""></a>
+                        </div>
+                        <div class="product-description product-description-brd margin-bottom-30">
+                            <div class="overflow-h margin-bottom-5">
+                                <div class="pull-left ">
+                                    <h4 class="title-price"><a href="@Url.Action("UserDetail","User",new{id=item.Id})">@item.FullName</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div><!--/end filter resilts-->
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->

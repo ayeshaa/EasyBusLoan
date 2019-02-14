@@ -1,0 +1,205 @@
+﻿@model TravelSystem.Models.Vehicles
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "VehicleDetail";
+}
+<!--=== Shop Product ===-->
+<div class="shop-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 md-margin-bottom-50">
+                <div class="ms-showcase2-template">
+                    <!-- Master Slider -->
+                    <div class="master-slider ms-skin-default" id="masterslider">
+                        @foreach (var item in Model.VehicleImages)
+                        {
+                            <div class="ms-slide">
+                                <img class="ms-brd" src="/blank.gif" data-src="/VehicleImages/@item.FileNameOnDisk" alt="@item.FileNameOnDisk">
+                                <img class="ms-thumb" src="/VehicleImages/@item.FileNameOnDisk" width="180" height="180" alt="thumb">
+                            </div>
+                        }
+                    </div>
+                    <!-- End Master Slider -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="shop-product-heading">
+                    <h2>@Model.VehicleTypes.VehicleTypeName</h2>
+                    @if (User.IsInRole("Buyer") && Convert.ToBoolean(TempData["IsApplication"]))
+                    {
+                        <button type="button" class="btn-u btn-u-sea-shop btn-u-lg connectToApp" style="float:right">Connect to Application</button>
+                    }
+                </div><!--/end shop product social-->
+                <ul class="list-inline product-ratings margin-bottom-30">
+                    @for (var i = 0; i < Model.Stars; i++)
+                    {
+                        <li><i class="rating-selected fa fa-star"></i></li>
+                    }
+                    @for (var i = 0; i < 5 - Model.Stars; i++)
+                    {
+                        <li><i class="rating fa fa-star"></i></li>
+                    }
+                    <li class="product-review-list">
+                        <span>(@Model.VehicleRatings.Count()) <a href="#">Review</a></span>
+                    </li>
+                </ul><!--/end shop product ratings-->
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Mileage</th>
+                            <td>@Model.Mileage</td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td>@Model.Model</td>
+                        </tr>
+                        <tr>
+                            <th>Passenger Seats</th>
+                            <td>@Model.PassengersSeats</td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>@Model.Location</td>
+                        </tr>
+                        <tr>
+                            <th>City Or State</th>
+                            <td>@Model.CityOrState</td>
+                        </tr>
+                        <tr>
+                            <th>Make Year</th>
+                            <td>@Model.MakeYear.ToString("yyyy")</td>
+                        </tr>
+                        <tr>
+                            <th>VIN Number</th>
+                            <td>@Model.Vinnumber</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="list-inline shop-product-prices margin-bottom-30">
+                    <li class="shop-red">$@Model.SalesPrice</li>
+                </ul><!--/end shop product prices-->
+                @if (!User.IsInRole("Seller"))
+                {
+                    @*<h3 class="shop-product-title">Quantity</h3>*@
+                    <div class="margin-bottom-40">
+                        @*<form name="f1" class="product-quantity sm-margin-bottom-20">
+                            <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty();' value='-'>-</button>
+                            <input type='text' class="quantity-field" name='qty' value="1" id='qty' />
+                            <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
+                        </form>*@
+                        <button type="button" class="btn-u btn-u-sea-shop btn-u-lg">Add to Cart</button>
+                    </div><!--/end product quantity-->
+                }
+            </div>
+        </div><!--/end row-->
+    </div>
+</div>
+<!--=== End Shop Product ===-->
+<!--=== Content Medium ===-->
+<div class="content-md container">
+    <div class="tab-v6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Reviews (@Model.VehicleRatings.Count())</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Description -->
+            <!-- Reviews -->
+            <div class="tab-pane fade in active" id="reviews">
+                <div class="product-comment margin-bottom-40">
+                    @if (Model.VehicleRatings.Count > 0)
+                    {
+                        @foreach (var item in Model.VehicleRatings)
+                        {
+                            <div class="product-comment-in">
+                                <img class="product-comment-img rounded-x" src="~/user.jpg" alt="">
+                                <div class="product-comment-dtl">
+                                    <h4>@item.User.FullName</h4>
+                                    <p>@item.Comment</p>
+                                    <ul class="list-inline product-ratings">
+                                        <li class="pull-right">
+                                            <ul class="list-inline">
+                                                @for (var i = 0; i < item.Stars; i++)
+                                                {
+                                                    <li><i class="rating-selected fa fa-star"></i></li>
+                                                }
+                                                @for (var i = 0; i < 5 - item.Stars; i++)
+                                                {
+                                                    <li><i class="rating fa fa-star"></i></li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No reviews yet</p>
+                    }
+                </div>
+                @if (User.IsInRole("Buyer"))
+                {
+                    <h3 class="heading-md margin-bottom-30">Add a review</h3>
+                    <form action="@Url.Action("VehicleReview","Vehicles")" method="post" id="sky-form3" class="sky-form sky-changes-4">
+                        <fieldset>
+                            <div class="margin-bottom-30">
+                                <label class="label-v2">Comment</label>
+                                <label class="textarea">
+                                    <textarea rows="7" name="Comment" id="Comment" class="form-control" style="width:1134px"></textarea>
+                                </label>
+                            </div>
+                        </fieldset>
+                        <footer class="review-submit">
+                            <label class="label-v2">Review</label>
+                            <div class="stars-ratings">
+                                <input type="radio" name="stars-rating5" id="stars-rating-5" class="radiocheck">
+                                <label for="stars-rating-5"><i class="fa fa-star"></i></label>
+                                <input type="radio" name="stars-rating4" id="stars-rating-4" class="radiocheck">
+                                <label for="stars-rating-4"><i class="fa fa-star"></i></label>
+                                <input type="radio" name="stars-rating3" id="stars-rating-3" class="radiocheck">
+                                <label for="stars-rating-3"><i class="fa fa-star"></i></label>
+                                <input type="radio" name="stars-rating2" id="stars-rating-2" class="radiocheck">
+                                <label for="stars-rating-2"><i class="fa fa-star"></i></label>
+                                <input type="radio" name="stars-rating1" id="stars-rating-1" class="radiocheck">
+                                <label for="stars-rating-1"><i class="fa fa-star"></i></label>
+                            </div>
+                            <button type="submit" class="btn-u btn-u-sea-shop btn-u-sm pull-right">Submit</button>
+                        </footer>
+                        <input type="hidden" name="Stars" id="Stars" />
+                        <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.Id" />
+                    </form>
+                }
+
+            </div>
+            <!-- End Reviews -->
+        </div>
+    </div>
+</div><!--/end container-->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".radiocheck").change(function () {
+                if ($("#stars-rating-5").prop("checked")) {
+                    $("#Stars").val(5);
+                }
+                if ($("#stars-rating-4").prop("checked")) {
+                    $("#Stars").val(4);
+                }
+                if ($("#stars-rating-3").prop("checked")) {
+                    $("#Stars").val(3);
+                }
+                if ($("#stars-rating-2").prop("checked")) {
+                    $("#Stars").val(2);
+                }
+                if ($("#stars-rating-1").prop("checked")) {
+                    $("#Stars").val(1);
+                }
+            });
+            $(".connectToApp").click(function () {
+                console.lo
+                window.location.href = "/Buyer/ConnectToApplication?vehicleId=" + $("#VehicleId").val();
+            })
+        });
+    </script>
+}

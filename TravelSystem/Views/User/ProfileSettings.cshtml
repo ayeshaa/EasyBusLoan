@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model TravelSystem.Models.AccountViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Profile Settings";
+}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-3 filter-by-block md-margin-bottom-60">
+            @if (User.IsInRole("Seller"))
+            {
+                <partial name="~/Views/Shared/_PartialSellerMenu.cshtml" />
+            }
+            @if (User.IsInRole("Lendor"))
+            {
+                <partial name="~/Views/Shared/_PartialLendorMenu.cshtml" />
+            }
+            @if (User.IsInRole("Buyer"))
+            {
+                <partial name="~/Views/Shared/_PartialBuyerMenu.cshtml" />
+            }
+        </div>
+        <div class="col-md-9">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-12 result-category">
+                    <h2>Profile Settings</h2>
+
+                </div>
+                @*<div class="col-sm-8">
+
+                </div>*@
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory" style="padding:0px !important">
+                <div class="row illustration-v2 margin-bottom-30">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"]
+                        </div>
+                    }
+                    <div class="col-12">
+                        <form method="post" action="@Url.Action("ProfileSettings","User")" enctype="multipart/form-data">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-12 well text-center">
+                                            <div class="col-md-6 col-centered">
+                                                <div class="reg-header">
+                                                </div>
+                                                @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = "Company Name*", @required = "required", @class = "form-control margin-bottom-5" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.CompanyName, "")</span>
+                                                @Html.TextBoxFor(m => m.FullName, new { @placeholder = "Full Name*", @required = "required", @class = "form-control margin-bottom-5" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.FullName, "")</span>
+                                                @Html.TextBoxFor(m => m.Phone, new { @placeholder = "Phone*", @required = "required", @class = "form-control margin-bottom-5" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.Phone, "")</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 text-center">
+                                        <input type="submit" class="btn btn-primary btn-lg margin-bottom-20" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!--/end filter resilts-->
+
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->
+
+<script src="~/js/location.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvmA6K2UJ2o-xYy2flqy2-43aLmsgjQg&libraries=places&callback=initAutocomplete"
+        async defer></script>

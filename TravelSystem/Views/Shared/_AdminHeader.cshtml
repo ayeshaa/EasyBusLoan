@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<nav class=" navbar-expand navbar-dark bg-primary static-top" style="padding: .5rem 1rem;">
+    <div class="row">
+        <div class="col-6">
+            <a class="navbar-brand mr-1" href="">EZ Bus Loan</a>
+            <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div class="col-6 text-right">
+            <button data-toggle="popover" class="btn btn-default btn-circle btn-xl" data-container="body" data-placement="bottom" type="button" data-html="true" href="#" id="login">
+                @HttpContextAccessor.HttpContext.Session.GetString("UserName").Substring(0,1).ToUpper().ToString()
+            </button>
+        </div>
+    </div>
+</nav>
+<div id="popover-content-login" style="display:none;">
+    <ul class="list-group">
+        <li class="list-group-item">@HttpContextAccessor.HttpContext.Session.GetString("UserName").ToString()</li>
+        <li class="list-group-item"><a href="@Url.Action("Logout","Admin")">Logout</a></li>
+    </ul>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("[data-toggle=popover]").each(function (i, obj) {
+
+            $(this).popover({
+                html: true,
+                content: function () {
+                    var id = $(this).attr('id');
+                    return $('#popover-content-' + id).html();
+                }
+            });
+
+        });
+    });
+</script>
+<style>
+    .popover {
+        width: 220px;
+    }
+</style>

@@ -1,0 +1,30 @@
+﻿@model TravelSystem.Models.Blogs
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/css/blog.css" rel="stylesheet" />
+<div class="wrapper">
+
+    <!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">@Model.Title</h1>
+
+        </div>
+    </div><!--/breadcrumbs-->
+    <!--=== End Breadcrumbs ===-->
+    <div class="container content blog-full-width" style="min-height:500px">
+        <!--Blog Post-->
+        <div class="blog margin-bottom-40">
+            @Html.Raw(Model.Body)
+        </div>
+        <!--End Blog Post-->
+    </div><!--/container-->
+    <!--=== End Content Part ===-->
+
+</div>
+
+
+

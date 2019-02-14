@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EZBus Loan</title>
+
+    <environment include="Development">
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css" rel="stylesheet" />
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css" rel="stylesheet" />
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.mobile.min.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/AdminDesign/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/AdminDesign/css/sb-admin.min.css" rel="stylesheet" />
+        <link href="~/AdminDesign/css/custom.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/AdminDesign/css/loading.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <environment include="Development">
+        <script src="~/AdminDesign/js/Kendo/jquery.min.js"></script>
+        <script src="~/AdminDesign/js/Kendo/kendo.all.min.js"></script>
+    </environment>
+</head>
+<body id="page-top">
+
+    @(await Html.PartialAsync("/Views/Shared/_AdminHeader.cshtml"))
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @(await Html.PartialAsync("/Views/Shared/_AdminSideBar.cshtml"))
+        <div id="content-wrapper">
+            <div class="loading-wrapper">
+                <div class="loading"></div>
+            </div>
+            @RenderBody()
+            <!-- Sticky Footer -->
+            @(await Html.PartialAsync("/Views/Shared/_AdminFooter.cshtml"))
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+
+    <environment include="Development">
+        @*<script src="/AdminDesign/js/jquery.min.js"></script>*@
+        <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
+        <script src="~/AdminDesign/js/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/AdminDesign/js/jquery/dist/jquery.unobtrusive-ajax.js"></script>
+        <script src="/AdminDesign/js/jquery.easing.min.js"></script>
+        <script src="~/AdminDesign/js/sb-admin.min.js"></script>
+        <script src="~/AdminDesign/js/site.js"></script>
+    </environment>
+    <environment exclude="Development">
+        @*<script src="/AdminDesign/js/jquery.min.js"></script>*@
+        <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
+        <script src="~/AdminDesign/js/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/AdminDesign/js/jquery/dist/jquery.unobtrusive-ajax.js"></script>
+        <script src="/AdminDesign/js/jquery.easing.min.js"></script>
+        <script src="~/AdminDesign/js/sb-admin.min.js"></script>
+        <script src="~/AdminDesign/js/site.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-responsive-collapse">
+    <!-- Nav Menu -->
+    <ul class="nav navbar-nav">
+        <!-- Pages -->
+        <li class="dropdown active">
+            <a href="/">
+                HOME
+            </a>
+
+        </li>
+        <!-- End Pages -->
+        <!-- Promotion -->
+        <li class="dropdown">
+            <a href="@Url.Action("Inventory","Vehicles")" >
+                Inventory
+            </a>
+
+        </li>
+        <!-- End Promotion -->
+        <!-- Gifts -->
+        <li class="dropdown mega-menu-fullwidth">
+            <a href="@Url.Action("AllLendors","Lendor")">
+                Lendors
+            </a>
+            <!--/end dropdown-menu-->
+        </li>
+        <!-- End Gifts -->
+        <!-- Books -->
+        <li class="dropdown mega-menu-fullwidth">
+            <a href="@Url.Action("AllSellers","Seller")">
+                Sellers
+            </a>
+            <!--/end dropdown-menu-->
+        </li>
+        <!-- End Books -->
+        <!-- Clothes -->
+        <li class="dropdown">
+            <a href="@Url.Action("Register","User",new {finance="yes" })">
+                Apply For Finance
+            </a>
+
+        </li>
+        <!-- End Clothes -->
+        <li class="">
+            <a href="/Blog">
+                Blog
+            </a>
+
+        </li>
+        <!-- Main Demo -->
+        <li><a href="../index.html">Contact</a></li>
+        <!-- Main Demo -->
+    </ul>
+    <!-- End Nav Menu -->
+</div>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TravelSystem.Models.Vehicles>
+@{
+    ViewData["Title"] = "Inventory";
+}
+<div class="row illustration-v2 margin-bottom-30">
+
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="product-img product-img-brd">
+                <a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})"><img class="full-width img-responsive" style="width: 300px;height: 300px;" src="~/VehicleImages/@item.VehicleImages.Select(o=>o.FileNameOnDisk).FirstOrDefault()" alt=""></a>
+                <a class="product-review" href="@Url.Action("VehicleDetail","Vehicles",new { id = item.Id })">Quick review</a>
+                @*<button id="@item.Id" type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>*@
+            </div>
+            <div class="product-description product-description-brd margin-bottom-30">
+                <div class="overflow-h margin-bottom-5">
+                    <div class="pull-left">
+                        <h4 class="title-price"><a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})">@item.VehicleTypes.VehicleTypeName</a></h4>
+                        <span class="gender text-uppercase">@item.CityOrState</span>
+                        <span class="gender">Make Year - @item.MakeYear.ToString("yyyy")</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="title-price">$@item.SalesPrice</span>
+                    </div>
+                </div>
+                <ul class="list-inline product-ratings">
+                    @for (var i = 0; i < item.Stars; i++)
+                    {
+                        <li><i class="rating-selected fa fa-star"></i></li>
+                    }
+                    @for (var i = 0; i < 5 - item.Stars; i++)
+                    {
+                        <li><i class="rating fa fa-star"></i></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</div>

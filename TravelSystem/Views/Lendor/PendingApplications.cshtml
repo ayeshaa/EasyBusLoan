@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<TravelSystem.Models.ApplicantDetails>
+@{
+    ViewData["Title"] = "Pending Applications";
+}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-3 filter-by-block md-margin-bottom-60">
+            <partial name="~/Views/Shared/_PartialLendorMenu.cshtml" />
+        </div>
+        <div class="col-md-9">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-4 result-category">
+                    <h2>Pending Applications</h2>
+
+                </div>
+                <div class="col-sm-8">
+
+                </div>
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory">
+                <div class="row illustration-v2 margin-bottom-30">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"]
+                        </div>
+                    }
+
+                    @foreach (var item in Model)
+                    {<div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    @*<div class="col-md-1">
+                                        @if (@item.Vehicle.VehicleImages.Count > 0)
+                                        {
+                                            <img src="~/VehicleImages/@item.Vehicle.VehicleImages.Select(o=>o.FileNameOnDisk).FirstOrDefault()" width="60" height="60" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/VehicleImages/logo1.png" width="60" height="60" />
+                                        }
+                                    </div>*@
+                                    <div class="col-md-10" style="line-height: 1px;">
+                                        <div>
+                                            <a href="@Url.Action("ApplicantDetail","Lendor",new { id = item.Id})">
+                                                <h2>
+                                                    @if (item.VehicleId.HasValue)
+                                                    {
+                                                        @item.Vehicle.VehicleTypes.VehicleTypeName
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.ApplicantVehicles.Select(o=>o.VehicleTypes.VehicleTypeName).FirstOrDefault()
+                                                    }
+                                                </h2>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <span class="fa fa-address-book"></span> @item.Address ,@item.City @item.ZipCode
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div><!--/end filter resilts-->
+
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->

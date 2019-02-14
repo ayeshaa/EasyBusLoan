@@ -1,0 +1,124 @@
+﻿
+@model TravelSystem.Models.AccountViewModels.RegisterViewModel
+@{ 
+    Layout = null;
+}
+<div class="container content">
+    <div class="row">
+        <div id="sucessMessageContainer" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            @*<form action="" post="" id="LenderRegForm" class="reg-page">*@
+            @using (Html.BeginForm("Register", "User", FormMethod.Post, new { enctype = "multipart/form-data", @class = "reg-page", role = "form", @id = "LenderRegForm" }))
+            {
+                @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = "Company Name*", @required = "required", @class = "form-control margin-bottom-20" })
+                @Html.TextBoxFor(m => m.FullName, new { @placeholder = "Contact Person Name*", @required = "required", @class = "form-control margin-bottom-20" })
+                <span class="text-danger">@Html.ValidationMessageFor(m => m.FullName)</span>
+                <input type="hidden" name="IsLendor" value="true" />
+                @*<input type="text" placeholder="Contact Person Name*" class="form-control margin-bottom-20">*@
+
+                @Html.TextBoxFor(m => m.Phone, new { @placeholder = "Phone*", @type = "number", @required = "required", @class = "form-control margin-bottom-20" })
+                @*<input type="text" placeholder="Phone*" onkeyup="$cc.csv(event)" class="form-control margin-bottom-20">*@
+
+
+                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email*", @type = "email", @required = "required", @class = "form-control margin-bottom-20", })
+                @*<input type="text" placeholder="Email*" class="form-control margin-bottom-20">*@
+                <span class="text-danger">@Html.ValidationMessageFor(m => m.Email)</span>
+
+                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password*", @type = "password", @required = "required", @class = "form-control margin-bottom-20" })
+                @*<input type="text" placeholder="Password*" class="form-control margin-bottom-20">*@
+                <span class="text-danger">@Html.ValidationMessageFor(m => m.Password)</span>
+
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "Confirm Password*", @required = "required", @class = "form-control margin-bottom-20" })
+                @*<input type="text" placeholder="Confirm Password*" class="form-control margin-bottom-20">*@
+                <span class="text-danger">@Html.ValidationMessageFor(m => m.ConfirmPassword)</span>
+                <hr>
+
+                <div class="row">
+                    <img src="~/assets/img/30.gif" id="gif" style="display: block; margin: 0 auto; visibility: hidden;">
+                    <div class="col-lg-6 text-right">
+                        <input class="btn-u" type="submit" id="submitlender" value="Submit Request" />
+                    </div>
+                </div>
+            }
+            @*</form>*@
+        </div>
+    </div>
+</div>
+@*<script>
+        $("#submitlender").click(function (e) {
+            {
+                debugger;
+                e.preventDefault();
+                //var submit = checkRequiredFiels();
+                // if (submit == false) {
+                //   return false;
+                //}
+
+
+                var data = $("#LenderRegForm").get(0);
+                var formData = new FormData(data);
+                //var email = $("#Email").val();
+
+
+                //formData.append("model", JSON.stringify(data));
+
+                $('#gif').css('visibility', 'visible');
+                $.ajax({
+                    url: "/Account/Register", //you can get also action attribute from form using form.attr('action')
+                    type: 'POST',
+                    datatype: "html",
+                    contentType: false, // Not to set any content header
+                    processData: false,
+                    data: formData,
+                }).done(function (result) {
+                    debugger;
+
+                    if (result.includes("validation-summary-errors")) {
+                        $('#gif').css('visibility', 'hidden');
+                        $("#errorsValidation").html(result);
+                        $("#errorsValidation").attr("tabindex", -1).focus();
+                        $("#errorsValidation").scrollIntoView();
+                        $("#errorsValidation").animate({ scrollTop: 0 }, "slow");
+                    }
+                    else {
+                        $("#sucessMessageContainer").html('<div class="row"> <div class="col-md-12 col-centered text-center">   <h2>Great!</h2>   <p>We have sent you an email. Follow the link in your email to activate your account. Did not get email? Try checking your spam folder.</p>     <a href="/Account/Login" class="btn-u">Log in</a>  </div>    </div>');
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                    }
+                    //alert(results.values.Errors);
+                    $('#gif').css('visibility', 'hidden');
+                });
+            }
+        });
+
+
+    </script>*@
+
+<script>
+    var $cc = {}
+    $cc.csv = function (e) {
+        var number = String(e.target.value);
+        var cleanNumber = '';
+        for (var i = 0; i < number.length; i++) {
+            if (/^[0-9]+$/.test(number.charAt(i))) {
+                cleanNumber += number.charAt(i);
+            }
+        }
+
+        //Only parse and correct the input value if the key pressed isn't backspace.
+        if (e.key != 'Backspace') {
+            //Format the value to include spaces in the correct locations
+            var formatNumber = '';
+            for (var i = 0; i < cleanNumber.length; i++) {
+                //if (i == 3 || i == 7 || i == 11) {
+                //   // formatNumber = formatNumber + cleanNumber.charAt(i) + ' '
+                //} else {
+                formatNumber += cleanNumber.charAt(i)
+                // }
+            }
+            e.target.value = formatNumber;
+        }
+        if (document.getElementById('PhoneNumber').value.length > 1) {
+            document.getElementById('phoneMessage').innerHTML = '';
+            document.getElementById('PhoneNumber').style.border = "1px solid #ccc";
+        }
+    }
+</script>

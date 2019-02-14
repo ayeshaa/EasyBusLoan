@@ -1,0 +1,126 @@
+﻿@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http;
+@inject IOptions<StripeSettings> Stripe
+
+@model IEnumerable<TravelSystem.Models.VehiclesCarts>
+@{
+    ViewData["Title"] = "Cart";
+}
+<!--=== Content Part ===-->
+<div class="content container" style="min-height:500px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-6 result-category">
+                    <h2>Cart</h2>
+                </div>
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory">
+                <div class="row illustration-v2 margin-bottom-30">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["Success"]
+                        </div>
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        @if (item.SpGetVehicleDetail.ImageNameOnDisk != null)
+                                        {
+                                            <img src="~/VehicleImages/@item.SpGetVehicleDetail.ImageNameOnDisk" width="60" height="60" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/VehicleImages/logo1.png" width="60" height="60" />
+                                        }
+                                    </div>
+                                    <div class="col-md-7" style="line-height: 1px;">
+                                        <div>
+                                            <a href="@Url.Action("VehicleDetail", "Vehicles", new { id = item.VehicleId })">
+                                                <h2>
+                                                    @item.SpGetVehicleDetail.VehicleTypeName
+
+                                                </h2>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 text-right" style="padding: 20px;">
+                                        <span>$@item.SpGetVehicleDetail.SalesPrice</span>
+                                    </div>
+                                    <div class="col-md-1 text-right" style="padding: 20px;">
+                                        <span class="fa fa-remove btn btn-u-sm removeFromCart" id="@item.Id"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Count() > 0)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Charges</th>
+                                                <td>$@(Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4 / 100)</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sub Total</th>
+                                                <td>$@Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum()</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total</th>
+                                                <td>$@(Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() + Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4 / 100)</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-1">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (Model.Count() > 0)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                </div>
+                                <div class="col-md-3 text-right">
+
+                                    <form action="/Buyer/Charge">
+
+                                        <script src="//checkout.stripe.com/v2/checkout.js"
+                                                class="stripe-button"
+                                                data-key="@Stripe.Value.PublishableKey"
+                                                data-description="Checkout"
+                                                data-amount="@((Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() + Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4 / 100)*100)">
+                                        </script>
+
+                                    </form>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div><!--/end filter resilts-->
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->

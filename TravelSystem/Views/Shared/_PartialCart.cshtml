@@ -1,0 +1,58 @@
+﻿<style>
+    .header-v5 .mCustomScrollbar {
+        height:200px !important;
+         max-height: 200px !important; 
+    }
+</style>
+<!-- Shopping Cart -->
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http;
+@{
+    string machineName = System.Environment.MachineName;
+    int userId = Convert.ToInt32(Context.Session.GetInt32("Id"));
+    var result = Context.Session.GetObjectFromJson<List<VehiclesCarts>>("Cart").ToList();
+}
+<div class="shop-badge badge-icons pull-right">
+    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+    <span class="badge badge-sea rounded-x">@result.Count()</span>
+    @if (result.Count > 0)
+    {
+ <div class="badge-open">
+        <ul class="list-unstyled mCustomScrollbar" data-mcs-theme="minimal-dark">
+            @foreach (var item in result.ToList())
+            {
+            <li>
+                @if (item.SpGetVehicleDetail.ImageNameOnDisk != null)
+                {
+                    <img src="~/VehicleImages/@item.SpGetVehicleDetail.ImageNameOnDisk" width="60" height="60" />
+                }
+                else
+                {
+                    <img src="~/VehicleImages/logo1.png" width="60" height="60" />
+                }
+                <button type="button" class="close removeFromCart" id="@item.Id">×</button>
+                <div class="overflow-h">
+                    <span>@item.SpGetVehicleDetail.VehicleTypeName</span>
+                    <small>@item.SpGetVehicleDetail.SalesPrice</small>
+                </div>
+            </li>
+            }
+
+        </ul>
+        <div class="subtotal">
+            <div class="overflow-h margin-bottom-10">
+                <span>Subtotal</span>
+                <span class="pull-right subtotal-cost">$@result.Select(o=>o.SpGetVehicleDetail.SalesPrice).Sum()</span>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <a href="@Url.Action("Cart","Buyer")" class="btn-u btn-brd btn-brd-hover btn-u-sea-shop btn-block">View Cart</a>
+                </div>
+                <div class="col-xs-6">
+                    <a href="@Url.Action("Cart","Buyer")" class="btn-u btn-u-sea-shop btn-block">Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

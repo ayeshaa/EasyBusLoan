@@ -1,0 +1,311 @@
+﻿@model TravelSystem.Models.ApplicantDetails
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Applicant Details";
+}
+<!--=== Shop Product ===-->
+<div class="shop-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 md-margin-bottom-50">
+                <div class="ms-showcase2-template">
+                    <!-- Master Slider -->
+                    <div class="master-slider ms-skin-default" id="masterslider">
+                        @foreach (var item in Model.Vehicle.VehicleImages)
+                        {
+                            <div class="ms-slide">
+                                <img class="ms-brd" src="/blank.gif" data-src="/VehicleImages/@item.FileNameOnDisk" alt="@item.FileNameOnDisk">
+                                <img class="ms-thumb" src="/VehicleImages/@item.FileNameOnDisk" width="180" height="180" alt="thumb">
+                            </div>
+                        }
+                    </div>
+                    <!-- End Master Slider -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="shop-product-heading">
+                    <h2>@Model.Vehicle.VehicleTypes.VehicleTypeName</h2>
+                    @if (User.IsInRole("Buyer") && Convert.ToBoolean(TempData["IsApplication"]))
+                    {
+                        <button type="button" class="btn-u btn-u-sea-shop btn-u-lg connectToApp" style="float:right">Connect to Application</button>
+                    }
+                </div><!--/end shop product social-->
+                <ul class="list-inline product-ratings margin-bottom-30">
+                    @for (var i = 0; i < Model.Vehicle.Stars; i++)
+                    {
+                        <li><i class="rating-selected fa fa-star"></i></li>
+                    }
+                    @for (var i = 0; i < 5 - Model.Vehicle.Stars; i++)
+                    {
+                        <li><i class="rating fa fa-star"></i></li>
+                    }
+                    <li class="product-review-list">
+                        <span>(@Model.Vehicle.VehicleRatings.Count()) <a href="#">Review</a></span>
+                    </li>
+                </ul><!--/end shop product ratings-->
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Mileage</th>
+                            <td>@Model.Vehicle.Mileage</td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td>@Model.Vehicle.Model</td>
+                        </tr>
+                        <tr>
+                            <th>Passenger Seats</th>
+                            <td>@Model.Vehicle.PassengersSeats</td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>@Model.Vehicle.Location</td>
+                        </tr>
+                        <tr>
+                            <th>City Or State</th>
+                            <td>@Model.Vehicle.CityOrState</td>
+                        </tr>
+                        <tr>
+                            <th>Make Year</th>
+                            <td>@Model.Vehicle.MakeYear.ToString("yyyy")</td>
+                        </tr>
+                        <tr>
+                            <th>VIN Number</th>
+                            <td>@Model.Vehicle.Vinnumber</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="list-inline shop-product-prices margin-bottom-30">
+                    <li class="shop-red">$@Model.Vehicle.SalesPrice</li>
+                </ul><!--/end shop product prices-->
+                @if (User.IsInRole("Lendor"))
+                {
+                    <div class="margin-bottom-40">
+                        <a href="@Url.Action("ApproveApplication","Lendor",new { id = Model.Id})" class="btn-u btn-u-sea-shop btn-u-lg">Approve</a>
+                    </div><!--/end product quantity-->
+                }
+            </div>
+        </div><!--/end row-->
+    </div>
+</div>
+<!--=== End Shop Product ===-->
+
+<div class="container">
+    <div class="tab-v6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Applicant Credit References</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Description -->
+            <!-- Reviews -->
+            <div class="tab-pane fade in active" id="reviews">
+                <div class="">
+                    @if (Model.ApplicantsCreditReferences.Count > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>Bank Name</th>
+                                <th>Account Number</th>
+                                <th>Telephone</th>
+                                <th>Contact</th>
+                            </tr>
+                            @foreach (var item in Model.ApplicantsCreditReferences)
+                            {
+                                <tr>
+                                    <td>@item.BankName</td>
+                                    <td>@item.AccountNumber</td>
+                                    <td>@item.Telephone</td>
+                                    <td>@item.Contact</td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Credit Referrences</p>
+                    }
+                </div>
+            </div>
+            <!-- End Reviews -->
+        </div>
+    </div>
+</div><!--/end container-->
+<div class="container">
+    <div class="tab-v6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Applicants Guarantors</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Description -->
+            <!-- Reviews -->
+            <div class="tab-pane fade in active" id="reviews">
+                <div class="">
+                    @if (Model.ApplicantsGuarantors.Count > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>Title</th>
+                                <th>Ownership</th>
+                                <th>Principle Owner</th>
+                                <th>Social Security Number</th>
+                                <th>State</th>
+                                <th>Zip Code</th>
+                            </tr>
+                            @foreach (var item in Model.ApplicantsGuarantors)
+                            {
+                                <tr>
+                                    <td>@item.Title</td>
+                                    <td>@item.OwnerShip</td>
+                                    <td>@item.PrincipleOwner</td>
+                                    <td>@item.SocialSecurityNumber</td>
+                                    <td>@item.State</td>
+                                    <td>@item.ZipCode</td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Applicants Guarantors</p>
+                    }
+                </div>
+            </div>
+            <!-- End Reviews -->
+        </div>
+    </div>
+</div><!--/end container-->
+<div class="container">
+    <div class="tab-v6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Applicants Financed Equipments</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Description -->
+            <!-- Reviews -->
+            <div class="tab-pane fade in active" id="reviews">
+                <div class="">
+                    @if (Model.ApplicantsFinancedEquipments.Count > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>Expansion</th>
+                                <th>Lease</th>
+                                <th>Loan</th>
+                                <th>Replacement</th>
+                                <th>Quantity</th>
+                                <th>S Requested</th>
+                                <th>Terms</th>
+                                <th>Year,Manufacture,Model</th>
+                            </tr>
+                            @foreach (var item in Model.ApplicantsFinancedEquipments)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.IsExpansion)
+                                        {
+                                            @:Yes
+                                        }
+                                        else
+                                        {
+                                            @:No
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.IsLease)
+                                        {
+                                            @:Yes
+                                        }
+                                        else
+                                        {
+                                            @:No
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.IsLoan)
+                                        {
+                                            @:Yes
+                                        }
+                                        else
+                                        {
+                                            @:No
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.IsReplacement)
+                                        {
+                                            @:Yes
+                                        }
+                                        else
+                                        {
+                                            @:No
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Quantity == null)
+                                        {
+                                            @:1
+                                        }
+                                        else
+                                        {
+                                            @item.Quantity
+                                        }
+                                    </td>
+                                    <td>@item.Srequested</td>
+                                    <td>@item.Terms</td>
+                                    <td>@item.YearManufactureModel</td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Applicants Financed Equipments</p>
+                    }
+                </div>
+            </div>
+            <!-- End Reviews -->
+        </div>
+    </div>
+</div><!--/end container-->
+<div class="container">
+    <div class="tab-v6">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Applicants Insurances</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Description -->
+            <!-- Reviews -->
+            <div class="tab-pane fade in active" id="reviews">
+                <div class="">
+                    @if (Model.ApplicantsInsurances.Count > 0)
+                    {
+                        <table class="table">
+                            <tr>
+                                <th>Insurance Company Name</th>
+                                <th>Agent Name</th>
+                                <th>Telephone</th>
+                            </tr>
+                            @foreach (var item in Model.ApplicantsInsurances)
+                            {
+                            <tr>
+                                <td>@item.InsuranceCompanyName</td>
+                                <td>@item.Agent</td>
+                                <td>@item.Telephone</td>
+                            </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Applicants Insurances</p>
+                    }
+                </div>
+            </div>
+            <!-- End Reviews -->
+        </div>
+    </div>
+</div><!--/end container-->

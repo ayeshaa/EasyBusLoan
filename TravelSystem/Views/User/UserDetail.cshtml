@@ -1,0 +1,73 @@
+﻿@model TravelSystem.Models.ApplicationUser
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "User Detail";
+}
+<!--=== Shop Product ===-->
+<div class="shop-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 md-margin-bottom-50">
+                <div class="ms-showcase2-template">
+                    <!-- Master Slider -->
+                    <div class="master-slider ms-skin-default" id="masterslider">
+
+                        <div class="ms-slide">
+                            <img class="ms-brd" src="~/user.jpg" alt="user">
+                        </div>
+
+                    </div>
+                    <!-- End Master Slider -->
+                </div>
+            </div>
+            <div class="col-md-6 margin-top-20">
+                <div class="shop-product-heading">
+                    <h2>@Model.FullName</h2>
+                </div><!--/end shop product social-->
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                @if (Model.IsLendor)
+                                {
+                                    @:Lendor
+                                }@if (Model.IsBuyer)
+                                {
+                                    @:Buyer
+                                }
+                                @if (Model.IsSeller)
+                                {
+                                    @:Seller
+                                }
+                            </th>
+                            <td>
+                                @if (Model.IsLendor)
+                                {
+                                    @:Yes
+                                }@if (Model.IsBuyer)
+                                {
+                                    @:Yes
+                                }
+                                @if (Model.IsSeller)
+                                {
+                                    @:Yes
+                                }
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div><!--/end row-->
+    </div>
+</div>
+<!--=== End Shop Product ===-->

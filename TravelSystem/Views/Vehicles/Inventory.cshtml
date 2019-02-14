@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "Inventory";
+}
+<!--=== Content Part ===-->
+<div class="content container">
+    <div class="row">
+        <div class="col-md-3 filter-by-block md-margin-bottom-60">
+            <h1>Filter By</h1>
+
+            <div class="panel-group" id="accordion-v2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-v2" href="#collapseTwo">
+                                Types
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <ul class="list-unstyled checkbox-list">
+                                @foreach (var item in TempData["VehicleTypes"] as IEnumerable<TravelSystem.Models.VehicleTypes>)
+                                {
+                                    <li>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="checkbox" value="@item.Id" class="FilterCheck" />
+                                            <i></i>
+                                            @item.VehicleTypeName
+                                        </label>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/end panel group-->
+            <div class="panel-group" id="accordion-v4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-v4" href="#collapseFour">
+                                Price
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="slider-snap"></div>
+                            <p class="slider-snap-text">
+                                <span class="slider-snap-value-lower" id="LowerHandle"></span>
+                                <span class="slider-snap-value-upper" id="HigherHandle"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/end panel group-->
+        </div>
+        <div class="col-md-9">
+            <div class="row margin-bottom-5">
+                <div class="col-sm-4 result-category">
+                    <h2>Inventory</h2>
+                    <small class="shop-bg-green badge-results">@Convert.ToInt32(TempData["TotalVehicles"]) Results</small>
+                </div>
+                <div class="col-sm-8">
+                    @*<ul class="list-inline clear-both">
+                            <li class="sort-list-btn">
+                                <h3>Sort By :</h3>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Popularity <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">All</a></li>
+                                        <li><a href="#">Best Sales</a></li>
+                                        <li><a href="#">Top Last Week Sales</a></li>
+                                        <li><a href="#">New Arrived</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sort-list-btn">
+                                <h3>Show :</h3>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        20 <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">All</a></li>
+                                        <li><a href="#">10</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">3</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>*@
+                </div>
+            </div><!--/end result category-->
+            <div class="filter-results" id="inventory">
+
+            </div><!--/end filter resilts-->
+            @*<div class="text-center">
+                    <ul class="pagination pagination-v2">
+                        <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                        <li><a href="#">1</a></li>
+                        <li class="active"><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                </div>*@<!--/end pagination-->
+        </div>
+    </div><!--/end row-->
+</div><!--/end container-->
+<!--=== End Content Part ===-->
+
+@section Scripts{
+<script>
+       
+        $(document).ready(function () {
+            var Checked = [];
+            $("#inventory").load('/Vehicles/InventoryGrid');
+            $(".FilterCheck").change(function () {
+                if ($(this).prop("checked")) {
+                    Checked.push(parseInt($(this).val()));
+                }
+                else {
+                    var index = Checked.indexOf(parseInt($(this).val()));
+                    if (index !== -1) {
+                        Checked.splice(index, 1);
+                    }
+                }
+                loadInventory();
+            });
+            $(".slider-snap").change(function () {
+                loadInventory();
+            });
+            function loadInventory() {
+                var fromPrice = $(".slider-snap-value-lower").html();
+                var toPrice = $(".slider-snap-value-upper").html();
+                var vehicleIds = Checked.join(",");
+                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice);
+            }
+            
+        });
+     
+    </script>
+
+}

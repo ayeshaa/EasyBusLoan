@@ -1,0 +1,147 @@
+﻿
+@using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Home Page";
+    var result = TempData["Vehicles"] as List<Vehicles>;
+}
+
+<div class="tp-banner-container">
+    <div class="tp-banner">
+        <ul>
+            <!-- SLIDE -->
+            <li class="revolution-mch-1" data-transition="fade" data-slotamount="5" data-masterspeed="1000" data-title="Slide 1">
+                <!-- MAIN IMAGE -->
+                <img src="assets/img/1.jpg" alt="darkblurbg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                <div class="tp-caption revolution-ch1 sft start"
+                     data-x="center"
+                     data-hoffset="0"
+                     data-y="100"
+                     data-speed="1500"
+                     data-start="500"
+                     data-easing="Back.easeInOut"
+                     data-endeasing="Power1.easeIn"
+                     data-endspeed="300">
+                    The New <br>
+                    <strong>Collection</strong><br>
+                    is here
+                </div>
+                <!-- LAYER -->
+                <div class="tp-caption sft"
+                     data-x="center"
+                     data-hoffset="0"
+                     data-y="380"
+                     data-speed="1600"
+                     data-start="1800"
+                     data-easing="Power4.easeOut"
+                     data-endspeed="300"
+                     data-endeasing="Power1.easeIn"
+                     data-captionhidden="off"
+                     style="z-index: 6">
+                    <a href="@Url.Action("Inventory","Vehicles")" class="btn-u btn-brd btn-brd-hover btn-u-light">Shop Now</a>
+                </div>
+            </li>
+        </ul>
+        <div class="tp-bannertimer tp-bottom"></div>
+    </div>
+</div>
+<!--=== End Slider ===-->
+<!--=== Product Content ===-->
+<div class="container content-md">
+    <!--=== End Illustration v1 ===-->
+    <div class="heading heading-v1 margin-bottom-20">
+        <h2>Featured Vehicles</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio elit, ultrices vel cursus sed, placerat ut leo. Phasellus in magna erat. Etiam gravida convallis augue non tincidunt. Nunc lobortis dapibus neque quis lacinia. Nam dapibus tellus sit amet odio venenatis</p>
+    </div>
+    <!--=== Illustration v2 ===-->
+    <div class="illustration-v2 margin-bottom-60">
+        <div class="customNavigation margin-bottom-25">
+            <a class="owl-btn prev rounded-x"><i class="fa fa-angle-left"></i></a>
+            <a class="owl-btn next rounded-x"><i class="fa fa-angle-right"></i></a>
+        </div>
+        <ul class="list-inline owl-slider">
+            @foreach (var item in result)
+            {
+                <li class="item">
+                    <div class="product-img">
+                        <a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})"><img class="full-width img-responsive" style="width: 300px;height: 300px;" src="~/VehicleImages/@item.VehicleImages.Select(o=>o.FileNameOnDisk).FirstOrDefault()" alt=""></a>
+                        <a class="product-review" href="@Url.Action("VehicleDetail","Vehicles",new { id = item.Id })">Quick review</a>
+                        <button id="@item.Id" type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                    </div>
+                    <div class="product-description product-description-brd">
+                        <div class="overflow-h margin-bottom-5">
+                            <div class="pull-left">
+                                <h4 class="title-price"><a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})">@item.VehicleTypes.VehicleTypeName</a></h4>
+                                <span class="gender text-uppercase">@item.CityOrState</span>
+                                <span class="gender">Make Year - @item.MakeYear.ToString("yyyy")</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="title-price">$@item.SalesPrice</span>
+                            </div>
+                        </div>
+                        <ul class="list-inline product-ratings">
+                            @for (var i = 0; i < item.Stars; i++)
+                            {
+                                <li><i class="rating-selected fa fa-star"></i></li>
+                            }
+                            @for (var i = 0; i < 5 - item.Stars; i++)
+                            {
+                                <li><i class="rating fa fa-star"></i></li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+
+
+        </ul>
+    </div>
+    <!--=== End Illustration v2 ===-->
+
+
+</div>
+<!--=== End Product Content ===-->
+<!--=== Collection Banner ===-->
+<div class="collection-banner">
+    <div class="container">
+        <div class="col-md-12 md-margin-bottom-50">
+            <h2>Are you looking to sell your Bus?</h2>
+            <p>Duis in posuere risus. Vivamus sed dignissim tellus. In vehicula justo tempor commodo. <br> Nunc lobortis dapibus neque quis lacinia</p><br>
+            <a href="#" class="btn-u btn-brd btn-brd-hover btn-u-light">List My Bus</a>
+        </div>
+
+    </div>
+</div>
+<!--=== End Collection Banner ===-->
+<div class="container content-sm">
+    <div class="text-center margin-bottom-50">
+        <h2 class="title-v2 title-center">The only checkout financing solution you need</h2>
+    </div>
+
+    <div class="row content-boxes-v4">
+        <div class="col-md-4 md-margin-bottom-40">
+
+            <div class="content-boxes-in-v4">
+                <h2>OMNI-CHANNEL</h2>
+                <p>Bus Travel Exchange provides instant financing for every customer with a seamless experience wherever they buy – online, mobile or in store.</p>
+
+            </div>
+        </div>
+        <div class="col-md-4 md-margin-bottom-40">
+
+            <div class="content-boxes-in-v4">
+                <h2>MULTIPLE LENDERS</h2>
+                <p>Bus Travel Exchange provides instant financing for every customer with a seamless experience wherever they buy – online, mobile or in store.</p>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="content-boxes-in-v4">
+                <h2>GLOBAL COVERAGE</h2>
+                <p>Bus Travel Exchange provides instant financing for every customer with a seamless experience wherever they buy – online, mobile or in store.</p>
+
+            </div>
+        </div>
+    </div>
+</div>

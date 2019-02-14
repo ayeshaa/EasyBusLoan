@@ -1,0 +1,83 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http.Authentication
+@model TravelSystem.Models.AccountViewModels.LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+}
+<div class="log-reg-v3 content-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 md-margin-bottom-50">
+                <h2 class="welcome-title">Welcome to EZ Bus Loan</h2>
+                <p>Suspendisse et tincidunt ipsum, et dignissim urna. Vestibulum nisl tortor, gravida at magna et, suscipit vehicula massa.</p><br>
+
+                <div class="info-block-v2">
+                    <i class="icon icon-settings"></i>
+                    <div class="info-block-in">
+                        <h3>Curabitur tincidunt</h3>
+                        <p>Vestibulum non ex volutpat, sodales diam sit amet, semper nunc. Integer sed nibh commodo, tincidunt nisi.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form id="sky-form1" class="log-reg-block sky-form" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                    <h2>Log in to your account</h2>
+                    <section>
+                        <div class="input login-input">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                @Html.TextBoxFor(o => o.Email, new { type = "email", @class = "form-control", @placeholder = "Email" })
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="input login-input no-border-top">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                @Html.PasswordFor(o => o.Password, new { @class = "form-control", @placeholder = "Password" })
+                            </div>
+                        </div>
+                    </section>
+                    <div class="row margin-bottom-5">
+                        @*<div class="col-xs-6">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="checkbox" />
+                                    <i></i>
+                                    Remember me
+                                </label>
+                            </div>*@
+                        <div class="col-xs-6 text-right">
+                            <a href="@Url.Action("ForgotPassword","User")">Forget your Password?</a>
+                        </div>
+                    </div>
+                    <button class="btn-u btn-u-sea-shop btn-block margin-bottom-20" type="submit">Log in</button>
+                    <div class="border-wings">
+                        <span>or</span>
+                    </div>
+                </form>
+                <div class="margin-bottom-20"></div>
+                <p class="text-center">Don't have account yet? Learn more and <a href="@Url.Action("Register","User")" style="color:#638C9C">Sign Up</a></p>
+            </div>
+        </div><!--/end row-->
+    </div><!--/end container-->
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+<script src="~/js/jquery.geocomplete.min.js"></script>
+<script>
+    $(function() {
+        $("#location").geocomplete({
+            details: ".geo-details",
+            detailsAttribute: "data-geo"
+        });
+
+    });
+</script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&callback=initGoogleMaps"></script>
+}
