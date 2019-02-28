@@ -1,17 +1,77 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<link href="~/assets/css/pages/page_contact.css" rel="stylesheet" />
+<style>
+    .headline h2, .headline h3, .headline h4 {
+        border-bottom: 2px solid #16b9cc;
+    }
+    .who li i {
+        color: #16b9cc !important;
+    }
+</style>
+<!--=== Content Part ===-->
+<div class="container content">
+    <div class="row margin-bottom-30">
+        <div class="col-md-9 mb-margin-bottom-30">
+            <div class="headline"><h2>Contact Form</h2></div>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas feugiat. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit landitiis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas feugiat.</p><br>
+            <form action="/Home/Contact" method="post" id="sky-form3" class="sky-form sky-changes-3">
+                <div class="row margin-bottom-10">
+                    <section class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><span class="fa fa-user"></span></span>
+                            <input type="text" class="form-control" placeholder="Name" name="Name" aria-describedby="basic-addon1">
+                        </div>
+                    </section>
+                    <section class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><span class="fa fa-phone"></span></span>
+                            <input type="text" class="form-control" placeholder="Phone" name="Phone" aria-describedby="basic-addon1">
+                        </div>
+                    </section>
+                </div>
+                <div class="row margin-bottom-10">
+                    <section class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">@@</span>
+                            <input type="email" class="form-control" placeholder="Email" name="Email" aria-describedby="basic-addon1">
+                        </div>
+                    </section>
+                </div>
+                <div class="row margin-bottom-10">
+                    <section class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"><span class="fa fa-mail-forward"></span></span>
+                            <textarea rows="4" name="Message" id="message" class="form-control"></textarea>
+                        </div>
+                    </section>
+                </div>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+                <footer>
+                    <button type="submit" class="btn-u margin-bottom-10">Send message</button>
+                </footer>
+            </form>
+            @if (ViewBag.Message != null)
+            {
+            <div class="alert alert-success">
+                @ViewBag.Message
+            </div>
+            }
+
+        </div><!--/col-md-9-->
+        <div class="col-md-3">
+            <!-- Contacts -->
+            <div class="headline"><h2>Contacts</h2></div>
+            <ul class="list-unstyled who margin-bottom-30">
+                <li><a href="#" style="color:#888 !important"><i class="fa fa-home"></i>5B Streat, City 50987 New Town US</a></li>
+                <li><a href="#" style="color:#888 !important"><i class="fa fa-envelope"></i>info@example.com</a></li>
+                <li><a href="#" style="color:#888 !important"><i class="fa fa-phone"></i>1(222) 5x86 x97x</a></li>
+                <li><a href="#" style="color:#888 !important"><i class="fa fa-globe"></i>http://www.example.com</a></li>
+            </ul>
+        </div><!--/col-md-3-->
+    </div><!--/row-->
+</div><!--/container-->
+<!--=== End Content Part ===-->

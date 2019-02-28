@@ -61,40 +61,16 @@
         <div class="col-md-9">
             <div class="row margin-bottom-5">
                 <div class="col-sm-4 result-category">
-                    <h2>Inventory</h2>
-                    <small class="shop-bg-green badge-results">@Convert.ToInt32(TempData["TotalVehicles"]) Results</small>
+                    <h2>Car For You</h2>
+                    @*<small class="shop-bg-green badge-results"></small>*@
                 </div>
                 <div class="col-sm-8">
-                    @*<ul class="list-inline clear-both">
+                    <ul class="list-inline clear-both">
                             <li class="sort-list-btn">
-                                <h3>Sort By :</h3>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        Popularity <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">All</a></li>
-                                        <li><a href="#">Best Sales</a></li>
-                                        <li><a href="#">Top Last Week Sales</a></li>
-                                        <li><a href="#">New Arrived</a></li>
-                                    </ul>
-                                </div>
+                                <h3>Search :</h3>
+                                <input type="text" id="searchText" value="@ViewBag.SearchText" class="form-control" style="width:70%"/>
                             </li>
-                            <li class="sort-list-btn">
-                                <h3>Show :</h3>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        20 <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">All</a></li>
-                                        <li><a href="#">10</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">3</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>*@
+                        </ul>
                 </div>
             </div><!--/end result category-->
             <div class="filter-results" id="inventory">
@@ -119,7 +95,7 @@
        
         $(document).ready(function () {
             var Checked = [];
-            $("#inventory").load('/Vehicles/InventoryGrid');
+            $("#inventory").load('/Vehicles/InventoryGrid?searchText=' + $("#searchText").val());
             $(".FilterCheck").change(function () {
                 if ($(this).prop("checked")) {
                     Checked.push(parseInt($(this).val()));
@@ -135,11 +111,15 @@
             $(".slider-snap").change(function () {
                 loadInventory();
             });
+            $(document).on("keydown","#searchText",function () {
+                loadInventory();
+            });
             function loadInventory() {
+                var searchText = $("#searchText").val();
                 var fromPrice = $(".slider-snap-value-lower").html();
                 var toPrice = $(".slider-snap-value-upper").html();
                 var vehicleIds = Checked.join(",");
-                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice);
+                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice + "&searchText=" + searchText);
             }
             
         });

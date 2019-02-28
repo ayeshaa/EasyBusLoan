@@ -65,6 +65,12 @@ namespace TravelSystem.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                    if (user.IsBlock)
+                    {
+                        ModelState.AddModelError(string.Empty, "You are blocked, Please contact support");
+                        return View(model);
+                    }
                     _logger.LogInformation("User logged in.");
                     return RedirectToAction("Index", "Home");
                 }

@@ -13,7 +13,7 @@
             <li class="revolution-mch-1" data-transition="fade" data-slotamount="5" data-masterspeed="1000" data-title="Slide 1">
                 <!-- MAIN IMAGE -->
                 <img src="assets/img/1.jpg" alt="darkblurbg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
-                <div class="tp-caption revolution-ch1 sft start"
+                @*<div class="tp-caption revolution-ch1 sft start"
                      data-x="center"
                      data-hoffset="0"
                      data-y="100"
@@ -25,12 +25,12 @@
                     The New <br>
                     <strong>Collection</strong><br>
                     is here
-                </div>
+                </div>*@
                 <!-- LAYER -->
                 <div class="tp-caption sft"
                      data-x="center"
                      data-hoffset="0"
-                     data-y="380"
+                     data-y="260"
                      data-speed="1600"
                      data-start="1800"
                      data-easing="Power4.easeOut"
@@ -38,7 +38,17 @@
                      data-endeasing="Power1.easeIn"
                      data-captionhidden="off"
                      style="z-index: 6">
-                    <a href="@Url.Action("Inventory","Vehicles")" class="btn-u btn-brd btn-brd-hover btn-u-light">Shop Now</a>
+                    <div class="row">
+                        <div class="col-md-10" style="padding:0px 4px">
+                            <input type="text" id="searchText" class="form-control input-lg" placeholder="Search Keyword,Vehicle" />
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-lg btn-primary searchBtn"><span class="fa fa-search margin-right-10"></span>Search</button>
+                            @*<input type="submit" class="btn btn-lg btn-primary" placeholder="Search" />*@
+                        </div>
+                    </div>
+                    
+                    @*<a href="@Url.Action("Inventory","Vehicles")" class="btn-u btn-brd btn-brd-hover btn-u-light">Shop Now</a>*@
                 </div>
             </li>
         </ul>
@@ -145,3 +155,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $(".searchBtn").click(function () {
+            var searchText = $("#searchText").val();
+            window.location.href = "@Url.Action("Inventory","Vehicles")?searchText=" + searchText;
+        })
+    })
+</script>

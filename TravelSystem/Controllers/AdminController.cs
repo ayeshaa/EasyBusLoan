@@ -4,9 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
+using TravelSystem.Common;
 using TravelSystem.Models;
 
 namespace TravelSystem.Controllers
@@ -14,9 +16,11 @@ namespace TravelSystem.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public AdminController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -65,7 +69,7 @@ namespace TravelSystem.Controllers
             }
             else
             {
-                return RedirectToAction("LogIn","Admin");
+                return RedirectToAction("LogIn", "Admin");
             }
         }
         public ActionResult Blogs()
@@ -109,7 +113,7 @@ namespace TravelSystem.Controllers
                 _context.BlogCategories.Remove(blogCategory);
                 await _context.SaveChangesAsync();
             }
-            return Json(true);  
+            return Json(true);
         }
         public async Task<ActionResult> DeleteBlog(int id)
         {
@@ -127,5 +131,43 @@ namespace TravelSystem.Controllers
             return RedirectToAction("Index");
 
         }
+        public ActionResult LoanApplications()
+        {
+            return View();
+        }
+        public ActionResult Users()
+        {
+            return View();
+        }
+        public IActionResult GetAllUsers()
+        {
+            var result = _context.Users.ToList();
+            var list = new List<ApplicationUser>();
+
+            foreach (var item in result)
+            {
+                var find = _context.UserRoles.FirstOrDefault(o => o.UserId == item.Id);
+                switch (find.RoleId)
+                {
+                    case (int)Role.Lendor:
+                        item.IsLendor = true;
+                        break;
+                    case (int)Role.Buyer:
+                        item.IsBuyer = true;
+                        break;
+                    case (int)Role.Seller:
+                        item.IsSeller = true;
+                        break;
+                }
+                list.Add(item);
+            }
+            return Json(list);
+        }
+        public async Task<IActionResult> BlockUser(int id)
+        {
+            await _context.Database.ExecuteSqlCommandAsync("spBlockUser @Id = {0}", id);
+            return Json(true);
+        }
+
     }
 }

@@ -19,6 +19,7 @@ namespace TravelSystem.Models
         public bool IsSeller { get; set; }
         public bool IsBuyer { get; set; }
         public bool IsLendor { get; set; }
+        public bool IsBlock { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
         public IList<ApplicantDetails> ApplicantDetails { get; set; }

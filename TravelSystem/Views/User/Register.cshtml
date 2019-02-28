@@ -78,6 +78,10 @@ else
                 $("#RegistrationContainer").hide();
                 $("#BuyerRegistration").load("@Url.Action("BuyerRegistration", "User")");
             };
+              if ($("#finance").val() === "no") {
+                 $("#RegistrationContainer").hide();
+            $("#SellerRegistration").load("@Url.Action("SellerRegistration","User")");
+            };
         $("#LoadSellerPartial").click(function () {
             $("#RegistrationContainer").hide();
             $("#SellerRegistration").load("@Url.Action("SellerRegistration","User")");

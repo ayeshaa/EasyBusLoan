@@ -1,5 +1,6 @@
 ﻿@model TravelSystem.Models.Vehicles
 @using Microsoft.AspNetCore.Http;
+@using TravelSystem.Services
 @{
     ViewData["Title"] = "VehicleDetail";
 }
@@ -81,17 +82,38 @@
                 @if (!User.IsInRole("Seller"))
                 {
                     @*<h3 class="shop-product-title">Quantity</h3>*@
-                    <div class="margin-bottom-40">
-                        @*<form name="f1" class="product-quantity sm-margin-bottom-20">
-                            <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty();' value='-'>-</button>
-                            <input type='text' class="quantity-field" name='qty' value="1" id='qty' />
-                            <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
-                        </form>*@
-                        <button type="button" class="btn-u btn-u-sea-shop btn-u-lg">Add to Cart</button>
-                    </div><!--/end product quantity-->
+                <div class="margin-bottom-40">
+                    @*<form name="f1" class="product-quantity sm-margin-bottom-20">
+            <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty();' value='-'>-</button>
+            <input type='text' class="quantity-field" name='qty' value="1" id='qty' />
+            <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
+        </form>*@
+                    <button type="button" class="btn-u btn-u-sea-shop btn-u-lg margin-bottom-10">Add to Cart</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-social-icon btn-twitter"
+                               href="https://twitter.com/intent/tweet?
+                                   url=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)&text=@Model.VehicleTypes.VehicleTypeName" 
+                                   target="_blank" title="Share on Twitter">
+                                <span class="fa fa-twitter"></span>
+                            </a>
+                                <a class="btn btn-social-icon btn-facebook" title="Share on Facebook"
+                                   href="https://facebook.com/sharer.php?u=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)&t=@Model.VehicleTypes.VehicleTypeName" target="_blank">
+                                <span class="fa fa-facebook"></span>
+                            </a>
+                            <a class="btn btn-social-icon btn-google"  href="https://plus.google.com/share?
+                                       url=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)" 
+                                       target="_blank" title="Share on Google+">
+                                <span class="fa fa-google"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div><!--/end product quantity-->
                 }
             </div>
+          
         </div><!--/end row-->
+        
     </div>
 </div>
 <!--=== End Shop Product ===-->

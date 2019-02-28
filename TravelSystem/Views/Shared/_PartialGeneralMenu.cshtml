@@ -12,19 +12,29 @@
         <!-- End Pages -->
         <!-- Promotion -->
         <li class="dropdown">
-            <a href="@Url.Action("Inventory","Vehicles")" >
-                Inventory
+            <a href="@Url.Action("Inventory","Vehicles")">
+                Car For You
             </a>
 
         </li>
         <!-- End Promotion -->
         <!-- Gifts -->
-        <li class="dropdown mega-menu-fullwidth">
-            <a href="@Url.Action("AllLendors","Lendor")">
-                Lendors
-            </a>
-            <!--/end dropdown-menu-->
-        </li>
+        @if (User.IsInRole("Seller"))
+        {
+            <li class="dropdown mega-menu-fullwidth">
+                <a href="@Url.Action("AddVehicle","Seller")">
+                    Sell Your Car
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="dropdown mega-menu-fullwidth">
+                <a href="@Url.Action("Register","User",new {finance="no" })">
+                    Sell Your Car
+                </a>
+            </li>
+        }
         <!-- End Gifts -->
         <!-- Books -->
         <li class="dropdown mega-menu-fullwidth">
@@ -49,7 +59,7 @@
 
         </li>
         <!-- Main Demo -->
-        <li><a href="../index.html">Contact</a></li>
+        <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
         <!-- Main Demo -->
     </ul>
     <!-- End Nav Menu -->
