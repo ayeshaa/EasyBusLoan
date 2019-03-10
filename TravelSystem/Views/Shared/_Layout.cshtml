@@ -91,7 +91,7 @@
         <!--=== Header v5 ===-->
         <div class="header-v5 header-static">
             <!-- Topbar v3 -->
-            <div class="topbar-v3">
+           @*<div class="topbar-v3">
                 <div class="search-open">
                     <div class="container">
                         <input type="text" class="form-control" placeholder="Search">
@@ -110,31 +110,12 @@
                         </div>
                         <div class="col-sm-6">
                             <ul class="list-inline right-topbar pull-right">
-                                @if (SignInManager.IsSignedIn(User))
-                                {
-                                    if (User.IsInRole("Lendor"))
-                                    {
-                                        <li><a href="@Url.Action("Index","Lendor")">My Dashboard</a> </li>
-                                    }
-                                    if (User.IsInRole("Seller"))
-                                    {
-                                        <li><a href="@Url.Action("Index","Seller")">My Dashboard</a> </li>
-                                    }
-                                    if (User.IsInRole("Buyer"))
-                                    {
-                                        <li><a href="@Url.Action("Index","Buyer")">My Dashboard</a> </li>
-                                    }
-                                    <li><a href="@Url.Action("Logout","User")">Logout</a> </li>
-                                }
-                                else
-                                {
-                                    <li><a href="@Url.Action("LogIn", "User")"> Login </a> | <a href="@Url.Action("Register", "User")"> Register </a></li>
-                                }
+                                
                             </ul>
                         </div>
                     </div>
                 </div><!--/container-->
-            </div>
+            </div>*@
             <!-- End Topbar v3 -->
             <!-- Navbar -->
             <div class="navbar navbar-default mega-menu" role="navigation">
@@ -148,7 +129,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="/">
-                            <img id="logo-header" src="/logo1.png" alt="Logo" style=" max-width: 82px;">
+                            <img id="logo-header" src="/logo1.png" alt="Logo" style=" max-width: 75px;">
                         </a>
                     </div>
                     @if (!User.IsInRole("Seller") && !User.IsInRole("Lendor"))
@@ -199,9 +180,9 @@
                                     <h2 class="thumb-headline">QUICK LINKS</h2>
                                     <ul class="list-unstyled simple-list margin-bottom-20">
                                         <li><a href="#">HOME</a></li>
-                                        <li><a href="#">Inventory</a></li>
+                                        <li><a href="#">Cars For Sale</a></li>
                                         <li><a href="#">Documentos </a></li>
-                                        <li><a href="#">Francisco papa</a></li>
+                                        <li><a href="#">Register</a></li>
                                         <li>...</li>
                                     </ul>
                                 </div>
@@ -232,9 +213,9 @@
                                 </div>
 
                                 <div class="col-sm-12 col-xs-6">
-                                    <h2 class="thumb-headline">Documentos</h2>
+                                    <h2 class="thumb-headline">Contact</h2>
                                     <ul class="list-unstyled simple-list">
-                                        <li><a href="#">Ultima Hora</a></li>
+                                        <li><a href="#">Contact</a></li>
                                         <li><a href="#">Exclusiva</a></li>
                                         <li><a href="#">Documentos </a></li>
                                         <li><a href="#">Francisco papa</a></li>

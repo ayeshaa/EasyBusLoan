@@ -51,55 +51,52 @@
     <!--=== End Illustration v1 ===-->
     <div class="heading heading-v1 margin-bottom-20">
         <h2>Featured Vehicles</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio elit, ultrices vel cursus sed, placerat ut leo. Phasellus in magna erat. Etiam gravida convallis augue non tincidunt. Nunc lobortis dapibus neque quis lacinia. Nam dapibus tellus sit amet odio venenatis</p>
+        
     </div>
     <!--=== Illustration v2 ===-->
     <div class="illustration-v2 margin-bottom-60">
-        <div class="customNavigation margin-bottom-25">
-            <a class="owl-btn prev rounded-x"><i class="fa fa-angle-left"></i></a>
-            <a class="owl-btn next rounded-x"><i class="fa fa-angle-right"></i></a>
-        </div>
-        <ul class="list-inline owl-slider">
-            @foreach (var item in result)
-            {
-                <li class="item">
-                    <div class="product-img">
-                        <a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})"><img class="full-width img-responsive" style="width: 300px;height: 300px;" src="~/VehicleImages/@item.VehicleImages.Select(o=>o.FileNameOnDisk).FirstOrDefault()" alt=""></a>
-                        <a class="product-review" href="@Url.Action("VehicleDetail","Vehicles",new { id = item.Id })">Quick review</a>
-                        <button id="@item.Id" type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                    </div>
-                    <div class="product-description product-description-brd">
-                        <div class="overflow-h margin-bottom-5">
-                            <div class="pull-left">
-                                <h4 class="title-price"><a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})">@item.VehicleTypes.VehicleTypeName</a></h4>
-                                <span class="gender text-uppercase">@item.CityOrState</span>
-                                <span class="gender">Make Year - @item.MakeYear.ToString("yyyy")</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="title-price">$@item.SalesPrice</span>
-                            </div>
+
+
+        @foreach (var item in result)
+        {
+            <div class="col-md-3 col-sm-6 md-margin-bottom-30">
+                <div class="product-img">
+                    <a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})"><img class="full-width img-responsive" style="width: 300px;height: 300px;" src="~/VehicleImages/@item.VehicleImages.Select(o=>o.FileNameOnDisk).FirstOrDefault()" alt=""></a>
+                    <a class="product-review" href="@Url.Action("VehicleDetail","Vehicles",new { id = item.Id })">Quick review</a>
+                    <button id="@item.Id" type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                </div>
+                <div class="product-description product-description-brd">
+                    <div class="overflow-h margin-bottom-5">
+                        <div class="pull-left">
+                            <h4 class="title-price"><a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})">@item.VehicleTypes.VehicleTypeName</a></h4>
+                            <span class="gender text-uppercase">@item.CityOrState</span>
+                            <span class="gender">Make Year - @item.MakeYear.ToString("yyyy")</span>
                         </div>
-                        <ul class="list-inline product-ratings">
-                            @for (var i = 0; i < item.Stars; i++)
-                            {
-                                <li><i class="rating-selected fa fa-star"></i></li>
-                            }
-                            @for (var i = 0; i < 5 - item.Stars; i++)
-                            {
-                                <li><i class="rating fa fa-star"></i></li>
-                            }
-                        </ul>
+                        <div class="product-price">
+                            <span class="title-price">$@item.SalesPrice</span>
+                        </div>
                     </div>
-                </li>
+                    <ul class="list-inline product-ratings">
+                        @for (var i = 0; i < item.Stars; i++)
+                        {
+                            <li><i class="rating-selected fa fa-star"></i></li>
+                        }
+                        @for (var i = 0; i < 5 - item.Stars; i++)
+                        {
+                            <li><i class="rating fa fa-star"></i></li>
+                        }
+                    </ul>
+                </div>
+                </div>
             }
 
 
-        </ul>
+        
     </div>
     <!--=== End Illustration v2 ===-->
 
-
-</div>
+   
+    </div>
 <!--=== End Product Content ===-->
 <!--=== Collection Banner ===-->
 <div class="collection-banner">

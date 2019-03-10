@@ -420,7 +420,7 @@
 /*Navbar Nav set to centre*/
 @media (min-width: 992px) {
     .header-v5 .navbar-nav {
-        float: none;
+        float: right;
         margin: 0 auto;
         display: table;
         table-layout: fixed;
@@ -430,7 +430,7 @@
 /*Navbar Menu*/
 .header-v5 .navbar-default .navbar-nav > li > a {
     color: #687074;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 400;
     text-transform: uppercase;
 }
@@ -586,7 +586,7 @@
 
     .header-v5 .navbar-default .navbar-nav > li > a:hover,
     .header-v5 .navbar-default .navbar-nav > .active > a {
-        border-top: solid 2px #16b9cc;
+        /*border-top: solid 2px #16b9cc;*/
     }
 
     .header-v5 .navbar-default .navbar-nav > li > a,

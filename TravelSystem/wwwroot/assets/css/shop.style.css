@@ -3009,3 +3009,9 @@ li:first-child {
 {
     color:#fff !important;
 }
+.col-centered
+{
+    margin-left:auto;
+    margin-right:auto;
+    float:none;
+}

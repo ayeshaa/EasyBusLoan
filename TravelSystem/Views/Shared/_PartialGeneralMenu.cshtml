@@ -1,4 +1,10 @@
-﻿<!-- Collect the nav links, forms, and other content for toggling -->
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Identity
+@using TravelSystem.Helpers
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!-- Collect the nav links, forms, and other content for toggling -->
 <div class="collapse navbar-collapse navbar-responsive-collapse">
     <!-- Nav Menu -->
     <ul class="nav navbar-nav">
@@ -12,27 +18,21 @@
         <!-- End Pages -->
         <!-- Promotion -->
         <li class="dropdown">
-            <a href="@Url.Action("Inventory","Vehicles")" >
-                Inventory
+            <a href="@Url.Action("Inventory","Vehicles")">
+                Car For Sale
             </a>
 
         </li>
         <!-- End Promotion -->
         <!-- Gifts -->
-        <li class="dropdown mega-menu-fullwidth">
+        @*<li class="dropdown mega-menu-fullwidth">
             <a href="@Url.Action("AllLendors","Lendor")">
                 Lendors
             </a>
-            <!--/end dropdown-menu-->
-        </li>
+        </li>*@
         <!-- End Gifts -->
         <!-- Books -->
-        <li class="dropdown mega-menu-fullwidth">
-            <a href="@Url.Action("AllSellers","Seller")">
-                Sellers
-            </a>
-            <!--/end dropdown-menu-->
-        </li>
+      
         <!-- End Books -->
         <!-- Clothes -->
         <li class="dropdown">
@@ -50,6 +50,26 @@
         </li>
         <!-- Main Demo -->
         <li><a href="../index.html">Contact</a></li>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            if (User.IsInRole("Lendor"))
+            {
+                <li><a href="@Url.Action("Index","Lendor")">My Dashboard</a> </li>
+            }
+            if (User.IsInRole("Seller"))
+            {
+                <li><a href="@Url.Action("Index","Seller")">My Dashboard</a> </li>
+            }
+            if (User.IsInRole("Buyer"))
+            {
+                <li><a href="@Url.Action("Index","Buyer")">My Dashboard</a> </li>
+            }
+            <li><a href="@Url.Action("Logout","User")">Logout</a> </li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("LogIn", "User")"> Login </a></li>
+        }
         <!-- Main Demo -->
     </ul>
     <!-- End Nav Menu -->
