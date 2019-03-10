@@ -1,4 +1,10 @@
-﻿<!-- Collect the nav links, forms, and other content for toggling -->
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Identity
+@using TravelSystem.Helpers
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!-- Collect the nav links, forms, and other content for toggling -->
 <div class="collapse navbar-collapse navbar-responsive-collapse">
     <!-- Nav Menu -->
     <ul class="nav navbar-nav">
@@ -12,37 +18,22 @@
         <!-- End Pages -->
         <!-- Promotion -->
         <li class="dropdown">
-            <a href="@Url.Action("Inventory","Vehicles")">
-                Car For You
+            <a href="@Url.Action("Inventory","Vehicles")" >
+                Inventory
             </a>
 
         </li>
         <!-- End Promotion -->
         <!-- Gifts -->
-        @if (User.IsInRole("Seller"))
-        {
-            <li class="dropdown mega-menu-fullwidth">
-                <a href="@Url.Action("AddVehicle","Seller")">
-                    Sell Your Car
-                </a>
-            </li>
-        }
-        else
-        {
-            <li class="dropdown mega-menu-fullwidth">
-                <a href="@Url.Action("Register","User",new {finance="no" })">
-                    Sell Your Car
-                </a>
-            </li>
-        }
-        <!-- End Gifts -->
-        <!-- Books -->
         <li class="dropdown mega-menu-fullwidth">
-            <a href="@Url.Action("AllSellers","Seller")">
-                Sellers
+            <a href="@Url.Action("AllLendors","Lendor")">
+                Lendors
             </a>
             <!--/end dropdown-menu-->
         </li>
+        <!-- End Gifts -->
+        <!-- Books -->
+      
         <!-- End Books -->
         <!-- Clothes -->
         <li class="dropdown">
@@ -59,7 +50,7 @@
 
         </li>
         <!-- Main Demo -->
-        <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
+        <li><a href="../index.html">Contact</a></li>
         <!-- Main Demo -->
     </ul>
     <!-- End Nav Menu -->
