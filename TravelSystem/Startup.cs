@@ -40,6 +40,8 @@ namespace TravelSystem
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddDetection();
+            services.AddDetectionCore().AddBrowser();
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(100);//You can set Time

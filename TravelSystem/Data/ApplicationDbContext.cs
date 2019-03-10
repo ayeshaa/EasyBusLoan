@@ -8,6 +8,10 @@ namespace TravelSystem.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
+        public ApplicationDbContext()
+        {
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -29,6 +33,7 @@ namespace TravelSystem.Models
         public virtual DbSet<spGetVehicleDetail> spGetVehicleDetail { get; set; }
         public virtual DbSet<PaymentVehicles> PaymentVehicles { get; set; }
         public virtual DbSet<ApplicantVehicles> ApplicantVehicles { get; set; }
+        public virtual DbSet<Conversations> Conversation { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

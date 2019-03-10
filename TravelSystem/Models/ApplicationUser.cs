@@ -22,6 +22,8 @@ namespace TravelSystem.Models
         public bool IsBlock { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
+        public string Photo { get; set; }
+        public bool IsLogin { get; set; }
         public IList<ApplicantDetails> ApplicantDetails { get; set; }
         public IList<ApplicantDetails> ApplicantApproveDetails { get; set; }
         public IList<Vehicles> Vehicles { get; set; }
