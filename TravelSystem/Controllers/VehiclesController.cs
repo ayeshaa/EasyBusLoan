@@ -105,22 +105,36 @@ namespace TravelSystem.Controllers
             }
             return RedirectToAction("VehicleDetail", "Vehicles", new { id = vehicleRatings.VehicleId });
         }
-        public ActionResult Inventory()
+        public ActionResult Inventory(string searchText)
         {
+            ViewBag.SearchText = searchText;
             TempData["TotalVehicles"] = _context.Vehicles.Where(o=>o.IsSold == false).Count();
             TempData["VehicleTypes"] = _context.VehicleTypes.ToList();
             return View();
         }
-        public ActionResult InventoryGrid(string vehicleIds, decimal fromPrice, decimal toPrice)
+        public ActionResult InventoryGrid(string vehicleIds, decimal fromPrice, decimal toPrice, string searchText)
         {
             string[] selectedVehicles = new string[] { };
             if (!string.IsNullOrEmpty(vehicleIds))
             {
                 selectedVehicles = vehicleIds.Split(",");
             }
-
-            var result = _context.Vehicles.Include(o => o.VehicleTypes).Include(o => o.VehicleImages).Include(o => o.VehicleRatings)
+            ViewBag.SearchText = searchText;
+            var result = new List<Vehicles>();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                result = _context.Vehicles.Include(o => o.VehicleTypes)
+               .Include(o => o.VehicleImages).Include(o => o.VehicleRatings)
+               .Where(o => (o.VehicleTypes.VehicleTypeName.Contains(searchText) || o.Vinnumber.Contains(searchText)
+               || o.Location.Contains(searchText) || o.Mileage.Contains(searchText) || o.CityOrState.Contains(searchText) || o.SalesPrice.Equals(searchText)) && (o.IsSold == false) && (o.SalesPrice > fromPrice && o.SalesPrice < (toPrice == 0 ? 1000000 : toPrice))).ToList();
+            }
+            else
+            {
+                result = _context.Vehicles.Include(o => o.VehicleTypes)
+                .Include(o => o.VehicleImages).Include(o => o.VehicleRatings)
                 .Where(o => o.IsSold == false && (o.SalesPrice > fromPrice && o.SalesPrice < (toPrice == 0 ? 1000000 : toPrice))).ToList();
+            }
+            TempData["TotalVehicles"] = result.Count();
             foreach (var item in result)
             {
                 if (item.VehicleImages.Count == 0)

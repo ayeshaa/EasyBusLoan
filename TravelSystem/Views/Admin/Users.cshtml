@@ -1,0 +1,150 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <h3 class="card-header-text">Lendors</h3>
+                        </div>
+                        @*<div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Blog"><i class="fa fa-plus btn-icon shadow "></i></button>
+
+                            </div>*@
+                    </div>
+                </div>
+                <div class="card-body listPadding">
+                    <div id="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="PopupWarning" style="display: none;">
+    <table>
+        <tr>
+            <td>
+                <p>Do you want to delete?</p>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <button class="k-button k-primary" id="btnYes">Yes</button>
+                <button class="k-button k-primary" id="btnNo">No</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/x-kendo-template" id="template">
+    <div class="toolbar" style="text-align:right">
+        <label class="role-label" for="role">Select Role:</label>
+        <input type="search" id="role" style="width: 150px" />
+    </div>
+</script>
+<script type="text/javascript">
+    function blockUser(id) {
+        $.ajax({
+            url: "@Url.Action("BlockUser","Admin")",
+            data: { id: id },
+            type: "GET",
+            success: function (data) {
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").dataSource.refresh();
+            }
+        });
+    }
+     $(document).on("click", ".deleteBlog", function () {
+        var id = $(this)[0].id;
+        var kendoWindow = $("#PopupWarning").kendoWindow({
+            title: "Confirmation",
+            resizable: false,
+            modal: true
+        });
+        kendoWindow.data("kendoWindow").content($("#PopupWarning").html()).center().open();
+        $("#btnYes").bind("click", function () {
+            $.get('@Url.Action("DeleteBlog", "Admin")', { id: id }, function (data) {
+                if (data) {
+                    kendoWindow.data("kendoWindow").close();
+            $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
+                }
+            });
+
+        });
+        $("#btnNo").bind("click", function () {
+            kendoWindow.data("kendoWindow").close();
+        });
+        $(this).off(event);
+    });
+    $(document).ready(function () {
+     var grid =   $("#grid").kendoGrid({
+            toolbar: kendo.template($("#template").html()),
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "@Url.Action("GetAllUsers", "Admin")"
+                    },
+                    pageSize: 50
+                },
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "Id",
+                        title: "#",
+                        width:150
+                    },
+                    {
+                        template: "<span class='btn btn-link'>#: FullName # </span>",
+                        field: "FullName",
+                        title: "Full Name"
+                    },
+                     {
+                        template: "<span class=''>#: Email # </span>",
+                        field: "Email",
+                        title: "Email"
+                    },
+                      {
+                          template: "<button type='button' onclick='blockUser(#:Id#)' class='blockUser btn #if(IsBlock) {#btn-primary#} else{#btn-danger#}#'>#if(IsBlock) {#Block#} else{#Unblock#}#</span>",
+                    }
+                ]
+        });
+        var dropDown = grid.find("#role").kendoComboBox({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+                { text: "Lendor", value: "1" },
+                { text: "Buyer", value: "2" },
+                { text: "Seller", value: "3" }
+            ],
+            filter: "contains",
+            autoBind: false,
+            change: function () {
+                var value = this.value();
+                if (value == 1) {
+                    grid.data("kendoGrid").dataSource.filter({ field: "IsLendor", operator: "eq", value: true });
+                }
+                else if (value == 2) {
+                    grid.data("kendoGrid").dataSource.filter({ field: "IsBuyer", operator: "eq", value: true });
+                }
+                else if (value == 3) {
+                    grid.data("kendoGrid").dataSource.filter({ field: "IsSeller", operator: "eq", value: true });
+                }
+                else {
+                    grid.data("kendoGrid").dataSource.filter({});
+                }
+            }
+        });
+        
+    });
+</script>

@@ -43,6 +43,9 @@
     <Content Update="Views\Admin\BlogCategories.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Admin\Users.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Blog\Detail.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
