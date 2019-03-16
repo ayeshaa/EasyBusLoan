@@ -28,6 +28,7 @@ namespace TravelSystem.Models
         public virtual DbSet<VehicleRatings> VehicleRatings { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<PaymentVehicles> PaymentVehicles { get; set; }
+        public virtual DbSet<Conversations> Conversation { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
