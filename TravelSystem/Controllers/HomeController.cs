@@ -76,7 +76,22 @@ namespace TravelSystem.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        public IActionResult Service()
+        {
+            return View();
+        }
+        public IActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+        public IActionResult TermsAndConditions()
+        {
+            return View();
+        }
+        public IActionResult Working()
+        {
+            return View();
+        }
         public IActionResult Contact()
         {
             return View();

@@ -168,6 +168,14 @@ namespace TravelSystem.Controllers
             await _context.Database.ExecuteSqlCommandAsync("spBlockUser @Id = {0}", id);
             return Json(true);
         }
-
+        public ActionResult Payments()
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetAllPayments()
+        {
+            var result = await _context.spGetVehiclePaymentsResult.FromSql("spGetVehiclePayments").ToListAsync();
+            return Json(result);
+        }
     }
 }

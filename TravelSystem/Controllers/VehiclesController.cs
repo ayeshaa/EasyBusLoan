@@ -60,55 +60,63 @@ namespace TravelSystem.Controllers
             {
                 TempData["IsApplication"] = _context.ApplicantDetails.Any(o => o.UserId == userId);
             }
-            
+
             var result = _context.Vehicles.Include(o => o.VehicleTypes).Include(o => o.VehicleImages)
                 .Include(o => o.VehicleRatings).ThenInclude(o => o.User).FirstOrDefault(o => o.Id == id);
-            if (result.VehicleImages.Count == 0)
+            if (result != null)
             {
-                var vehicleImage = new VehicleImages
+                if (result.VehicleImages.Count() == 0)
                 {
-                    FileNameOnDisk = "logo1.png",
-                    VehicleId = result.Id
+                    var vehicleImage = new VehicleImages
+                    {
+                        FileNameOnDisk = "logo1.png",
+                        VehicleId = result.Id
 
-                };
-                result.VehicleImages.Add(vehicleImage);
-            }
-            var stars = 0;
-            if (result.VehicleRatings.Count == 0)
-            {
-                stars = 5;
-                result.Stars = stars;
-            }
-            else
-            {
-                var count = 0;
-                foreach (var result2 in result.VehicleRatings)
-                {
-                    count += result2.Stars;
+                    };
+                    result.VehicleImages.Add(vehicleImage);
                 }
-                var totalUsers = result.VehicleRatings.Count;
-                var sumOfUserRating = totalUsers * 5;
-                stars = (count * 5) / sumOfUserRating;
-                result.Stars = stars;
+                var stars = 0;
+                if (result.VehicleRatings.Count == 0)
+                {
+                    stars = 5;
+                    result.Stars = stars;
+                }
+                else
+                {
+                    var count = 0;
+                    foreach (var result2 in result.VehicleRatings)
+                    {
+                        count += result2.Stars;
+                    }
+                    var totalUsers = result.VehicleRatings.Count;
+                    var sumOfUserRating = totalUsers * 5;
+                    stars = (count * 5) / sumOfUserRating;
+                    result.Stars = stars;
+                }
             }
             return View(result);
         }
         public ActionResult VehicleReview(VehicleRatings vehicleRatings)
         {
             int userId = GetLoggedInUserId();
-            var vehicleRating = _context.VehicleRatings.FirstOrDefault(o => o.VehicleId == vehicleRatings.VehicleId && o.UserId == userId);
-            if (vehicleRating == null)
+            if (userId > 0)
             {
-                vehicleRatings.UserId = userId;
-                _context.VehicleRatings.Add(vehicleRatings);
-                _context.SaveChanges();
+                var vehicleRating = _context.VehicleRatings.FirstOrDefault(o => o.VehicleId == vehicleRatings.VehicleId && o.UserId == userId);
+                if (vehicleRating == null)
+                {
+                    vehicleRatings.UserId = userId;
+                    _context.VehicleRatings.Add(vehicleRatings);
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("VehicleDetail", "Vehicles", new { id = vehicleRatings.VehicleId });
             }
-            return RedirectToAction("VehicleDetail", "Vehicles", new { id = vehicleRatings.VehicleId });
+            ViewBag.VehicleId = vehicleRatings.VehicleId;
+            return RedirectToAction("LogIn", "User",new { vehicleId = vehicleRatings.VehicleId});
         }
         public ActionResult Inventory(string searchText)
         {
             ViewBag.SearchText = searchText;
-            TempData["TotalVehicles"] = _context.Vehicles.Where(o=>o.IsSold == false).Count();
+            TempData["TotalVehicles"] = _context.Vehicles.Where(o => o.IsSold == false).Count();
             TempData["VehicleTypes"] = _context.VehicleTypes.ToList();
             return View();
         }
@@ -173,9 +181,9 @@ namespace TravelSystem.Controllers
                 foreach (var item in selectedVehicles)
                 {
                     var vehicle = result.Where(o => o.VehicleTypeId == Convert.ToInt32(item)).ToList();
-                    if (vehicle.Count()>0)
+                    if (vehicle.Count() > 0)
                     {
-                        foreach(var s in vehicle)
+                        foreach (var s in vehicle)
                         {
                             vehicles.Add(s);
                         }

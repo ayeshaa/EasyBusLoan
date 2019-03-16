@@ -46,13 +46,18 @@ namespace TravelSystem.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login(int? vehicleId,string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+           
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+                ViewData["ReturnUrl"] = returnUrl;
+            var loginModel = new LoginViewModel();
+            if (vehicleId.HasValue)
+            {
+                loginModel.VehicleId = vehicleId.Value;
+            }
+            return View(loginModel);
         }
         [HttpPost]
         //[AllowAnonymous]
@@ -65,14 +70,26 @@ namespace TravelSystem.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+                    var user = await _userManager.FindByEmailAsync(model.Email);
                     if (user.IsBlock)
                     {
                         ModelState.AddModelError(string.Empty, "You are blocked, Please contact support");
                         return View(model);
                     }
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Index", "Home");
+                    var isVehicleDetail = 0;
+                    if (model.VehicleId.HasValue)
+                    {
+                        isVehicleDetail = Convert.ToInt32(model.VehicleId.Value);
+                    }
+                    if (isVehicleDetail > 0)
+                    {
+                        return RedirectToAction("VehicleDetail", "Vehicles", new { id = Convert.ToInt32(model.VehicleId.Value) });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {

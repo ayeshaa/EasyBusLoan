@@ -160,8 +160,7 @@
                         <p>No reviews yet</p>
                     }
                 </div>
-                @if (User.IsInRole("Buyer"))
-                {
+             
                     <h3 class="heading-md margin-bottom-30">Add a review</h3>
                     <form action="@Url.Action("VehicleReview","Vehicles")" method="post" id="sky-form3" class="sky-form sky-changes-4">
                         <fieldset>
@@ -191,7 +190,7 @@
                         <input type="hidden" name="Stars" id="Stars" />
                         <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.Id" />
                     </form>
-                }
+               
 
             </div>
             <!-- End Reviews -->
