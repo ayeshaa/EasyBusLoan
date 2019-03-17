@@ -1,0 +1,168 @@
+﻿@model TravelSystem.Models.Vehicles
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("#vehicleTypes").kendoDropDownList({
+            placeholder: "Select Vehicle Type",
+            dataTextField: "VehicleTypeName",
+            dataValueField: "Id",
+            select: onSelect,
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetVehicleTypes","Admin")",
+                    }
+                }
+            },
+            value: [
+
+            ]
+        });
+    });
+</script>
+<form method="post" action="@Url.Action("SaveVehicle","Admin")">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3 class="card-header-text">Vehicle Detail</h3>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(m => m.Id)
+                                <div class="form-group">
+                                    <label>Vehicle Types</label>
+                                    <select id="vehicleTypes" style="width:100%" name="VehicleTypeId"></select>
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.VehicleTypeId, "")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Mileage</label>
+                                    @Html.TextBoxFor(o => o.Mileage, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Mileage" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Mileage, "")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Model</label>
+                                    @Html.TextBoxFor(o => o.Model, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Model" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Model, "")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Passenger Seats</label>
+                                    @Html.TextBoxFor(o => o.PassengersSeats, new { @type = "number", @class = " k-textbox", @style = "width:100%", @placeholder = "Passenger Seats" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.PassengersSeats, "")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sales Price</label>
+                                    @Html.TextBoxFor(o => o.SalesPrice, new { @type = "number", @class = " k-textbox", @style = "width:100%", @placeholder = "Sales Price" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.SalesPrice, "")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    @Html.TextBoxFor(o => o.Location, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Location" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Location, "")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>City Or State</label>
+                                    @Html.TextBoxFor(o => o.CityOrState, new { @class = " k-textbox", @style = "width:100%", @placeholder = "City Or State" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.CityOrState, "")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>VIN Number</label>
+                                    @Html.TextBoxFor(o => o.Vinnumber, new { @class = " k-textbox", @style = "width:100%", @placeholder = "VIN Number" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Vinnumber, "")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Make Year</label>
+                                    @Html.TextBoxFor(o => o.MakeYear, new { id = "datetimepicker", @class = " k-textbox", @style = "width:100%", @placeholder = "Make Year" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.MakeYear, "")</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input name="files" id="files" type="file" aria-label="files" />
+                            </div>
+                        </div>
+                        <div class="row margin-top-20">
+
+                            @foreach (var item in Model.VehicleImages)
+                            {
+                                <div class="col-md-1">
+                                    <img src="~/VehicleImages/@item.FileNameOnDisk" width="30" height="30"/>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $("#files").kendoUpload();
+        $("#datetimepicker").kendoDateTimePicker({
+            value: new Date(),
+            dateInput: true
+        });
+
+    });
+</script>
+<script>
+    function onSelect(e) {
+
+        var dataItem = e.dataItem;
+      var multiselect = $("#categories").data("kendoMultiSelect");
+        var selectedData = [];
+        var value = multiselect.value();
+        var selectedCategories = value;
+        selectedCategories.push(dataItem.Id);
+        $("#blogCat").val(selectedCategories.join(","));
+
+    };
+    $(document).ready(function () {
+        $("#btnBack").click(function () {
+            window.location.href = "@Url.Action("Vehicles","Admin")";
+        });
+    });
+</script>

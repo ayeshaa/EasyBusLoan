@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Admin\AddVehicle.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Admin\AddBlogCategories.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

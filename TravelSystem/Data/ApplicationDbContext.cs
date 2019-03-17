@@ -35,6 +35,7 @@ namespace TravelSystem.Models
         public virtual DbSet<ApplicantVehicles> ApplicantVehicles { get; set; }
         public virtual DbSet<Conversations> Conversation { get; set; }
         public virtual DbSet<spGetVehiclePaymentsResult> spGetVehiclePaymentsResult { get; set; }
+        public virtual DbSet<spGetAllVehiclesResult> spGetAllVehiclesResult { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
