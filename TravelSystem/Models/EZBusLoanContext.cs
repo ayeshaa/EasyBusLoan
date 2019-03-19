@@ -1,44 +1,45 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TravelSystem.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public partial class EZBusLoanContext : DbContext
     {
-        public ApplicationDbContext()
+        public EZBusLoanContext()
         {
         }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public EZBusLoanContext(DbContextOptions<EZBusLoanContext> options)
             : base(options)
         {
         }
-        public virtual DbSet<Admins> Admins { get; set; }
-        public virtual DbSet<BlogCategories> BlogCategories { get; set; }
-        public virtual DbSet<Blogs> Blogs { get; set; }
+
         public virtual DbSet<ApplicantDetails> ApplicantDetails { get; set; }
         public virtual DbSet<ApplicantsCreditReferences> ApplicantsCreditReferences { get; set; }
         public virtual DbSet<ApplicantsFinancedEquipments> ApplicantsFinancedEquipments { get; set; }
         public virtual DbSet<ApplicantsGuarantors> ApplicantsGuarantors { get; set; }
         public virtual DbSet<ApplicantsInsurances> ApplicantsInsurances { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<VehicleImages> VehicleImages { get; set; }
         public virtual DbSet<Vehicles> Vehicles { get; set; }
         public virtual DbSet<VehicleTypes> VehicleTypes { get; set; }
         public virtual DbSet<VehiclesCarts> VehiclesCarts { get; set; }
         public virtual DbSet<VehicleRatings> VehicleRatings { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<spGetVehicleDetail> spGetVehicleDetail { get; set; }
         public virtual DbSet<PaymentVehicles> PaymentVehicles { get; set; }
-        public virtual DbSet<ApplicantVehicles> ApplicantVehicles { get; set; }
         public virtual DbSet<Conversations> Conversation { get; set; }
-        public virtual DbSet<spGetVehiclePaymentsResult> spGetVehiclePaymentsResult { get; set; }
         public virtual DbSet<spGetAllVehiclesResult> spGetAllVehiclesResult { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+            optionsBuilder.UseSqlServer("Server=DESKTOP-HA15CAR;Database=EZBusLoan;Trusted_Connection=True;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicantDetails>(entity =>
             {
                 entity.Property(e => e.Address)
@@ -214,31 +215,31 @@ namespace TravelSystem.Models
                     .HasConstraintName("FK_ApplicantsInsurances_ApplicantDetails");
             });
 
-            //modelBuilder.Entity<Users>(entity =>
-            //{
-            //    entity.Property(e => e.CompanyName)
-            //        .HasMaxLength(150)
-            //        .IsUnicode(false);
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.Property(e => e.CompanyName)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
-            //    entity.Property(e => e.Email)
-            //        .IsRequired()
-            //        .HasMaxLength(100)
-            //        .IsUnicode(false);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-            //    entity.Property(e => e.FullName)
-            //        .IsRequired()
-            //        .HasMaxLength(100)
-            //        .IsUnicode(false);
+                entity.Property(e => e.FullName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-            //    entity.Property(e => e.Password)
-            //        .IsRequired()
-            //        .HasMaxLength(100)
-            //        .IsUnicode(false);
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-            //    entity.Property(e => e.Phone)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-            //});
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<VehicleImages>(entity =>
             {

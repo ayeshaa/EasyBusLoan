@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +19,17 @@ namespace TravelSystem.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public AdminController(IHostingEnvironment hostingEnvironment,ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
             _userManager = userManager;
         }
 
         public IActionResult Index()
         {
+
             return View();
         }
         [HttpPost]
@@ -45,16 +50,32 @@ namespace TravelSystem.Controllers
         }
         public ActionResult Dashboard()
         {
-            return View();
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult AddBlog(int? id)
         {
-            var blog = new Blogs();
-            if (id.HasValue)
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
             {
-                blog = _context.Blogs.FirstOrDefault(o => o.Id == id);
+                var blog = new Blogs();
+                if (id.HasValue)
+                {
+                    blog = _context.Blogs.FirstOrDefault(o => o.Id == id);
+                }
+                return View(blog);
             }
-            return View(blog);
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult SaveBlog(Blogs blogs)
         {
@@ -74,25 +95,57 @@ namespace TravelSystem.Controllers
         }
         public ActionResult Blogs()
         {
-            return View();
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public async Task<IActionResult> GetAllBlogs()
         {
-            var result = await _context.Blogs.ToListAsync();
-            return Json(result);
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var result = await _context.Blogs.ToListAsync();
+                return Json(result);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult BlogCategories()
         {
-            return View();
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult AddBlogCategories(int? id)
         {
-            var blogCategory = new BlogCategories();
-            if (id.HasValue)
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
             {
-                blogCategory = _context.BlogCategories.FirstOrDefault(o => o.Id == id);
+                var blogCategory = new BlogCategories();
+                if (id.HasValue)
+                {
+                    blogCategory = _context.BlogCategories.FirstOrDefault(o => o.Id == id);
+                }
+                return View(blogCategory);
             }
-            return View(blogCategory);
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public async Task<IActionResult> GetAllBlogCategories()
         {
@@ -106,24 +159,39 @@ namespace TravelSystem.Controllers
             return RedirectToAction("BlogCategories");
         }
         public async Task<ActionResult> DeleteBlogCategory(int id)
-        {
-            var blogCategory = _context.BlogCategories.FirstOrDefault(o => o.Id == id);
-            if (blogCategory != null)
+        { var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
             {
-                _context.BlogCategories.Remove(blogCategory);
-                await _context.SaveChangesAsync();
+                var blogCategory = _context.BlogCategories.FirstOrDefault(o => o.Id == id);
+                if (blogCategory != null)
+                {
+                    _context.BlogCategories.Remove(blogCategory);
+                    await _context.SaveChangesAsync();
+                }
+                return Json(true);
             }
-            return Json(true);
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public async Task<ActionResult> DeleteBlog(int id)
         {
-            var blog = _context.Blogs.FirstOrDefault(o => o.Id == id);
-            if (blog != null)
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
             {
-                _context.Blogs.Remove(blog);
-                await _context.SaveChangesAsync();
+                var blog = _context.Blogs.FirstOrDefault(o => o.Id == id);
+                if (blog != null)
+                {
+                    _context.Blogs.Remove(blog);
+                    await _context.SaveChangesAsync();
+                }
+                return Json(true);
             }
-            return Json(true);
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult Logout()
         {
@@ -133,41 +201,194 @@ namespace TravelSystem.Controllers
         }
         public ActionResult LoanApplications()
         {
-            return View();
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public ActionResult Users()
         {
-            return View();
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public IActionResult GetAllUsers()
         {
-            var result = _context.Users.ToList();
-            var list = new List<ApplicationUser>();
-
-            foreach (var item in result)
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
             {
-                var find = _context.UserRoles.FirstOrDefault(o => o.UserId == item.Id);
-                switch (find.RoleId)
+                var result = _context.Users.ToList();
+                var list = new List<ApplicationUser>();
+
+                foreach (var item in result)
                 {
-                    case (int)Role.Lendor:
-                        item.IsLendor = true;
-                        break;
-                    case (int)Role.Buyer:
-                        item.IsBuyer = true;
-                        break;
-                    case (int)Role.Seller:
-                        item.IsSeller = true;
-                        break;
+                    var find = _context.UserRoles.FirstOrDefault(o => o.UserId == item.Id);
+                    switch (find.RoleId)
+                    {
+                        case (int)Role.Lendor:
+                            item.IsLendor = true;
+                            break;
+                        case (int)Role.Buyer:
+                            item.IsBuyer = true;
+                            break;
+                        case (int)Role.Seller:
+                            item.IsSeller = true;
+                            break;
+                    }
+                    list.Add(item);
                 }
-                list.Add(item);
+                return Json(list);
             }
-            return Json(list);
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
         public async Task<IActionResult> BlockUser(int id)
         {
-            await _context.Database.ExecuteSqlCommandAsync("spBlockUser @Id = {0}", id);
-            return Json(true);
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                await _context.Database.ExecuteSqlCommandAsync("spBlockUser @Id = {0}", id);
+                return Json(true);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
         }
-
+        public ActionResult Payments()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public async Task<IActionResult> GetAllPayments()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var result = await _context.spGetVehiclePaymentsResult.FromSql("spGetVehiclePayments").ToListAsync();
+                return Json(result);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public async Task<IActionResult> GetAllVehicles()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var result = await _context.spGetAllVehiclesResult.FromSql("spGetAllVehicles").ToListAsync();
+                return Json(result);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult Vehicles()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn","Admin");
+            }
+        }
+        public async Task<ActionResult> DeleteVehicle(int id)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var vehicle = _context.Vehicles.FirstOrDefault(o => o.Id == id);
+                if (vehicle != null)
+                {
+                    _context.Vehicles.Remove(vehicle);
+                    await _context.SaveChangesAsync();
+                }
+                return Json(true);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult AddVehicle(int? id)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var vehicle = new Vehicles();
+                if (id.HasValue)
+                {
+                    vehicle = _context.Vehicles.Include(o=>o.VehicleImages).FirstOrDefault(o => o.Id == id);
+                }
+                return View(vehicle);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+       
+        [HttpPost]
+        public IActionResult SaveVehicle(Vehicles vehicle, List<IFormFile> files)
+        {
+            vehicle.UserId = 1014;
+            _context.Entry(vehicle).State = vehicle.Id > 0 ? Microsoft.EntityFrameworkCore.EntityState.Modified : Microsoft.EntityFrameworkCore.EntityState.Added;
+            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "VehicleImages");
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    var filePath = Path.Combine(uploads, file.FileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    var objVehicleImage = new VehicleImages
+                    {
+                        FileNameOnDisk = file.FileName,
+                        VehicleId = vehicle.Id
+                    };
+                    vehicle.VehicleImages.Add(objVehicleImage);
+                }
+            }
+            if (files.Count() > 0)
+            {
+                _context.Database.ExecuteSqlCommand("Delete From VehicleImages Where VehicleId = {0}", vehicle.Id);
+                _context.VehicleImages.AddRange(vehicle.VehicleImages);
+            }
+          
+            _context.SaveChanges();
+            return RedirectToAction("Vehicles");
+        }
+        public IActionResult GetVehicleTypes()
+        {
+            return Json(_context.VehicleTypes.ToList());
+        }
     }
 }

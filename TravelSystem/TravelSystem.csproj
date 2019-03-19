@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Admin\AddVehicle.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Admin\AddBlogCategories.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -44,6 +47,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Admin\BlogCategories.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Admin\Payments.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Admin\Users.cshtml">
@@ -122,11 +128,24 @@
 
   <ItemGroup>
     <Folder Include="Areas\" />
-    <Folder Include="wwwroot\AdminDesign\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Blog\Index.cshtml" />
+    <None Include="wwwroot\VehicleImages\1.png" />
+    <None Include="wwwroot\VehicleImages\2.png" />
+    <None Include="wwwroot\VehicleImages\3.png" />
+    <None Include="wwwroot\VehicleImages\4.png" />
+    <None Include="wwwroot\VehicleImages\5.png" />
+    <None Include="wwwroot\VehicleImages\6.png" />
+    <None Include="wwwroot\VehicleImages\7.png" />
+    <None Include="wwwroot\VehicleImages\8.png" />
+    <None Include="wwwroot\VehicleImages\9.png" />
+    <None Include="wwwroot\VehicleImages\img19-md.jpg" />
+    <None Include="wwwroot\VehicleImages\img20-md.jpg" />
+    <None Include="wwwroot\VehicleImages\img35-md.jpg" />
+    <None Include="wwwroot\VehicleImages\img39-md.jpg" />
   </ItemGroup>
 
 </Project>

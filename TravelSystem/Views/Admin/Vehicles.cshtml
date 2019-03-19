@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <h3 class="card-header-text">Vehicles</h3>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                            <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Vehicle"><i class="fa fa-plus btn-icon shadow "></i></button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body listPadding">
+                    <div id="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="PopupWarning" style="display: none;">
+    <table>
+        <tr>
+            <td>
+                <p>Do you want to delete?</p>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <button class="k-button k-primary" id="btnYes">Yes</button>
+                <button class="k-button k-primary" id="btnNo">No</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).on("click", "#btnAdd", function () {
+        window.location.href="@Url.Action("AddVehicle","Admin")"
+    })
+     $(document).on("click", ".deleteVehicle", function () {
+        var id = $(this)[0].id;
+        var kendoWindow = $("#PopupWarning").kendoWindow({
+            title: "Confirmation",
+            resizable: false,
+            modal: true
+        });
+        kendoWindow.data("kendoWindow").content($("#PopupWarning").html()).center().open();
+        $("#btnYes").bind("click", function () {
+            $.get('@Url.Action("DeleteVehicle", "Admin")', { id: id }, function (data) {
+                if (data) {
+                    kendoWindow.data("kendoWindow").close();
+            $('#grid').data('kendoGrid').dataSource.read();
+                    $('#grid').data('kendoGrid').refresh();
+                }
+            });
+
+        });
+        $("#btnNo").bind("click", function () {
+            kendoWindow.data("kendoWindow").close();
+        });
+        $(this).off(event);
+    });
+    $(document).ready(function () {
+     $("#grid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "@Url.Action("GetAllVehicles", "Admin")"
+                    },
+                    pageSize: 20
+                },
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "Id",
+                        title: "#",
+                        width:150
+                    },
+                    {
+                        template: "<span class='btn btn-link' onclick='Edit(#:Id#)'>#: VehicleTypeName # </span>",
+                    field: "VehicleTypeName",
+                        title: "VehicleTypeName"
+                    },
+                    {
+                         field: "Mileage",
+                        title: "Mileage"
+                    },
+                    {
+                        field: "SalesPrice",
+                        title: "SalesPrice"
+                    },
+                    {
+                        field: "MakeYear",
+                        title: "MakeYear"
+                    },
+                    {
+                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicle' />",
+                        width:100
+                    }
+                ]
+        });
+
+    });
+     function Edit(e) {
+        window.location.href = "@Url.Action("AddVehicle", "Admin")?id=" + e;
+    }
+</script>

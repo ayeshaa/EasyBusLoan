@@ -1,0 +1,307 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+    <link rel="canonical" href="https://vimeo.com/9679622">
+
+<title>The Sandpit de Sam O&#39;Hare on Vimeo</title>
+<style>
+    body, html, iframe, .player, .fallback {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        
+            background-color: transparent;
+        
+    }
+    .player.loading { opacity: 0; }
+</style>
+
+
+<script>
+!function(){if('PerformanceLongTaskTiming' in window){var g=window.__tti={e:[]};
+g.o=new PerformanceObserver(function(l){g.e=g.e.concat(l.getEntries())});
+g.o.observe({entryTypes:['longtask']})}}();
+</script>
+
+
+<!--[if IE]><script>var cacheBuster = '?' + Math.round((Math.random() * 1000) + new Date().getTime());</script><![endif]-->
+
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+<div class="vp-placeholder">
+    <style>
+        .vp-placeholder,
+        .vp-placeholder-thumb,
+        .vp-placeholder-thumb::before,
+        .vp-placeholder-thumb::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .vp-placeholder {
+            visibility: hidden;
+            width: 100%;
+            max-height: 100%;
+            height: calc(720 / 1280 * 100vw);
+            max-width: calc(1280 / 720 * 100vh);
+            margin: auto;
+        }
+        .vp-placeholder-carousel {
+            display: none;
+            background-color: #000;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -60px;
+            height: 60px;
+        }
+    </style>
+
+    
+
+    
+        <style>
+            .vp-placeholder-thumb {
+                overflow: hidden;
+                width: 100%;
+                max-height: 100%;
+                margin: auto;
+            }
+            .vp-placeholder-thumb::before,
+            .vp-placeholder-thumb::after {
+                content: "";
+                display: block;
+                filter: blur(7px);
+                margin: 0;
+                background: url(https://i.vimeocdn.com/video/48617238.jpg?mw=80&q=85) 50% 50% / contain no-repeat;
+            }
+            .vp-placeholder-thumb::before {
+                /* before is used to prevent the bleeding edge to black or white  */
+                margin: -30px;
+            }
+        </style>
+    
+
+    <div class="vp-placeholder-thumb"></div>
+    <div class="vp-placeholder-carousel"></div>
+    <script>
+        (function(document) {
+
+            var placeholder = document.querySelector('.vp-placeholder');
+            var placeholderThumb = document.querySelector('.vp-placeholder-thumb');
+            var videoWidth = parseInt('1280');
+            var videoHeight = parseInt('720');
+
+            
+
+            
+                // The thumbnail could have a different aspect ratio as the video.
+                var thumb = new Image();
+                thumb.onload = function() {
+                    var videoAspectRatio = videoWidth / videoHeight;
+                    var imageAspectRatio = this.width / this.height;
+                    // If the image aspect ratio is more than 5% off of the video
+                    // aspect ratio adjust scaling for thumb.
+                    if (imageAspectRatio <= 0.95 * videoAspectRatio || imageAspectRatio >= 1.05 * videoAspectRatio) {
+                        var rect = placeholder.getBoundingClientRect();
+                        var placeholderWidth = rect.right - rect.left;
+                        var placeholderHeight = rect.bottom - rect.top;
+                        var viewportWidth = window.innerWidth / placeholderWidth * 100;
+                        var viewportHeight = window.innerHeight / placeholderHeight * 100;
+                        placeholderThumb.style.height = 'calc(' + this.height + ' / ' + this.width + ' * ' + viewportWidth + 'vw)';
+                        placeholderThumb.style.maxWidth = 'calc(' + this.width + ' / ' + this.height + ' * ' + viewportHeight + 'vh)';
+                    }
+
+                    placeholder.style.visibility = 'visible';
+                };
+                thumb.src = "https://i.vimeocdn.com/video/48617238.jpg?mw=80&q=85";
+            
+
+        }(document));
+    </script>
+</div>
+
+<div id="player" class="player"></div>
+<script>
+    (function(document, player) {
+        /* global TextTrackList, ActiveXObject, VimeoPlayer */
+
+        var config = {"cdn_url":"https://f.vimeocdn.com","vimeo_api_url":"api.vimeo.com","request":{"files":{"hls":{"separate_av":false,"default_cdn":"level3","cdns":{"level3":{"url":"https://07-lvl3-hls.vimeocdn.com/1552733748-ec6423d6bed6ed6968e3212846b449c04d6abc96/01/1935/0/9679622/master.m3u8","origin":"level3"}},"origin":"level3"},"progressive":[{"profile":116,"width":480,"mime":"video/mp4","fps":24,"url":"https://07-lvl3-pdl.vimeocdn.com/01/1935/0/9679622/16418621.mp4?expires=1552733748&token=0a53409421adb11f39314","cdn":"level3","quality":"240p","id":16418621,"origin":"level3","height":272},{"profile":113,"width":1280,"mime":"video/mp4","fps":24,"url":"https://07-lvl3-pdl.vimeocdn.com/01/1935/0/9679622/16360778.mp4?expires=1552733748&token=0f768c338518e5b9f4322","cdn":"level3","quality":"720p","id":16360778,"origin":"level3","height":720},{"profile":107,"width":640,"mime":"video/mp4","fps":24,"url":"https://07-lvl3-pdl.vimeocdn.com/01/1935/0/9679622/16360497.mp4?expires=1552733748&token=0cd0b0871dcfa658c27a6","cdn":"level3","quality":"360p","id":16360497,"origin":"level3","height":360}]},"lang":"en","sentry":{"url":"https://6f5f8e1cecfa40fb850f578b69fc1705@sentry.io/1297650","enabled":false,"debug_enabled":true,"debug_intent":0},"ab_tests":{"chromecast":{"data":{},"group":false},"nudge":{"data":{},"group":false}},"referrer":"about:blank#blocked","cookie_domain":".vimeo.com","timestamp":1552729848,"gc_debug":{"bucket":"vimeo-player-debug"},"expires":3600,"currency":"USD","session":"67e6d1073e6526b9f24648b9e099973b529eabea1552729848","cookie":{"scaling":1,"volume":1.0,"quality":null,"hd":0,"captions":null},"build":{"player":"","backend":"1.1.21","js":"3.8.34"},"urls":{"barebone_js":"https://f.vimeocdn.com/p/3.8.34/js/barebone.js","zeroclip_swf":"https://f.vimeocdn.com/p/external/zeroclipboard/ZeroClipboard.swf","fresnel":"https://fresnel.vimeocdn.com/add/player-stats","js":"https://f.vimeocdn.com/p/3.8.34/js/player.js","proxy":"https://player.vimeo.com/static/proxy.html","chromeless_css":"https://f.vimeocdn.com/p/3.8.34/css/chromeless.css","three_js":"https://f.vimeocdn.com/p/external/three.rvimeo.min.js","sentry_url":"https://f.vimeocdn.com/p/external/sentry.min.js","mux_url":"https://f.vimeocdn.com/p/external/mux.js","vuid_js":"https://f.vimeocdn.com/js_opt/modules/utils/vuid.min.js","chromeless_js":"https://f.vimeocdn.com/p/3.8.34/js/chromeless.js","zeroclip_js":"https://f.vimeocdn.com/p/external/zeroclipboard/ZeroClipboard-patch.js","css":"https://f.vimeocdn.com/p/3.8.34/css/player.css"},"signature":"dbdac4be2d881f54c2d24f1bef8ef0bc","flags":{"dnt":0,"preload_video":"metadata_on_hover","plays":1,"partials":1,"autohide_controls":0},"country":"PK"},"player_url":"player.vimeo.com","video":{"version":{"current":null,"available":null},"height":720,"duration":330,"thumbs":{"1280":"https://i.vimeocdn.com/video/48617238_1280.jpg","960":"https://i.vimeocdn.com/video/48617238_960.jpg","640":"https://i.vimeocdn.com/video/48617238_640.jpg","base":"https://i.vimeocdn.com/video/48617238"},"owner":{"account_type":"plus","name":"Sam O'Hare","img":"https://i.vimeocdn.com/portrait/372870_60x60.jpg","url":"https://vimeo.com/samohare","img_2x":"https://i.vimeocdn.com/portrait/372870_120x120.jpg","id":1639813},"file_codecs":{"hevc":{"hdr":[],"sdr":[]},"avc":[16418621,16360778,16360497]},"id":9679622,"embed_code":"<iframe src=\"https://player.vimeo.com/video/9679622\" width=\"640\" height=\"360\" frameborder=\"0\" allowfullscreen><\/iframe>","title":"The Sandpit","share_url":"https://vimeo.com/9679622","width":1280,"embed_permission":"public","fps":24.0,"spatial":0,"live_event":null,"allow_hd":1,"hd":1,"lang":null,"default_to_hd":1,"url":"https://vimeo.com/9679622","privacy":"anybody","bypass_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGlwX2lkIjo5Njc5NjIyLCJleHAiOjE1NTI2ODQ4NzV9.e4k89uNnOdV-A_xqT4hY3OZdEAbuA0fh72-PrJpaOtk","unlisted_hash":null},"user":{"vimeo_api_interaction_tokens":null,"liked":0,"account_type":"none","vimeo_api_client_token":null,"logged_in":0,"owner":0,"watch_later":0,"id":0,"mod":0},"embed":{"autopause":1,"playsinline":1,"settings":{"fullscreen":1,"byline":1,"like":1,"playbar":1,"title":1,"color":0,"speed":0,"watch_later":1,"share":1,"scaling":1,"spatial_compass":1,"collections":0,"info_on_pause":0,"portrait":1,"logo":1,"embed":1,"badge":{"name":"Vimeo Staff Pick","img":"https://f.vimeocdn.com/p/images/badges/1.png","svg":"https://f.vimeocdn.com/p/images/badges/1.svg","height":100,"width":100,"link":"https://vimeo.com/channels/staffpicks/9679622","img_2x":"https://f.vimeocdn.com/p/images/badges/1@2x.png","margin":"10px 10px 0 10px","id":1},"spatial_label":1,"volume":1},"color":"00adef","on_site":0,"app_id":"","muted":0,"dnt":0,"player_id":"","api":3,"editor":false,"context":"embed.main","time":0,"outro":"videos","log_plays":1,"quality":null,"transparent":1,"loop":0,"autoplay":0},"view":1,"vimeo_url":"vimeo.com"};
+
+        if (!config.request) {
+            // console.error('Invalid config');
+            return;
+        }
+
+        if (typeof config.request === 'object' && 'error' in config.request) {
+            if ('html' in config.request) {
+                document.documentElement.innerHTML = config.request.html.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+            }
+            return;
+        }
+
+        // This probably won't be needed, but we have frame origin set to only
+        // allow pages loaded from player.vimeo.com so if this is inside of an
+        // iframe we should not try to redirect to the vimeo.com url.
+        //
+        // We should only redirect if the player.vimeo.com/video/123 URL is
+        // requested directly.
+        //
+        // @see http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
+        var isIframe = (function() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }());
+
+        // Redirect to the mobile site when player is loaded via the twitter app
+        // for iOS (and Android?).  This is so we can leverage the mobile site's
+        // outro in these cases and provide a tweet button.
+        if (!isIframe && /twitter/i.test(navigator.userAgent) && config.video.url) {
+            window.location = config.video.url;
+        }
+
+    // i18n ______________________________________________________
+        if (config.request.lang) {
+            document.documentElement.setAttribute('lang', config.request.lang);
+        }
+
+    // Support tests ______________________________________________________
+
+        // Check all the prefixed versions of the fullscreen api for support.
+        var fullscreenSupport = 'exitFullscreen' in document || 'webkitExitFullscreen' in document || 'webkitCancelFullScreen' in document || 'mozCancelFullScreen' in document || 'msExitFullscreen' in document || 'webkitEnterFullScreen' in document.createElement('video');
+
+        // Check for h264 and text track support.
+        var videoSupport = (function() {
+            var video = document.createElement('video');
+
+            return {
+                h264: 'canPlayType' in video && video.canPlayType('video/mp4') !== '',
+                textTracks: typeof TextTrackList !== 'undefined' && typeof video.textTracks !== 'undefined' && video.textTracks instanceof TextTrackList
+            };
+        }());
+
+        // Does this browser support inlining SVG into HTML?
+        // From modernizr: https://github.com/Modernizr/Modernizr/blob/master/feature-detects/svg/inline.js
+        var inlineSvgSupport = (function() {
+            var div = document.createElement('div');
+            div.innerHTML = '<svg/>';
+            return (div.firstChild && div.firstChild.namespaceURI) === 'http://www.w3.org/2000/svg';
+        }());
+
+        // Put Windows phone through.
+        var windowsPhone = /MSIE 9/.test(navigator.userAgent) && /Windows Phone/.test(navigator.userAgent);
+        var IE10 = /IE 10/.test(navigator.userAgent);
+
+
+    // Initialization _____________________________________________________
+
+        /**
+         * We want to use the player if:
+         *   1. The browser has fullscreen support, regardless of if it’s enabled,
+         *   2. IE10 with no Flash support,
+         *   3. Windows Phone
+         */
+        var usePlayer = fullscreenSupport || IE10 || windowsPhone;
+
+        // We'll be inserting both the stylesheet and javascript before this script
+        var firstScript = document.getElementsByTagName('script')[0];
+        var script = document.createElement('script');
+        var jsDone = false;
+        var playerObject = false;
+
+        // If the browser doesn't support inline svg, don't use the player.
+        if (!inlineSvgSupport) {
+            usePlayer = false;
+        }
+
+        // @NOTE: Make sure this is commented out before committing. - Ryan
+        // usePlayer = false;
+
+        if (!usePlayer) {
+            // Remove placeholder if it exists for flash and fallback.
+            // It overlaps the content.
+            var placeholder = document.querySelector('.vp-placeholder');
+            if (placeholder && placeholder.parentNode) {
+                placeholder.parentNode.removeChild(placeholder);
+            }
+        }
+
+        if (usePlayer) {
+            // Add the loading class now to avoid any possibility of seeing
+            // something before the player loads
+            player.className = 'player loading';
+
+            var startTime = new Date().getTime();
+
+            // Start the loading of the javascript first
+            script.src = config.request.urls.js;
+
+            firstScript.parentNode.insertBefore(script, firstScript);
+            script['onreadystatechange' in script ? 'onreadystatechange' : 'onload'] = function() {
+                if (!jsDone && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+                    jsDone = true;
+                    playerObject = new VimeoPlayer(player, config, cssDone || { link: link, startTime: startTime });
+                }
+            };
+
+            // Load the stylesheet
+            var cssDone = false;
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            // cacheBuster for ie only http://stackoverflow.com/questions/10316247/media-queries-fail-inside-ie9-iframe
+            link.href = config.request.urls.css + (typeof cacheBuster === 'undefined' ? '' : cacheBuster);
+
+            document.getElementsByTagName('head')[0].appendChild(link);
+            link.onload = function() {
+                cssDone = true;
+            };
+        }
+        else {
+            player.innerHTML = '<div class="fallback"><iframe src="/video/9679622/fallback?js&amp;referrer=' + encodeURIComponent(config.request.referrer) + '" frameborder="0"></iframe></div>';
+        }
+
+        if (!config.request.flags.dnt && !config.embed.dnt) {
+            window._vuid = [
+                ['pid', config.request.session]
+            ];
+            var vim = document.createElement('script');
+            vim.async = true;
+            vim.src = config.request.urls.vuid_js;
+            firstScript.parentNode.insertBefore(vim, firstScript);
+        }
+
+    }(document, document.getElementById('player')));
+</script>
+
+</body>
+</html>
