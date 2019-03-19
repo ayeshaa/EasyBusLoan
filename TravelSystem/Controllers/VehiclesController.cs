@@ -61,7 +61,7 @@ namespace TravelSystem.Controllers
                 TempData["IsApplication"] = _context.ApplicantDetails.Any(o => o.UserId == userId);
             }
 
-            var result = _context.Vehicles.Include(o => o.VehicleTypes).Include(o => o.VehicleImages)
+            var result = _context.Vehicles.Include(o=>o.User).Include(o => o.VehicleTypes).Include(o => o.VehicleImages)
                 .Include(o => o.VehicleRatings).ThenInclude(o => o.User).FirstOrDefault(o => o.Id == id);
             if (result != null)
             {

@@ -117,110 +117,127 @@
     </div>
 </div>
 <!--=== End Shop Product ===-->
-<!--=== Content Medium ===-->
 <div class="content-md container">
     <div class="tab-v6">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Reviews (@Model.VehicleRatings.Count())</a></li>
+            <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Seller</a></li>
         </ul>
         <div class="tab-content">
-            <!-- Description -->
-            <!-- Reviews -->
-            <div class="tab-pane fade in active" id="reviews">
-                <div class="product-comment margin-bottom-40">
-                    @if (Model.VehicleRatings.Count > 0)
-                    {
-                        @foreach (var item in Model.VehicleRatings)
-                        {
-                            <div class="product-comment-in">
-                                <img class="product-comment-img rounded-x" src="~/user.jpg" alt="">
-                                <div class="product-comment-dtl">
-                                    <h4>@item.User.FullName</h4>
-                                    <p>@item.Comment</p>
-                                    <ul class="list-inline product-ratings">
-                                        <li class="pull-right">
-                                            <ul class="list-inline">
-                                                @for (var i = 0; i < item.Stars; i++)
-                                                {
-                                                    <li><i class="rating-selected fa fa-star"></i></li>
-                                                }
-                                                @for (var i = 0; i < 5 - item.Stars; i++)
-                                                {
-                                                    <li><i class="rating fa fa-star"></i></li>
-                                                }
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-                    }
-                    else
-                    {
-                        <p>No reviews yet</p>
-                    }
+            <div class="tab-pane fade in active">
+                <div class="product-comment margin-bottom-10">
+                   
+                        <h2>@Model.User.FullName</h2>
+                    <h4>@Model.User.Phone</h4>
                 </div>
-             
-                    <h3 class="heading-md margin-bottom-30">Add a review</h3>
-                    <form action="@Url.Action("VehicleReview","Vehicles")" method="post" id="sky-form3" class="sky-form sky-changes-4">
-                        <fieldset>
-                            <div class="margin-bottom-30">
-                                <label class="label-v2">Comment</label>
-                                <label class="textarea">
-                                    <textarea rows="7" name="Comment" id="Comment" class="form-control" style="width:1134px"></textarea>
-                                </label>
-                            </div>
-                        </fieldset>
-                        <footer class="review-submit">
-                            <label class="label-v2">Review</label>
-                            <div class="stars-ratings">
-                                <input type="radio" name="stars-rating5" id="stars-rating-5" class="radiocheck">
-                                <label for="stars-rating-5"><i class="fa fa-star"></i></label>
-                                <input type="radio" name="stars-rating4" id="stars-rating-4" class="radiocheck">
-                                <label for="stars-rating-4"><i class="fa fa-star"></i></label>
-                                <input type="radio" name="stars-rating3" id="stars-rating-3" class="radiocheck">
-                                <label for="stars-rating-3"><i class="fa fa-star"></i></label>
-                                <input type="radio" name="stars-rating2" id="stars-rating-2" class="radiocheck">
-                                <label for="stars-rating-2"><i class="fa fa-star"></i></label>
-                                <input type="radio" name="stars-rating1" id="stars-rating-1" class="radiocheck">
-                                <label for="stars-rating-1"><i class="fa fa-star"></i></label>
-                            </div>
-                            <button type="submit" class="btn-u btn-u-sea-shop btn-u-sm pull-right">Submit</button>
-                        </footer>
-                        <input type="hidden" name="Stars" id="Stars" />
-                        <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.Id" />
-                    </form>
-               
-
             </div>
-            <!-- End Reviews -->
+            </div>
+</div>
+            
         </div>
-    </div>
-</div><!--/end container-->
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $(".radiocheck").change(function () {
-                if ($("#stars-rating-5").prop("checked")) {
-                    $("#Stars").val(5);
-                }
-                if ($("#stars-rating-4").prop("checked")) {
-                    $("#Stars").val(4);
-                }
-                if ($("#stars-rating-3").prop("checked")) {
-                    $("#Stars").val(3);
-                }
-                if ($("#stars-rating-2").prop("checked")) {
-                    $("#Stars").val(2);
-                }
-                if ($("#stars-rating-1").prop("checked")) {
-                    $("#Stars").val(1);
-                }
-            });
-            $(".connectToApp").click(function () {
-                console.lo
-                window.location.href = "/Buyer/ConnectToApplication?vehicleId=" + $("#VehicleId").val();
-            })
-        });
-    </script>
-}
+        <!--=== Content Medium ===-->
+        <div class="content-md container">
+            <div class="tab-v6">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Reviews (@Model.VehicleRatings.Count())</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Description -->
+                    <!-- Reviews -->
+                    <div class="tab-pane fade in active" id="reviews">
+                        <div class="product-comment margin-bottom-40">
+                            @if (Model.VehicleRatings.Count > 0)
+                            {
+                                @foreach (var item in Model.VehicleRatings)
+                                {
+                                    <div class="product-comment-in">
+                                        <img class="product-comment-img rounded-x" src="~/user.jpg" alt="">
+                                        <div class="product-comment-dtl">
+                                            <h4>@item.User.FullName</h4>
+                                            <p>@item.Comment</p>
+                                            <ul class="list-inline product-ratings">
+                                                <li class="pull-right">
+                                                    <ul class="list-inline">
+                                                        @for (var i = 0; i < item.Stars; i++)
+                                                        {
+                                                            <li><i class="rating-selected fa fa-star"></i></li>
+                                                        }
+                                                        @for (var i = 0; i < 5 - item.Stars; i++)
+                                                        {
+                                                            <li><i class="rating fa fa-star"></i></li>
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>No reviews yet</p>
+                            }
+                        </div>
+
+                        <h3 class="heading-md margin-bottom-30">Add a review</h3>
+                        <form action="@Url.Action("VehicleReview","Vehicles")" method="post" id="sky-form3" class="sky-form sky-changes-4">
+                            <fieldset>
+                                <div class="margin-bottom-30">
+                                    <label class="label-v2">Comment</label>
+                                    <label class="textarea">
+                                        <textarea rows="7" name="Comment" id="Comment" class="form-control" style="width:1134px"></textarea>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <footer class="review-submit">
+                                <label class="label-v2">Review</label>
+                                <div class="stars-ratings">
+                                    <input type="radio" name="stars-rating5" id="stars-rating-5" class="radiocheck">
+                                    <label for="stars-rating-5"><i class="fa fa-star"></i></label>
+                                    <input type="radio" name="stars-rating4" id="stars-rating-4" class="radiocheck">
+                                    <label for="stars-rating-4"><i class="fa fa-star"></i></label>
+                                    <input type="radio" name="stars-rating3" id="stars-rating-3" class="radiocheck">
+                                    <label for="stars-rating-3"><i class="fa fa-star"></i></label>
+                                    <input type="radio" name="stars-rating2" id="stars-rating-2" class="radiocheck">
+                                    <label for="stars-rating-2"><i class="fa fa-star"></i></label>
+                                    <input type="radio" name="stars-rating1" id="stars-rating-1" class="radiocheck">
+                                    <label for="stars-rating-1"><i class="fa fa-star"></i></label>
+                                </div>
+                                <button type="submit" class="btn-u btn-u-sea-shop btn-u-sm pull-right">Submit</button>
+                            </footer>
+                            <input type="hidden" name="Stars" id="Stars" />
+                            <input type="hidden" name="VehicleId" id="VehicleId" value="@Model.Id" />
+                        </form>
+
+
+                    </div>
+                    <!-- End Reviews -->
+                </div>
+            </div>
+        </div><!--/end container-->
+        @section Scripts{
+            <script>
+                $(document).ready(function () {
+                    $(".radiocheck").change(function () {
+                        if ($("#stars-rating-5").prop("checked")) {
+                            $("#Stars").val(5);
+                        }
+                        if ($("#stars-rating-4").prop("checked")) {
+                            $("#Stars").val(4);
+                        }
+                        if ($("#stars-rating-3").prop("checked")) {
+                            $("#Stars").val(3);
+                        }
+                        if ($("#stars-rating-2").prop("checked")) {
+                            $("#Stars").val(2);
+                        }
+                        if ($("#stars-rating-1").prop("checked")) {
+                            $("#Stars").val(1);
+                        }
+                    });
+                    $(".connectToApp").click(function () {
+                        console.lo
+                        window.location.href = "/Buyer/ConnectToApplication?vehicleId=" + $("#VehicleId").val();
+                    })
+                });
+            </script>
+        }

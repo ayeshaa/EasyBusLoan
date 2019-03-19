@@ -32,6 +32,7 @@ namespace TravelSystem.Models
         public string Vinnumber { get; set; }
         [Required(ErrorMessage = "Required")]
         public DateTime MakeYear { get; set; }
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
         [ForeignKey(nameof(VehicleTypes))]
         public int VehicleTypeId { get; set; }

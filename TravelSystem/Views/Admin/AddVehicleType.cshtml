@@ -1,0 +1,87 @@
+﻿@model TravelSystem.Models.VehicleTypes
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+       $(document).ready(function () {
+        $("#vehicleTypes").kendoDropDownList({
+            placeholder: "Select Vehicle Type",
+            dataTextField: "VehicleTypeName",
+            dataValueField: "Id",
+            select: onSelect,
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetVehicleTypes","Admin")",
+                    }
+                }
+            },
+            value: [
+
+            ]
+        });
+    });
+</script>
+<form method="post" action="@Url.Action("SaveVehicleType","Admin")">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3 class="card-header-text">Vehicle Detail</h3>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(m => m.Id)
+                                <div class="form-group">
+                                    <label>Vehicle Type Name</label>
+                                    @Html.TextBoxFor(o => o.VehicleTypeName, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Name" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.VehicleTypeName, "")</span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    @Html.TextBoxFor(o => o.Description, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Description" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Description, "")</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function onSelect(e) {
+
+        var dataItem = e.dataItem;
+      var multiselect = $("#categories").data("kendoMultiSelect");
+        var selectedData = [];
+        var value = multiselect.value();
+        var selectedCategories = value;
+        selectedCategories.push(dataItem.Id);
+        $("#blogCat").val(selectedCategories.join(","));
+
+    };
+    $(document).ready(function () {
+        $("#btnBack").click(function () {
+            window.location.href = "@Url.Action("VehicleTypes","Admin")";
+        });
+    });
+</script>

@@ -390,5 +390,66 @@ namespace TravelSystem.Controllers
         {
             return Json(_context.VehicleTypes.ToList());
         }
+        public ActionResult VehicleTypes()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn","Admin");
+            }
+        }
+        public ActionResult AddVehicleType(int? id)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var vehicleType = new VehicleTypes();
+                if (id.HasValue)
+                { 
+                vehicleType = _context.VehicleTypes.FirstOrDefault(o => o.Id == id);
+                }
+                return View(vehicleType);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public IActionResult SaveVehicleType(VehicleTypes vehicleTypes)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                 _context.Entry(vehicleTypes).State = vehicleTypes.Id > 0 ? EntityState.Modified : EntityState.Added;
+                _context.SaveChanges();
+                return RedirectToAction("VehicleTypes");
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public async Task<IActionResult> DeleteVehicleType(int id)
+        {
+            var admin = HttpContext.Session.GetInt32("Id");
+            if (admin.HasValue)
+            {
+                var vehicleTypes = _context.VehicleTypes.FirstOrDefault(o => o.Id == id);
+                if (vehicleTypes != null)
+                {
+                    _context.VehicleTypes.Remove(vehicleTypes);
+                    await _context.SaveChangesAsync();
+                }
+                return Json(true);
+            }
+            else
+            { 
+            return RedirectToAction("LogIn","Admin");
+            }
+        }
     }
 }
