@@ -76,21 +76,30 @@ namespace TravelSystem.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Service()
+        public async Task<IActionResult> Service()
         {
-            return View();
+            var service = await _context.Services.FirstOrDefaultAsync();
+            return View(service);
         }
-        public IActionResult PrivacyPolicy()
+        public async Task<IActionResult> PrivacyPolicy()
         {
-            return View();
+            var policy = await _context.PrivacyPolicy.FirstOrDefaultAsync();
+            return View(policy);
         }
-        public IActionResult TermsAndConditions()
+        public async Task<IActionResult> TermsAndConditions()
         {
-            return View();
+            var terms = await _context.TermsAndConditions.FirstOrDefaultAsync();
+            return View(terms);
         }
-        public IActionResult Working()
+        public async Task<IActionResult> Working()
         {
-            return View();
+            var work = await _context.HowItWorks.FirstOrDefaultAsync();
+            return View(work);
+        }
+        public async Task<IActionResult> TermsOfUseSite()
+        {
+            var terms = await _context.TermsOfUseSite.FirstOrDefaultAsync();
+            return View(terms);
         }
         public IActionResult Contact()
         {

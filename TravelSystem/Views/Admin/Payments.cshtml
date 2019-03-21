@@ -10,10 +10,6 @@
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <h3 class="card-header-text">Payments</h3>
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                            <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Blog"><i class="fa fa-plus btn-icon shadow "></i></button>
-
-                        </div>
                     </div>
                 </div>
                 <div class="card-body listPadding">
@@ -70,7 +66,7 @@
                         title: "Vehicle Name"
                     },
                     {
-                        template: "#= kendo.toString(kendo.parseDate(CreatedDate, 'yyyy-MM-dd HH:mm:ss'), 'MM/dd/yyyy') #",
+                        template: "#= kendo.toString(kendo.parseDate(CreatedDate),  'dd-MMM-yyyy hh:mm tt') #",
                         field: "CreatedDate",
                         title: "Buy Date",
                     },
