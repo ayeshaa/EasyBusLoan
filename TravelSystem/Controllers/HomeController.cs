@@ -101,6 +101,11 @@ namespace TravelSystem.Controllers
             var terms = await _context.TermsOfUseSite.FirstOrDefaultAsync();
             return View(terms);
         }
+        public async Task<IActionResult> AboutUs()
+        {
+            var abt = await _context.About.FirstOrDefaultAsync();
+            return View(abt);
+        }
         public IActionResult Contact()
         {
             return View();

@@ -565,7 +565,7 @@ namespace TravelSystem.Controllers
             {
                 _context.Entry(works).State = works.Id > 0 ? EntityState.Modified : EntityState.Added;
                 _context.SaveChanges();
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("AddWorking");
             }
             else
             {
@@ -592,7 +592,7 @@ namespace TravelSystem.Controllers
             {
                 _context.Entry(policy).State = policy.Id > 0 ? EntityState.Modified : EntityState.Added;
                 _context.SaveChanges();
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("AddPrivacyPolicy");
             }
             else
             {
@@ -619,7 +619,7 @@ namespace TravelSystem.Controllers
             {
                 _context.Entry(terms).State = terms.Id > 0 ? EntityState.Modified : EntityState.Added;
                 _context.SaveChanges();
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("AddTermsAndConditions");
             }
             else
             {
@@ -646,7 +646,7 @@ namespace TravelSystem.Controllers
             {
                 _context.Entry(terms).State = terms.Id > 0 ? EntityState.Modified : EntityState.Added;
                 _context.SaveChanges();
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("AddTermsOfUseSite");
             }
             else
             {
@@ -673,7 +673,34 @@ namespace TravelSystem.Controllers
             {
                 _context.Entry(service).State = service.Id > 0 ? EntityState.Modified : EntityState.Added;
                 _context.SaveChanges();
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("AddServices");
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult AddAbout()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var abt = _context.About.FirstOrDefault();
+                return View(abt);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult SaveAbout(AboutUs abt)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                _context.Entry(abt).State = abt.Id > 0 ? EntityState.Modified : EntityState.Added;
+                _context.SaveChanges();
+                return RedirectToAction("AddAbout");
             }
             else
             {
