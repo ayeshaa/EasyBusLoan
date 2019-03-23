@@ -19,6 +19,7 @@ namespace TravelSystem.Models
         public virtual DbSet<Admins> Admins { get; set; }
         public virtual DbSet<BlogCategories> BlogCategories { get; set; }
         public virtual DbSet<Blogs> Blogs { get; set; }
+        public virtual DbSet<BlogComments> BlogComments { get; set; }
         public virtual DbSet<ApplicantDetails> ApplicantDetails { get; set; }
         public virtual DbSet<ApplicantsCreditReferences> ApplicantsCreditReferences { get; set; }
         public virtual DbSet<ApplicantsFinancedEquipments> ApplicantsFinancedEquipments { get; set; }

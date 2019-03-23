@@ -10,7 +10,7 @@ namespace TravelSystem.Models
     {
         public Blogs()
         {
-            
+            BlogComments = new List<BlogComments>();
         }
         public int Id { get; set; }
         [Required(ErrorMessage ="Required")]
@@ -22,5 +22,6 @@ namespace TravelSystem.Models
         [ForeignKey(nameof(Admins))]
         public int AdminId { get; set; }
         public virtual Admins Admins { get; set; }
+        public IList<BlogComments> BlogComments { get; set; }
     }
 }

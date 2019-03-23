@@ -114,7 +114,18 @@
         <div class="col-md-12 md-margin-bottom-50">
             <h2>Are you looking to sell your Bus?</h2>
             <p>Duis in posuere risus. Vivamus sed dignissim tellus. In vehicula justo tempor commodo. <br> Nunc lobortis dapibus neque quis lacinia</p><br>
-            <a href="#" class="btn-u btn-brd btn-brd-hover btn-u-light">List My Bus</a>
+            @if (User.IsInRole("Seller"))
+            {
+               <a href="@Url.Action("AddVehicle","Seller")" class="btn-u btn-brd btn-brd-hover btn-u-light">
+                        List my Bus
+                    </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Register","User",new {finance="no" })" class="btn-u btn-brd btn-brd-hover btn-u-light">
+                        List my Bus
+                    </a>
+            }
         </div>
 
     </div>
