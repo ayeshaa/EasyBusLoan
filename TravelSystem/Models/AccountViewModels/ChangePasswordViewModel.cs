@@ -20,5 +20,6 @@ namespace TravelSystem.Models.AccountViewModels
         [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
         [Required(ErrorMessage = "Required")]
         public string NewConfirmPassword { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -57,6 +57,18 @@
             }
         });
     }
+    function changePassword(email) {
+        window.location.href = "@Url.Action("ChangePassword","Admin")?email=" + email;
+        @*$.ajax({
+            url: "@Url.Action("ChangePassword","Admin")",
+            data: { email: email },
+            type: "GET",
+            success: function (data) {
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").dataSource.refresh();
+            }
+        });*@
+    }
      $(document).on("click", ".deleteBlog", function () {
         var id = $(this)[0].id;
         var kendoWindow = $("#PopupWarning").kendoWindow({
@@ -115,7 +127,7 @@
                         title: "Email"
                     },
                       {
-                          template: "<button type='button' onclick='blockUser(#:Id#)' class='blockUser btn #if(IsBlock) {#btn-primary#} else{#btn-danger#}#'>#if(IsBlock) {#Block#} else{#Unblock#}#</span>",
+                          template: "<button type='button' onclick='blockUser(#:Id#)' class='blockUser mr-1 btn #if(IsBlock) {#btn-primary#} else{#btn-danger#}#'>#if(IsBlock) {#Block#} else{#Unblock#}#</button><button type='button' onclick='changePassword(#=kendo.stringify(Email)#)' class='btn btn-success'>Change Password</button>",
                     }
                 ]
         });
