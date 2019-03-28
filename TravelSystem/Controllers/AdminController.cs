@@ -281,6 +281,11 @@ namespace TravelSystem.Controllers
             return RedirectToAction("LogIn", "Admin");
         }
     }
+        public ActionResult Detail(int id)
+        {
+            var user = _context.Users.FirstOrDefault(o => o.Id == id);
+            return View(user);
+        }
     public async Task<IActionResult> BlockUser(int id)
     {
         var adminId = HttpContext.Session.GetInt32("Id");

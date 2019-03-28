@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@model TravelSystem.Models.AccountViewModels.RegisterViewModel
+@model TravelSystem.Models.ProfileViewModel
 @{
     ViewData["Title"] = "Profile Settings";
 }
@@ -43,17 +43,26 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="col-md-12 well text-center">
-                                            <div class="col-md-6 col-centered">
-                                                <div class="reg-header">
-                                                </div>
+                                            <div class="col-md-8">
+
                                                 @Html.TextBoxFor(m => m.CompanyName, new { @placeholder = "Company Name*", @required = "required", @class = "form-control margin-bottom-5" })
                                                 <span class="text-danger">@Html.ValidationMessageFor(o => o.CompanyName, "")</span>
                                                 @Html.TextBoxFor(m => m.FullName, new { @placeholder = "Full Name*", @required = "required", @class = "form-control margin-bottom-5" })
                                                 <span class="text-danger">@Html.ValidationMessageFor(o => o.FullName, "")</span>
                                                 @Html.TextBoxFor(m => m.Phone, new { @placeholder = "Phone*", @required = "required", @class = "form-control margin-bottom-5" })
                                                 <span class="text-danger">@Html.ValidationMessageFor(o => o.Phone, "")</span>
+                                                <input type="file" class="form-control" name="Photo" />
                                             </div>
-
+                                            <div class="col-md-4">
+                                                @if (Model.Photo == null)
+                                                {
+                                                    <img style="width:150px;height:153px" src="~/Users/17241-200.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img style="width:150px;height:153px" src="~/Users/@Model.Photo" />
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 text-center">

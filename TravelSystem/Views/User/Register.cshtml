@@ -12,50 +12,51 @@
         </div>
         <div id="LendorRegistration">
         </div>
-        <div id="RegistrationContainer">
-            <div class="container">
-                <!--/Headline Center v2-->
+        @if (TempData["Id"] == null)
+        {
+            <div id="RegistrationContainer">
+                <div class="container">
+                    <!--/Headline Center v2-->
+                    <div class="row margin-bottom-60" style="margin-top: 60px;">
+                        <div class="col-sm-4" style="cursor:pointer">
+                            <a id="LoadSellerPartial">
+                                <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
+
+                                    <h3 class="title-v3-bg text-uppercase">I am seller</h3>
+
+                                    <p class="text-uppercase color-white" href="#">I want to sell something</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4" style="cursor:pointer">
+                            <a id="LoadBuyerPartial">
+                                <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
+
+                                    <h3 class="title-v3-bg text-uppercase">I am buyer</h3>
+
+                                    <p class="text-uppercase color-white" href="#">Want to Buy Something</p>
+                                </div>
+                            </a>
+                        </div>
 
 
-                <div class="row margin-bottom-60" style="margin-top: 60px;">
-                    <div class="col-sm-4" style="cursor:pointer">
-                        <a id="LoadSellerPartial">
-                            <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
+                        <div class="col-sm-4" style="cursor:pointer">
+                            <a id="LoadLendorPartial">
+                                <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
 
-                                <h3 class="title-v3-bg text-uppercase">I am seller</h3>
+                                    <h3 class="title-v3-bg text-uppercase">I am lendor</h3>
 
-                                <p class="text-uppercase color-white" href="#">I want to sell something</p>
-                            </div>
-                        </a>
+                                    <p class="text-uppercase color-white" href="#">Read More</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div><!--/row-->
+                    <div class="row margin-bottom-60">
+                        <div asp-validation-summary="All" class="text-danger"></div>
                     </div>
-                    <div class="col-sm-4" style="cursor:pointer">
-                        <a id="LoadBuyerPartial">
-                            <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
-
-                                <h3 class="title-v3-bg text-uppercase">I am buyer</h3>
-
-                                <p class="text-uppercase color-white" href="#">Want to Buy Something</p>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="col-sm-4" style="cursor:pointer">
-                        <a id="LoadLendorPartial">
-                            <div class="service-block-v1 md-margin-bottom-50" style=" background-color: #16b9cc;">
-
-                                <h3 class="title-v3-bg text-uppercase">I am lendor</h3>
-
-                                <p class="text-uppercase color-white" href="#">Read More</p>
-                            </div>
-                        </a>
-                    </div>
-                </div><!--/row-->
-                <div class="row margin-bottom-60">
-                    <div asp-validation-summary="All" class="text-danger"></div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 }
 else
@@ -66,12 +67,11 @@ else
             <h2>A link has been sent to your email Please Verify</h2>
         </div>
     </div>
-
 }
 
 @section Scripts{
-    
-    
+
+
     <script>
         $(document).ready(function () {
             if ($("#finance").val() === "yes") {
@@ -94,6 +94,31 @@ else
             $("#RegistrationContainer").hide();
             $("#BuyerRegistration").load("@Url.Action("BuyerRegistration", "User")");
         });
-    });
+        });
+
     </script>
+    @if (TempData["Id"] != null)
+    {
+        if (Model.IsBuyer)
+        {
+            <script>
+                $("#RegistrationContainer").hide();
+                $("#BuyerRegistration").load("@Url.Action("BuyerRegistration","User")");
+            </script>
+        }
+        if (Model.IsSeller)
+        {
+            <script>
+                $("#RegistrationContainer").hide();
+                $("SellerRegistration").load("@Url.Action("SellerRegistration","User")");
+            </script>
+        }
+        if (Model.IsLendor)
+        {
+            <script>
+                $("#RegistrationContainer").hide();
+                $("#LendorRegistration").load("@Url.Action("LendorRegistration","User")");            
+            </script>
+        }
+    }
 }

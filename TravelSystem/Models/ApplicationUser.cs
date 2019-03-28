@@ -10,7 +10,6 @@ namespace TravelSystem.Models
         {
             ApplicantApproveDetails = new List<ApplicantDetails>();
             ApplicantDetails = new List<ApplicantDetails>();
-            Vehicles = new List<Vehicles>();
             VehiclesCarts = new List<VehiclesCarts>();
             VehicleRatings = new List<VehicleRatings>();
             Payments = new List<Payments>();

@@ -57,6 +57,9 @@
             }
         });
     }
+        function userDetail(id) {
+        window.location.href = "@Url.Action("Detail","Admin")?id=" + id;
+    }
     function changePassword(email) {
         window.location.href = "@Url.Action("ChangePassword","Admin")?email=" + email;
         @*$.ajax({
@@ -117,7 +120,7 @@
                         width:150
                     },
                     {
-                        template: "<span class='btn btn-link'>#: FullName # </span>",
+                        template: "<span onclick='userDetail(#:Id#)' class='btn btn-link'>#: FullName # </span>",
                         field: "FullName",
                         title: "Full Name"
                     },
