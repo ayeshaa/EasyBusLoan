@@ -4,67 +4,81 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<script>
-       $(document).ready(function () {
-        $("#categories").kendoMultiSelect({
-            placeholder: "Select Categories",
-            dataTextField: "CategoryName",
-            dataValueField: "Id",
-            select: onSelect,
-            dataSource: {
-                type: "json",
-                transport: {
-                    read: {
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<section class="content">
 
+
+    <script>
+        $(document).ready(function () {
+            $("#categories").kendoMultiSelect({
+                placeholder: "Select Categories",
+                dataTextField: "CategoryName",
+                dataValueField: "Id",
+                select: onSelect,
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: {
+
+                        }
                     }
-                }
-            },
-            value: [
+                },
+                value: [
 
-            ]
+                ]
+            });
         });
-    });
-</script>
-<form method="post" action="@Url.Action("SaveTermsAndConditions","Admin")">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <h3 class="card-header-text">Terms And Conditions</h3>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
-                                <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+    </script>
+    <form method="post" action="@Url.Action("SaveTermsAndConditions","Admin")">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <h3 class="card-header-text">Terms And Conditions</h3>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.HiddenFor(m => m.Id)
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea id="editor" name="Description" rows="10" cols="30" style="height:440px" aria-label="editor">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.HiddenFor(m => m.Id)
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea id="editor" name="Description" rows="10" cols="30" style="height:440px" aria-label="editor">
 @if(Model!=null){
 @Html.Raw(Model.Description)
 }
     </textarea>
-                                    <script>
-                                        $(document).ready(function () {
-                                            // create Editor from textarea HTML element with default set of tools
-                                            $("#editor").kendoEditor({
-                                                encoded: false,
-                                                resizable: {
-                                                    content: true,
-                                                    toolbar: true
-                                                }
+                                        <script>
+                                            $(document).ready(function () {
+                                                // create Editor from textarea HTML element with default set of tools
+                                                $("#editor").kendoEditor({
+                                                    encoded: false,
+                                                    resizable: {
+                                                        content: true,
+                                                        toolbar: true
+                                                    }
+                                                });
                                             });
-                                        });
-                                    </script>
+                                        </script>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,9 +86,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</form>
-<script>
+    </form>
+    <script>
     function onSelect(e) {
 
         var dataItem = e.dataItem;
@@ -91,4 +104,5 @@
             window.location.href = "@Url.Action("Dashboard","Admin")";
         });
     });
-</script>
+    </script>
+    </section>

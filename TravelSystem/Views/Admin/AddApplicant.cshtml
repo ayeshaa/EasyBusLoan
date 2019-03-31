@@ -3,7 +3,19 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<script>
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<section class="content">
+
+    <script>
        $(document).ready(function () {
         $("#vehicleTypes").kendoDropDownList({
             placeholder: "Select Vehicle Type",
@@ -23,8 +35,8 @@
             ]
         });
     });
-</script>
-<div class="container-fluid">
+    </script>
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-3">
@@ -476,29 +488,29 @@
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
-<script>
-    $(document).ready(function () {
-        $("#files").kendoUpload();
-        $("#datetimepicker").kendoDateTimePicker({
-            value: new Date(),
-            dateInput: true
-        });
+    <script>
+        $(document).ready(function () {
+            $("#files").kendoUpload();
+            $("#datetimepicker").kendoDateTimePicker({
+                value: new Date(),
+                dateInput: true
+            });
 
-    });
-    $(document).ready(function () {
-        $("#files").kendoUpload();
-        $("#datetime").kendoDateTimePicker({
-            value: new Date(),
-            dateInput: true
         });
+        $(document).ready(function () {
+            $("#files").kendoUpload();
+            $("#datetime").kendoDateTimePicker({
+                value: new Date(),
+                dateInput: true
+            });
 
-    });
-</script>
-<script>
+        });
+    </script>
+    <script>
     function onSelect(e) {
 
         var dataItem = e.dataItem;
@@ -515,4 +527,5 @@
             window.location.href = "@Url.Action("ApplicantDetails","Admin")";
         });
     });
-</script>
+    </script>
+    </section>

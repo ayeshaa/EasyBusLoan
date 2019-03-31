@@ -6,45 +6,58 @@
 @{
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <h3 class="card-header-text">Vehicle Types</h3>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                            <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Vehicle Type"><i class="fa fa-plus btn-icon shadow "></i></button>
 
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3 class="card-header-text">Vehicle Types</h3>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Vehicle Type"><i class="fa fa-plus btn-icon shadow "></i></button>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body listPadding">
-                    <div id="grid"></div>
+                    <div class="card-body listPadding">
+                        <div id="grid"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="PopupWarning" style="display: none;">
-    <table>
-        <tr>
-            <td>
-                <p>Do you want to delete?</p>
-                <br />
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center">
-                <button class="k-button k-primary" id="btnYes">Yes</button>
-                <button class="k-button k-primary" id="btnNo">No</button>
-            </td>
-        </tr>
-    </table>
-</div>
-<script type="text/javascript">
+    <div id="PopupWarning" style="display: none;">
+        <table>
+            <tr>
+                <td>
+                    <p>Do you want to delete?</p>
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <button class="k-button k-primary" id="btnYes">Yes</button>
+                    <button class="k-button k-primary" id="btnNo">No</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
     $(document).on("click", "#btnAdd", function () {
         window.location.href="@Url.Action("AddVehicleType","Admin")"
     })
@@ -103,7 +116,7 @@
                          field: "Description",
                         title: "Description"
                     },
-                    
+
                     {
                         template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicleType' />",
                         width:100
@@ -115,6 +128,7 @@
      function Edit(e) {
         window.location.href = "@Url.Action("AddVehicleType", "Admin")?id=" + e;
     }
-</script>
+    </script>
 
 
+    </section>
