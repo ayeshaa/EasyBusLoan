@@ -1,58 +1,48 @@
 ﻿@{
+    ViewData["Title"] = "Vehicles";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
 <section class="content">
-
-    <div class="container-fluid">
+    <form method="post" action="@Url.Action("SaveVehicle","Admin")">
         <div class="row">
-            <div class="col-12">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <h3 class="card-header-text">Vehicles</h3>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                <button type="button" class="btn btn-primary btn-xl" id="btnAdd" data-placement="left" data-toggle="tooltip" title="Add Vehicle"><i class="fa fa-plus btn-icon shadow "></i></button>
-
-                            </div>
-                        </div>
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <button type="button" class="btn btn-primary btn-xl float-right" id="btnAdd" title="Add Blog Categories">Add</button>
                     </div>
-                    <div class="card-body listPadding">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
                         <div id="grid"></div>
                     </div>
                 </div>
+                <!-- /.box -->
+
             </div>
+            <!--/.col (left) -->
         </div>
-    </div>
-    <div id="PopupWarning" style="display: none;">
-        <table>
-            <tr>
-                <td>
-                    <p>Do you want to delete?</p>
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: center">
-                    <button class="k-button k-primary" id="btnYes">Yes</button>
-                    <button class="k-button k-primary" id="btnNo">No</button>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <script type="text/javascript">
+        <!-- /.row -->
+    </form>
+</section>
+<div id="PopupWarning" style="display: none;">
+    <table>
+        <tr>
+            <td>
+                <p>Do you want to delete?</p>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <button class="k-button k-primary" id="btnYes">Yes</button>
+                <button class="k-button k-primary" id="btnNo">No</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
     $(document).on("click", "#btnAdd", function () {
         window.location.href="@Url.Action("AddVehicle","Admin")"
     })
@@ -130,5 +120,4 @@
      function Edit(e) {
         window.location.href = "@Url.Action("AddVehicle", "Admin")?id=" + e;
     }
-    </script>
-    </section>
+</script>

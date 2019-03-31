@@ -3,26 +3,13 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
-<section class="content">
-
-
-    <script>
+<script>
        $(document).ready(function () {
         $("#categories").kendoMultiSelect({
             placeholder: "Select Categories",
             dataTextField: "CategoryName",
             dataValueField: "Id",
+           
             select: onSelect,
             dataSource: {
                 type: "json",
@@ -37,65 +24,61 @@
             ]
         });
     });
-    </script>
-    <form method="post" action="@Url.Action("SaveBlog","Admin")">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <h3 class="card-header-text">Blog Detail</h3>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
-                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+</script>
 
+<section class="content">
+    <form method="post" action="@Url.Action("SaveBlog","Admin")">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <button type="submit" class="btn btn-success float-right" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-danger float-right mr-1" id="btnBack" title="Back">Back</button>
+
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(m => m.Id)
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @style = "width:100%", @placeholder = "Title" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.Title, "")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Categories</label>
+                                    <select id="categories"></select>
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.CategoryIds, "")</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @Html.HiddenFor(m => m.Id)
-                                    <div class="form-group">
-                                        <label>Title</label>
-                                        @Html.TextBoxFor(m => m.Title, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Title" })
-                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.Title, "")</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Categories</label>
-                                        <select id="categories"></select>
-                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CategoryIds, "")</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea id="editor" name="Body" rows="10" cols="30" style="height:440px" aria-label="editor">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea id="editor" name="Body" rows="10" cols="30" style="height:440px" aria-label="editor">
 @Html.Raw(Model.Body)
     </textarea>
-                                        <script>
-                                            $(document).ready(function () {
-                                                // create Editor from textarea HTML element with default set of tools
-                                                $("#editor").kendoEditor({
-                                                    encoded: false,
-                                                    resizable: {
-                                                        content: true,
-                                                        toolbar: true
-                                                    }
-                                                });
+                                    <script>
+                                        $(document).ready(function () {
+                                            // create Editor from textarea HTML element with default set of tools
+                                            $("#editor").kendoEditor({
+                                                encoded: false,
+                                                resizable: {
+                                                    content: true,
+                                                    toolbar: true
+                                                }
                                             });
-                                        </script>
-                                    </div>
+                                        });
+                                    </script>
                                 </div>
-                                <input type="hidden" id="blogCat" name="CategoryIds" />
                             </div>
+                            <input type="hidden" id="blogCat" name="CategoryIds" />
                         </div>
                     </div>
                 </div>
@@ -130,4 +113,4 @@
         });
     });
     </script>
-    </section>
+</section>

@@ -3,18 +3,6 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
-<section class="content">
-
 
     <script>
     $(document).ready(function () {
@@ -37,24 +25,20 @@
         });
     });
     </script>
-    <form method="post" action="@Url.Action("SaveVehicle","Admin")">
-        <div class="container-fluid">
+    <section class="content">
+        <form method="post" action="@Url.Action("SaveVehicle","Admin")">
             <div class="row">
-                <div class="col-12">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <h3 class="card-header-text">Vehicle Detail</h3>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
-                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <button type="submit" class="btn btn-success float-right" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-danger float-right mr-1" id="btnBack" title="Back">Back</button>
 
-                                </div>
-                            </div>
                         </div>
-                        <div class="card-body">
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     @Html.HiddenFor(m => m.Id)
@@ -67,7 +51,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Mileage</label>
-                                        @Html.TextBoxFor(o => o.Mileage, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Mileage" })
+                                        @Html.TextBoxFor(o => o.Mileage, new { @class = " form-control", @style = "width:100%", @placeholder = "Mileage" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.Mileage, "")</span>
                                     </div>
                                 </div>
@@ -76,14 +60,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Model</label>
-                                        @Html.TextBoxFor(o => o.Model, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Model" })
+                                        @Html.TextBoxFor(o => o.Model, new { @class = " form-control", @style = "width:100%", @placeholder = "Model" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.Model, "")</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Passenger Seats</label>
-                                        @Html.TextBoxFor(o => o.PassengersSeats, new { @type = "number", @class = " k-textbox", @style = "width:100%", @placeholder = "Passenger Seats" })
+                                        @Html.TextBoxFor(o => o.PassengersSeats, new { @type = "number", @class = " form-control", @style = "width:100%", @placeholder = "Passenger Seats" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.PassengersSeats, "")</span>
                                     </div>
                                 </div>
@@ -92,14 +76,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Sales Price</label>
-                                        @Html.TextBoxFor(o => o.SalesPrice, new { @type = "number", @class = " k-textbox", @style = "width:100%", @placeholder = "Sales Price" })
+                                        @Html.TextBoxFor(o => o.SalesPrice, new { @type = "number", @class = " form-control", @style = "width:100%", @placeholder = "Sales Price" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.SalesPrice, "")</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Location</label>
-                                        @Html.TextBoxFor(o => o.Location, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Location" })
+                                        @Html.TextBoxFor(o => o.Location, new { @class = " form-control", @style = "width:100%", @placeholder = "Location" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.Location, "")</span>
                                     </div>
                                 </div>
@@ -108,14 +92,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>City Or State</label>
-                                        @Html.TextBoxFor(o => o.CityOrState, new { @class = " k-textbox", @style = "width:100%", @placeholder = "City Or State" })
+                                        @Html.TextBoxFor(o => o.CityOrState, new { @class = " form-control", @style = "width:100%", @placeholder = "City Or State" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.CityOrState, "")</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>VIN Number</label>
-                                        @Html.TextBoxFor(o => o.Vinnumber, new { @class = " k-textbox", @style = "width:100%", @placeholder = "VIN Number" })
+                                        @Html.TextBoxFor(o => o.Vinnumber, new { @class = " form-control", @style = "width:100%", @placeholder = "VIN Number" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.Vinnumber, "")</span>
                                     </div>
                                 </div>
@@ -124,7 +108,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Make Year</label>
-                                        @Html.TextBoxFor(o => o.MakeYear, new { id = "datetimepicker", @class = " k-textbox", @style = "width:100%", @placeholder = "Make Year" })
+                                        @Html.TextBoxFor(o => o.MakeYear, new { id = "datetimepicker", @class = " form-control", @style = "width:100%", @placeholder = "Make Year" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.MakeYear, "")</span>
                                     </div>
                                 </div>
@@ -149,19 +133,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-    <script>
-        $(document).ready(function () {
-            $("#files").kendoUpload();
-            $("#datetimepicker").kendoDateTimePicker({
-                value: new Date(),
-                dateInput: true
-            });
+        </form>
+    </section>
+        <script>
+            $(document).ready(function () {
+                $("#files").kendoUpload();
+                $("#datetimepicker").kendoDateTimePicker({
+                    value: new Date(),
+                    dateInput: true
+                });
 
-        });
-    </script>
-    <script>
+            });
+        </script>
+        <script>
     function onSelect(e) {
 
         var dataItem = e.dataItem;
@@ -178,5 +162,4 @@
             window.location.href = "@Url.Action("Vehicles","Admin")";
         });
     });
-    </script>
-    </section>
+        </script>

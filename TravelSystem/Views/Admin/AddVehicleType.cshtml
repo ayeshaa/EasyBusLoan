@@ -3,18 +3,6 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
-<section class="content">
-
     <script>
        $(document).ready(function () {
         $("#vehicleTypes").kendoDropDownList({
@@ -36,30 +24,26 @@
         });
     });
     </script>
-    <form method="post" action="@Url.Action("SaveVehicleType","Admin")">
-        <div class="container-fluid">
+    <section class="content">
+        <form method="post" action="@Url.Action("SaveVehicleType","Admin")">
             <div class="row">
-                <div class="col-12">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <h3 class="card-header-text">Vehicle Detail</h3>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
-                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <button type="submit" class="btn btn-success float-right" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-danger float-right mr-1" id="btnBack" title="Back">Back</button>
 
-                                </div>
-                            </div>
                         </div>
-                        <div class="card-body">
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     @Html.HiddenFor(m => m.Id)
                                     <div class="form-group">
                                         <label>Vehicle Type Name</label>
-                                        @Html.TextBoxFor(o => o.VehicleTypeName, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Name" })
+                                        @Html.TextBoxFor(o => o.VehicleTypeName, new { @class = " form-control", @style = "width:100%", @placeholder = "Name" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.VehicleTypeName, "")</span>
 
                                     </div>
@@ -67,7 +51,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Description</label>
-                                        @Html.TextBoxFor(o => o.Description, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Description" })
+                                        @Html.TextBoxFor(o => o.Description, new { @class = " form-control", @style = "width:100%", @placeholder = "Description" })
                                         <span class="text-danger">@Html.ValidationMessageFor(o => o.Description, "")</span>
 
                                     </div>
@@ -77,9 +61,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-    <script>
+        </form>
+    </section>
+        <script>
     function onSelect(e) {
 
         var dataItem = e.dataItem;
@@ -96,5 +80,4 @@
             window.location.href = "@Url.Action("VehicleTypes","Admin")";
         });
     });
-    </script>
-    </section>
+        </script>
