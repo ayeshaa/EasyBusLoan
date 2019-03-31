@@ -1,0 +1,39 @@
+﻿@model TravelSystem.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-md-8">
+    <h1>Detail</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Full Name</th>
+                <td>@Model.FullName</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>@Model.CompanyName</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>@Model.Phone</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                @if (Model.IsBlock == false)
+                {
+                <td> <i class="fa fa-circle" style="color:#FF0000;"></i></td>
+                }
+                else
+                {
+                    <td><i class="fa fa-circle" style="color:#00FF00;"></i></td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>

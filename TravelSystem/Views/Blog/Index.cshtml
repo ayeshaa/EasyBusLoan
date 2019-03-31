@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    var totalBlogs = Convert.ToInt32(ViewBag.TotalBlogs);
+    int pageNumber = !string.IsNullOrEmpty(Context.Request.Query["page"].ToString())?Convert.ToInt32(Context.Request.Query["page"].ToString()):1;
 }
 
 <link href="~/css/blog.css" rel="stylesheet" />
@@ -23,39 +25,39 @@
 
                 <!--Blog Post-->
                 <div class="row blog blog-medium margin-bottom-40">
-                    <div class="col-md-5">
-                        <img src="~/images/banner1.svg" class="img-responsive" />
-                    </div>
+
                     @foreach (var item in Model)
                     {
-                    <div class="col-md-7">
-                        <h2><a href="#">@item.Title</a></h2>
-                        <ul class="list-unstyled list-inline blog-info">
-                            <li><i class="fa fa-calendar"></i> @item.CreatedDate.ToString("dd-MM-yyyy")</li>
-                            <li><i class="fa fa-user"></i> <a href="#">@item.Admins.Name</a></li>
-                            <li><i class="fa fa-tags"></i> @item.CategoryIds</li>
-                        </ul>
-                        <p>
-
-                            @if (item.Body != null && item.Body.Length > 350)
-                            {
-                                string description = item.Body.Substring(0, 350);
-                                int index = description.LastIndexOf(' ');
-                                string outputdescription = description.Substring(0, index);
-                            <p>
-                                @outputdescription... 
-                            </p>
-
-                        }
-                        else if (item.Body != null && item.Body.Length < 350)
-                        {
-                            <p>
-                                @item.Body
-                            </p>
-                        }
-                            </p>
-                            <p><a class="btn-u btn-u-sm" href="/Blog/Detail/@item.Id">Read More <i class="fa fa-angle-double-right margin-left-5"></i></a></p>
+                        <div class="col-md-5">
+                            <img src="~/images/banner1.svg" class="img-responsive" />
                         </div>
+                        <div class="col-md-7">
+                            <h2><a href="#">@item.Title</a></h2>
+                            <ul class="list-unstyled list-inline blog-info">
+                                <li><i class="fa fa-calendar"></i> @item.CreatedDate.ToString("dd-MM-yyyy")</li>
+
+                                <li><i class="fa fa-tags"></i> @item.CategoryIds</li>
+                            </ul>
+                            <p>
+
+                                @if (item.Body != null && item.Body.Length > 350)
+                                {
+                                    string description = item.Body.Substring(0, 350);
+                                    int index = description.LastIndexOf(' ');
+                                    string outputdescription = description.Substring(0, index);
+                                <p>
+                                    @outputdescription...
+                                </p>
+
+                            }
+                            else if (item.Body != null && item.Body.Length < 350)
+                            {
+                                <p>
+                                    @item.Body
+                                </p>
+                            }
+                                <p><a class="btn-u btn-u-sm" href="/Blog/Detail/@item.Id">Read More <i class="fa fa-angle-double-right margin-left-5"></i></a></p>
+                            </div>
                         }
 
                 </div>
@@ -64,18 +66,34 @@
 
                 <!--Pagination-->
                 <div class="text-center">
+                    
+                 @if (totalBlogs > 5)
+                 {
+
+                 
                     <ul class="pagination">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li class="active"><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><a href="#">»</a></li>
+                        @if (pageNumber > 1)
+                        {
+                            <li><a href="@Url.Action("Index","Blog",new { page = pageNumber-1})">«</a></li>
+                        }
+
+                        @for (var i = 1; i <= Convert.ToInt32(totalBlogs / 5)+1; i++)
+                        {
+                            <li>
+                                <a @if (i == pageNumber) { @: class="active"
+                                   }
+                                   href="@Url.Action("Index","Blog",new { page = i})">@i</a>
+                            </li>
+                        }
+                        @if (pageNumber < (totalBlogs / 5))
+                        {
+                            <li><a href="@Url.Action("Index","Blog",new { page = pageNumber+1})">»</a></li>
+                        }
+
+
                     </ul>
+                 }
+
                 </div>
                 <!--End Pagination-->
             </div>

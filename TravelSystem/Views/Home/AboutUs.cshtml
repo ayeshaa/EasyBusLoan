@@ -1,0 +1,30 @@
+﻿@model TravelSystem.Models.AboutUs
+
+@{
+    ViewBag.Title = "HowItWorks";
+}
+
+<link href="~/css/blog.css" rel="stylesheet" />
+<div class="wrapper">
+
+    <!--=== Breadcrumbs ===-->
+    <div class="breadcrumbs">
+        <div class="container">
+            <h1 class="pull-left">About Us</h1>
+
+        </div>
+    </div><!--/breadcrumbs-->
+    <!--=== End Breadcrumbs ===-->
+    <div class="container content blog-full-width" style="min-height:500px">
+        <!--Blog Post-->
+        <div class="blog margin-bottom-40">
+            @if (Model != null)
+            {
+                @Html.Raw(Model.Description)
+            }
+        </div>
+        <!--End Blog Post-->
+    </div><!--/container-->
+    <!--=== End Content Part ===-->
+
+</div>

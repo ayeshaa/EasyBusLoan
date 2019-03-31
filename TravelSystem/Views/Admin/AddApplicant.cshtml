@@ -1,0 +1,518 @@
+﻿@model TravelSystem.Models.ApplicantDetails
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+       $(document).ready(function () {
+        $("#vehicleTypes").kendoDropDownList({
+            placeholder: "Select Vehicle Type",
+            dataTextField: "VehicleTypeName",
+            dataValueField: "Id",
+            select: onSelect,
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Url.Action("GetAllApplicantDetails", "Admin")",
+                    }
+                }
+            },
+            value: [
+
+            ]
+        });
+    });
+</script>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <h3 class="card-header-text">Applicant Detail</h3>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="@Url.Action("SaveApplicantDetails","Admin")">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.HiddenFor(m => m.Id)
+                                    <div class="form-group">
+                                        <label>Company Name</label>
+                                        @Html.TextBoxFor(o => o.CompanyName, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CompanyName" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CompanyName, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Year Established</label>
+                                        @Html.TextBoxFor(o => o.YearEstablished, new { id = "datetimepicker", @class = "k-textbox", @style = "width:100%", @placeholder = "Year" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.YearEstablished, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>TradeStyle</label>
+                                        @Html.TextBoxFor(o => o.TradeStyle, new { @class = " k-textbox", @style = "width:100%", @placeholder = "TradeStyleTradeStyle" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.TradeStyle, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>FederalTaxIdNumber</label>
+                                        @Html.TextBoxFor(o => o.FederalTaxIdNumber, new { @class = " k-textbox", @style = "width:100%", @placeholder = "FederalTaxIdNumber" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.FederalTaxIdNumber, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        @Html.TextBoxFor(o => o.Country, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Country" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.Country, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        @Html.TextBoxFor(o => o.City, new { @class = " k-textbox", @style = "width:100%", @placeholder = "City" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.City, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        @Html.TextBoxFor(o => o.State, new { @class = " k-textbox", @style = "width:100%", @placeholder = "State" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.State, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        @Html.TextBoxFor(o => o.Address, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Address" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.Address, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Zip Code</label>
+                                        @Html.TextBoxFor(o => o.ZipCode, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Zip Code" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.ZipCode, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ContactPerson</label>
+                                        @Html.TextBoxFor(o => o.ContactPerson, new { @class = " k-textbox", @style = "width:100%", @placeholder = "ContactPerson" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.ContactPerson, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Telephone</label>
+                                        @Html.TextBoxFor(o => o.Telephone, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Telephone" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.Telephone, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>FaxNumber</label>
+                                        @Html.TextBoxFor(o => o.FaxNumber, new { @class = " k-textbox", @style = "width:100%", @placeholder = "FaxNumber" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.FaxNumber, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>UserId</label>
+                                        @Html.TextBoxFor(o => o.UserId, new { @class = " k-textbox", @style = "width:100%", @placeholder = "UserId" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.UserId, "")</span>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsCorportation, new { @class = "checkbox", @style = "", @placeholder = "" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsCorportation, "")</span>
+                                                <label>IsCorportation</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsPartnership, new { @class = "", @style = "", @placeholder = "IsPartnership" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsPartnership, "")</span>
+                                                <label>IsPartnership</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsProprietorship, new { @class = "", @style = "", @placeholder = "IsProprietorship" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsProprietorship, "")</span>
+                                                <label>IsProprietorship</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>CurrentCoaches</label>
+                                        @Html.TextBoxFor(o => o.Message, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentCoaches" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentCoaches, "")</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Message</label>
+                                        @Html.TextBoxFor(o => o.Message, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Message" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.Message, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsCcorp, new { @class = "checkbox", @style = "", @placeholder = "" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsCcorp, "")</span>
+
+                                                <label>IsCcorp</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsScorp, new { @class = "", @style = "", @placeholder = "IsPartnership" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsScorp, "")</span>
+                                                <label>IsScorp</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.CheckBoxFor(o => o.IsLlc, new { @class = "", @style = "", @placeholder = "IsProprietorship" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(o => o.IsLlc, "")</span>
+                                                <label>IsLlc</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CurrentVans</label>
+                                        @Html.TextBoxFor(o => o.CurrentVans, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentVans" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentVans, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CurrentSchoolBuses</label>
+                                        @Html.TextBoxFor(o => o.CurrentSchoolBuses, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentSchoolBuses" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentSchoolBuses, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CurrentLimes</label>
+                                        @Html.TextBoxFor(o => o.CurrentLimes, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentLimes" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentLimes, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CurrentOthers</label>
+                                        @Html.TextBoxFor(o => o.CurrentOthers, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentOthers" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentOthers, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>CompanyInformation</label>
+                                        @Html.TextBoxFor(o => o.CompanyInformation, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CompanyInformation" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CompanyInformation, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>ReasonForAcquisitione</label>
+                                        @Html.TextBoxFor(o => o.ReasonForAcquisition, new { @class = " k-textbox", @style = "width:100%", @placeholder = "ReasonForAcquisition" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.ReasonForAcquisition, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>VehicleId</label>
+                                        @Html.TextBoxFor(o => o.VehicleId, new { @class = " k-textbox", @style = "width:100%", @placeholder = "VehicleId" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.VehicleId, "")</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>CurrentFederalTaxIdNumber</label>
+                                        @Html.TextBoxFor(o => o.CurrentFederalTaxIdNumber, new { @class = " k-textbox", @style = "width:100%", @placeholder = "CurrentFederalTaxIdNumber" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CurrentFederalTaxIdNumber, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>ApprovedByUserId</label>
+                                        @Html.TextBoxFor(o => o.ApprovedByUserId, new { @class = " k-textbox", @style = "width:100%", @placeholder = "ApprovedByUserId" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.ApprovedByUserId, "")</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Approved Date</label>
+                                        @Html.TextBoxFor(o => o.ApprovedDate, new { id = "datetime", @class = " k-textbox", @style = "width:100%", @placeholder = "ApprovedDate" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.ApprovedDate, "")</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(o => o.ToBeDelievered, new { @class = "", @style = "", @placeholder = "" })
+                                    <span class="text-danger">@Html.ValidationMessageFor(o => o.ToBeDelievered, "")</span>
+                                    <label>To Be Delivered</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <h3 class="card-header-text">Applicants CreditReferences</h3>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <h3 class="card-header-text">Applicants FinancedEquipments</h3>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <h3 class="card-header-text">Applicants Guarantors</h3>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <h3 class="card-header-text">Applicants Insurances</h3>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <h3 class="card-header-text">Applicant Vehicles</h3>
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
+                                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function () {
+        $("#files").kendoUpload();
+        $("#datetimepicker").kendoDateTimePicker({
+            value: new Date(),
+            dateInput: true
+        });
+
+    });
+    $(document).ready(function () {
+        $("#files").kendoUpload();
+        $("#datetime").kendoDateTimePicker({
+            value: new Date(),
+            dateInput: true
+        });
+
+    });
+</script>
+<script>
+    function onSelect(e) {
+
+        var dataItem = e.dataItem;
+      var multiselect = $("#categories").data("kendoMultiSelect");
+        var selectedData = [];
+        var value = multiselect.value();
+        var selectedCategories = value;
+        selectedCategories.push(dataItem.Id);
+        $("#blogCat").val(selectedCategories.join(","));
+
+    };
+    $(document).ready(function () {
+        $("#btnBack").click(function () {
+            window.location.href = "@Url.Action("ApplicantDetails","Admin")";
+        });
+    });
+</script>

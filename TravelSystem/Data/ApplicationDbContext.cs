@@ -19,6 +19,7 @@ namespace TravelSystem.Models
         public virtual DbSet<Admins> Admins { get; set; }
         public virtual DbSet<BlogCategories> BlogCategories { get; set; }
         public virtual DbSet<Blogs> Blogs { get; set; }
+        public virtual DbSet<BlogComments> BlogComments { get; set; }
         public virtual DbSet<ApplicantDetails> ApplicantDetails { get; set; }
         public virtual DbSet<ApplicantsCreditReferences> ApplicantsCreditReferences { get; set; }
         public virtual DbSet<ApplicantsFinancedEquipments> ApplicantsFinancedEquipments { get; set; }
@@ -30,6 +31,12 @@ namespace TravelSystem.Models
         public virtual DbSet<VehiclesCarts> VehiclesCarts { get; set; }
         public virtual DbSet<VehicleRatings> VehicleRatings { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<HowItWorks> HowItWorks { get; set; }
+        public virtual DbSet<PrivacyPolicy> PrivacyPolicy { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<AboutUs> About { get; set; }
+        public virtual DbSet<TermsAndConditions> TermsAndConditions { get; set; }
+        public virtual DbSet<TermsOfUseSite> TermsOfUseSite { get; set; }
         public virtual DbSet<spGetVehicleDetail> spGetVehicleDetail { get; set; }
         public virtual DbSet<PaymentVehicles> PaymentVehicles { get; set; }
         public virtual DbSet<ApplicantVehicles> ApplicantVehicles { get; set; }
