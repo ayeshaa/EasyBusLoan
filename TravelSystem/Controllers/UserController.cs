@@ -46,12 +46,12 @@ namespace TravelSystem.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(int? vehicleId,string returnUrl = null)
+        public async Task<IActionResult> Login(int? vehicleId, string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
-           
-                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-                ViewData["ReturnUrl"] = returnUrl;
+
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            ViewData["ReturnUrl"] = returnUrl;
             var loginModel = new LoginViewModel();
             if (vehicleId.HasValue)
             {
@@ -177,7 +177,7 @@ namespace TravelSystem.Controllers
                 }
                 AddErrors(result);
             }
-
+            TempData["Id"] = ModelState.IsValid;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -497,22 +497,22 @@ namespace TravelSystem.Controllers
         }
         public async Task<IActionResult> ProfileSettings()
         {
-            var model = new RegisterViewModel();
-
+            var model = new ProfileViewModel();
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
             if (user != null)
             {
-                model = new RegisterViewModel
+                model = new ProfileViewModel
                 {
                     CompanyName = user.CompanyName,
                     FullName = user.FullName,
                     Phone = user.Phone,
+                    Photo=user.Photo,
                 };
             }
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> ProfileSettings(RegisterViewModel model)
+        public async Task<IActionResult> ProfileSettings(ProfileViewModel model, IFormFile Photo,int Id)
         {
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
@@ -520,9 +520,21 @@ namespace TravelSystem.Controllers
             {
                 if (user != null)
                 {
+                    if (Photo != null)
+                    {
+                        var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "Users");
+
+                        var filePath = Path.Combine(uploads, Photo.FileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            Photo.CopyTo(fileStream);
+                        }
+                        user.Photo = Photo.FileName;
+                    }
                     user.CompanyName = model.CompanyName;
                     user.Phone = model.Phone;
                     user.FullName = model.FullName;
+                    model.Photo = user.Photo;
                 }
                 await _userManager.UpdateAsync(user);
             }
@@ -543,7 +555,7 @@ namespace TravelSystem.Controllers
             {
                 if (user != null)
                 {
-                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user,model.NewPassword);
+                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.NewPassword);
                 }
                 await _userManager.UpdateAsync(user);
             }

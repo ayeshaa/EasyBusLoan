@@ -129,6 +129,7 @@
   <ItemGroup>
     <Folder Include="Areas\" />
     <Folder Include="NewFolder\" />
+    <Folder Include="wwwroot\Users\" />
   </ItemGroup>
 
   <ItemGroup>

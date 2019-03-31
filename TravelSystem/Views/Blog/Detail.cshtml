@@ -6,23 +6,45 @@
     ViewBag.Title = "Detail";
 }
 <!--=== Breadcrumbs ===-->
-<div class="breadcrumbs">
-    <div class="container">
-        <h1 class="pull-left">@Model.Title</h1>
-
-    </div>
-</div><!--/breadcrumbs-->
+<hr />
 <!--=== End Breadcrumbs ===-->
 <div class="container content blog-full-width" style="min-height:500px">
     <!--Blog Post-->
-    <div class="blog margin-bottom-40">
-        @Html.Raw(Model.Body)
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/images/banner1.svg" class="img-responsive" />
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Title</h2>
+            @Html.Raw(Model.Body)
+   
+        </div>
+        
     </div>
     <!--End Blog Post-->
 </div><!--/container-->
 <div class="container">
     <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#reviews" role="tab" data-toggle="tab">Reviews (@Model.BlogComments.Count())</a></li>
+        <li class="active"><a href="#reviews" data-toggle="tab">Reviews (@Model.BlogComments.Count())</a></li>
+        <li class=" col-md-offset-9">
+            <div class="col-md-12 ">
+                <a class="btn btn-social-icon btn-twitter"
+                   href="https://twitter.com/intent/tweet?
+                                   url=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)&text=@Model.Title"
+                   target="_blank" title="Share on Twitter">
+                    <span class="fa fa-twitter"></span>
+                </a>
+                <a class="btn btn-social-icon btn-facebook" title="Share on Facebook"
+                   href="https://facebook.com/sharer.php?u=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)&t=@Model.Title" target="_blank">
+                    <span class="fa fa-facebook"></span>
+                </a>
+                <a class="btn btn-social-icon btn-google" href="https://plus.google.com/share?
+                                       url=@string.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString)"
+                   target="_blank" title="Share on Google+">
+                    <span class="fa fa-google"></span>
+                </a>
+            </div>
+        </li>
     </ul>
     <div class="tab-content">
         <!-- Description -->
