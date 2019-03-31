@@ -1,62 +1,44 @@
 ﻿@model TravelSystem.Models.BlogCategories
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Add Blog Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
 <section class="content">
-
-
     <form method="post" action="@Url.Action("SaveBlogCategories","Admin")">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <h3 class="card-header-text">Blog Category Detail</h3>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                    <button type="button" class="btn btn-danger" id="btnBack" data-placement="left" data-toggle="tooltip" title="Back"><i class="fa fa-reply btn-icon"></i></button>
-                                    <button type="submit" class="btn btn-success" id="btnSave" data-placement="left" data-toggle="tooltip" title="Save"><i class="fa fa-save btn-icon"></i></button>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <button type="submit" class="btn btn-success float-right" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-danger float-right mr-1" id="btnBack" title="Back">Back</button>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @Html.HiddenFor(m => m.Id)
-                                    <div class="form-group">
-                                        <label>Title</label>
-                                        @Html.TextBoxFor(m => m.CategoryName, new { @class = " k-textbox", @style = "width:100%", @placeholder = "Title" })
-                                        <span class="text-danger">@Html.ValidationMessageFor(o => o.CategoryName)</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
                     </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                        <div class="box-body">
+                            @Html.HiddenFor(m=>m.Id)
+                            <div class="form-group">
+                                <label>Title</label>
+                                @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control", @style = "width:100%", @placeholder = "Title" })
+                                <span class="text-danger">@Html.ValidationMessageFor(o => o.CategoryName)</span>
+                            </div>
+                        </div>
                 </div>
+                <!-- /.box -->
+
             </div>
+            <!--/.col (left) -->
         </div>
+        <!-- /.row -->
     </form>
+</section>
+<!-- /.content -->
+
     <script>
     $(document).ready(function () {
         $("#btnBack").click(function () {
-            window.location.href="@Url.Action("BlogCategories","Admin")"
+            window.location.href = "@Url.Action("BlogCategories","Admin")";
         })
     })
     </script>
-    </section>

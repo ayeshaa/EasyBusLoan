@@ -1,68 +1,24 @@
-﻿@*<!DOCTYPE html>
-
-
-    <environment include="Development">
-        <script src="~/AdminDesign/js/Kendo/jquery.min.js"></script>
-        <script src="~/AdminDesign/js/Kendo/kendo.all.min.js"></script>
-    </environment>
-</head>*@
-@*<body id="page-top">
-
- 
-    <div id="wrapper">
-        <!-- Sidebar -->
-     
-        <div id="content-wrapper">
-            <div class="loading-wrapper">
-                <div class="loading"></div>
-            </div>
-            @RenderBody()
-            <!-- Sticky Footer -->
-           
-        </div>
-        <!-- /.content-wrapper -->
-    </div>
-
-    <!-- /#wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-angle-up"></i>
-    </a>
-
-
-    <environment include="Development">
-        @*<script src="/AdminDesign/js/jquery.min.js"></script>*..@
-        <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
-        <script src="~/AdminDesign/js/jquery-validation//dist/jquery.validate.js"></script>
-        <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/AdminDesign/js/jquery//dist/jquery.unobtrusive-ajax.js"></script>
-        <script src="/AdminDesign/js/jquery.easing.min.js"></script>
-        <script src="~/AdminDesign/js/sb-admin.min.js"></script>
-        <script src="~/AdminDesign/js/site.js"></script>
-    </environment>
-    <environment exclude="Development">
-        @*<script src="/AdminDesign/js/jquery.min.js"></script>*//@
-        <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
-        <script src="~/AdminDesign/js/jquery-validation//dist/jquery.validate.js"></script>
-        <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/AdminDesign/js/jquery//dist/jquery.unobtrusive-ajax.js"></script>
-        <script src="/AdminDesign/js/jquery.easing.min.js"></script>
-        <script src="~/AdminDesign/js/sb-admin.min.js"></script>
-        <script src="~/AdminDesign/js/site.js"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
-</body>
-</html>*@
-
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"] - EZBus Loan</title>
+    <environment include="Development">
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css" rel="stylesheet" />
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css" rel="stylesheet" />
+        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.mobile.min.css" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800&amp;subset=cyrillic,latin'>
+        @*<link href="~/AdminDesign/css/bootstrap.min.css" rel="stylesheet" />
+            <link href="~/AdminDesign/css/sb-admin.min.css" rel="stylesheet" />*@
+        <link href="~/AdminDesign/css/custom.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/AdminDesign/css/loading.css" />
+    </environment>
+    <environment include="Development">
+        <script src="~/AdminDesign/js/Kendo/jquery.min.js"></script>
+        <script src="~/AdminDesign/js/Kendo/kendo.all.min.js"></script>
+    </environment>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -75,7 +31,7 @@
     <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="//dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
     <!-- Morris chart -->
     <link rel="stylesheet" href="/bower_components/morris.js/morris.css">
     <!-- jvectormap -->
@@ -95,27 +51,14 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-    <environment include="Development">
-        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.common-material.min.css" rel="stylesheet" />
-        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.min.css" rel="stylesheet" />
-        <link href="https://kendo.cdn.telerik.com/2018.3.1017/styles/kendo.material.mobile.min.css" rel="stylesheet" />
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800&amp;subset=cyrillic,latin'>
-        @*<link href="~/AdminDesign/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="~/AdminDesign/css/sb-admin.min.css" rel="stylesheet" />*@
-        <link href="~/AdminDesign/css/custom.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/AdminDesign/css/loading.css" />
-    </environment>
+
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap//dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    <environment include="Development">
-        <script src="~/AdminDesign/js/Kendo/jquery.min.js"></script>
-        <script src="~/AdminDesign/js/Kendo/kendo.all.min.js"></script>
-    </environment>
+    
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -124,6 +67,15 @@
         <!-- Left side column. contains the logo and sidebar -->
 
         <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    @ViewData["Title"]
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> @ViewContext.RouteData.Values["Controller"].ToString()</a></li>
+                    <li class="active">@ViewContext.RouteData.Values["Action"].ToString()</li>
+                </ol>
+            </section>
             @RenderBody()
         </div>
         @(await Html.PartialAsync("/Views/Shared/_AdminFooter.cshtml"))
@@ -300,7 +252,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
-    <script src="/bower_components/jquery//dist/jquery.min.js"></script>
+    @*<script src="/bower_components/jquery//dist/jquery.min.js"></script>*@
     <!-- jQuery UI 1.11.4 -->
     <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -311,7 +263,7 @@
     <script src="/bower_components/bootstrap//dist/js/bootstrap.min.js"></script>
     <!-- Morris.js charts -->
     <script src="/bower_components/raphael/raphael.min.js"></script>
-    <script src="/bower_components/morris.js/morris.min.js"></script>
+    @*<script src="/bower_components/morris.js/morris.min.js"></script>*@
     <!-- Sparkline -->
     <script src="/bower_components/jquery-sparkline//dist/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
@@ -333,29 +285,9 @@
     <!-- AdminLTE App -->
     <script src="/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/dist/js/pages/dashboard.js"></script>
+    @*<script src="/dist/js/pages/dashboard.js"></script>*@
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js"></script>
 
-    <environment include="Development">
-        @*<script src="/AdminDesign/js/jquery.min.js"></script>*@
-                    <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
-                    <script src="~/AdminDesign/js/jquery-validation//dist/jquery.validate.js"></script>
-                    <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-                    <script src="~/AdminDesign/js/jquery//dist/jquery.unobtrusive-ajax.js"></script>
-                    <script src="/AdminDesign/js/jquery.easing.min.js"></script>
-                    <script src="~/AdminDesign/js/sb-admin.min.js"></script>
-                    <script src="~/AdminDesign/js/site.js"></script>
-                </environment>
-                <environment exclude="Development">
-                    @*<script src="/AdminDesign/js/jquery.min.js"></script>*@
-                    <script src="/AdminDesign/js/bootstrap.bundle.js"></script>
-                    <script src="~/AdminDesign/js/jquery-validation//dist/jquery.validate.js"></script>
-                    <script src="~/AdminDesign/js/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-                    <script src="~/AdminDesign/js/jquery//dist/jquery.unobtrusive-ajax.js"></script>
-                    <script src="/AdminDesign/js/jquery.easing.min.js"></script>
-                    <script src="~/AdminDesign/js/sb-admin.min.js"></script>
-                    <script src="~/AdminDesign/js/site.js"></script>
-                </environment>
-            </body>
-            </html>
+</body>
+</html>
