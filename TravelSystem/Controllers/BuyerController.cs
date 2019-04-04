@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
 using TravelSystem.Models;
+using TravelSystem.Models.AccountViewModels;
 
 namespace TravelSystem.Controllers
 {
@@ -109,59 +110,86 @@ namespace TravelSystem.Controllers
                 return Json(false);
             }
         }
-        public IActionResult Charge(string stripeEmail, string stripeToken)
+        public IActionResult Charge(int PaymentId,string stripeEmail, string stripeToken,int UserId,OrderAddresses orderAddress)
         {
             int userId = GetLoggedInUserId();
-            var vehiclesInCart = HttpContext.Session.GetObjectFromJson<List<VehiclesCarts>>("Cart").ToList();
-            var cart = vehiclesInCart.Where(o => o.MachineName.Contains(machineName) || o.UserId == userId).ToList();
-            var amount = cart.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum();
-            var charges = (cart.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4) / 100;
-            var totalAmount = (amount + charges) * 100;
-            var user = _context.Users.FirstOrDefault(o => o.Id == userId);
-            var customerService = new StripeCustomerService();
-            var chargeService = new StripeChargeService();
-            var customer = customerService.Create(new StripeCustomerCreateOptions
-            {
-                Email = stripeEmail,
-                SourceToken = stripeToken
-            });
-            var charge = chargeService.Create(new StripeChargeCreateOptions
-            {
-                Amount = Convert.ToInt32(totalAmount),
-                Currency = "usd",
-                CustomerId = customer.Id,
-                Description = user != null ? (user.FullName + "_" + user.Id) : machineName + " has been made transaction"
-            });
+            TempData["Id"] = userId;
+                var vehiclesInCart = HttpContext.Session.GetObjectFromJson<List<VehiclesCarts>>("Cart").ToList();
+                var cart = vehiclesInCart.Where(o => o.MachineName.Contains(machineName) || o.UserId == userId).ToList();
+                var amount = cart.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum();
+                var charges = (cart.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4) / 100;
+                var totalAmount = (amount + charges) * 100;
+                var user = _context.Users.FirstOrDefault(o => o.Id == userId);
+                var customerService = new StripeCustomerService();
+                var chargeService = new StripeChargeService();
+                var customer = customerService.Create(new StripeCustomerCreateOptions
+                {
+                    Email = stripeEmail,
+                    SourceToken = stripeToken
+                });
+                var charge = chargeService.Create(new StripeChargeCreateOptions
+                {
+                    Amount = Convert.ToInt32(totalAmount),
+                    Currency = "usd",
+                    CustomerId = customer.Id,
+                    Description = user != null ? (user.FullName + "_" + user.Id) : machineName + " has been made transaction"
+                });
             var payment = new Payments
-            {
-                StripeCustomerId = customer.Id,
-                TotalAmount = totalAmount,
-                CreatedDate = DateTime.Now,
-                UserId = user != null ? user.Id : (int?)null,
-                IpAddress = user != null ? null : machineName
-            };
-            _context.Payments.Add(payment);
-            _context.SaveChanges();
-            var paymentVehicleList = new List<PaymentVehicles>();
-            foreach (var item in cart)
-            {
-                var paymentVehicle = new PaymentVehicles
+                {
+                    StripeCustomerId = customer.Id,
+                    TotalAmount = totalAmount,
+                    CreatedDate = DateTime.Now,
+                    UserId = user != null ? user.Id : (int?)null,
+                    IpAddress = user != null ? null : machineName
+                };
+                _context.Payments.Add(payment);
+                _context.SaveChanges();
+                var order = new OrderAddresses
                 {
                     PaymentId = payment.Id,
-                    VehicleId = item.VehicleId,
-                };
-                paymentVehicleList.Add(paymentVehicle);
-            }
-            _context.PaymentVehicles.AddRange(paymentVehicleList);
-            HttpContext.Session.SetObjectAsJson("Cart", new List<VehiclesCarts>());
-            _context.SaveChanges();
-            TempData["Success"] = "Transaction has been made successfully";
-            return RedirectToAction("Cart", "Buyer");
+                    BillingName = orderAddress.BillingName,
+                    BillingCompany = orderAddress.BillingCompany,
+                    BillingAddress1 = orderAddress.BillingAddress1,
+                    BillingAddress2 = orderAddress.BillingAddress2,
+                    BillingCity = orderAddress.BillingCity,
+                    BillingCountry = orderAddress.BillingCountry,
+                    BillingZipCode = orderAddress.BillingZipCode,
+                    ShippingName = orderAddress.ShippingName,
+                    ShippingCompany = orderAddress.ShippingCompany,
+                    ShippingAddress1 = orderAddress.ShippingAddress1,
+                    ShippingAddress2 = orderAddress.ShippingAddress2,
+                    ShippingCity = orderAddress.ShippingCity,
+                    ShippingCountry = orderAddress.ShippingCountry,
+                    ShippingZipCode = orderAddress.ShippingZipCode
 
+                };
+                _context.OrderAddresses.Add(order);
+                _context.SaveChanges();
+                var paymentVehicleList = new List<PaymentVehicles>();
+                foreach (var item in cart)
+                {
+                    var paymentVehicle = new PaymentVehicles
+                    {
+                        PaymentId = payment.Id,
+                        VehicleId = item.VehicleId,
+                    };
+                    paymentVehicleList.Add(paymentVehicle);
+                }
+                _context.PaymentVehicles.AddRange(paymentVehicleList);
+                HttpContext.Session.SetObjectAsJson("Cart", new List<VehiclesCarts>());
+                _context.SaveChanges();
+                TempData["Success"] = "Transaction has been made successfully";
+                return RedirectToAction("Cart", "Buyer");
+        }
+        public ActionResult OrderAddresses(int PaymentId)
+        {
+            var result = _context.OrderAddresses.FirstOrDefault(o=>o.PaymentId==PaymentId);
+            return View(result);
         }
         public ActionResult Cart()
         {
             int userId = GetLoggedInUserId();
+            TempData["Id"] = userId;
             var result = HttpContext.Session.GetObjectFromJson<List<VehiclesCarts>>("Cart").ToList();
             return View(result);
         }

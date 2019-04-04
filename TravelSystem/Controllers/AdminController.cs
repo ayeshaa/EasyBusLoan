@@ -299,7 +299,34 @@ namespace TravelSystem.Controllers
             return RedirectToAction("LogIn", "Admin");
         }
     }
-    public ActionResult Payments()
+        public ActionResult Reports()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public async Task<IActionResult> GetAllReports(DateTime? StartDate, DateTime? EndDate)
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var startDate = StartDate.HasValue ? StartDate.Value.Date.ToString("yyyy-MM-dd") : null;
+                var endDate = EndDate.HasValue ? EndDate.Value.Date.ToString("yyyy-MM-dd") : null;
+                var result = await _context.spGetVehiclePaymentsResult.FromSql("spGetVehiclePayments @StartDate={0},@EndDate = {1}", startDate, endDate).ToListAsync();
+                return Json(result);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult Payments()
     {
         var adminId = HttpContext.Session.GetInt32("Id");
         if (adminId.HasValue)

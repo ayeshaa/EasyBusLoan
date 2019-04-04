@@ -1,0 +1,153 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<StripeSettings> Stripe
+@model TravelSystem.Models.OrderAddresses
+@{
+    ViewData["Title"] = "OrderAddresses";
+}
+
+@using (Html.BeginForm("Charge", "Buyer", FormMethod.Post, new { enctype = "multipart/form-data", @class = "sky-form contact-style", role = "form", @id = "ChargeForm" }))
+{
+    <div id="errorsValidation">
+
+    </div>
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12">
+            <div class="col-md-12 well text-center">
+                <div class="container content">
+                    <div class="row">
+                        <div class="col-md-12 col-centered col-md-offset-3 col-sm-8 col-sm-offset-2">
+                            <div class="reg-page">
+                                <div class="reg-header">
+                                    <h2 style=" margin-bottom: 20px;">Shipping Details</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.ShippingName, new { @placeholder = "FullName*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingName, "")</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.ShippingCompany, new { @placeholder = "Company*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingCompany, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(m => m.ShippingAddress1, new { @placeholder = "Address1*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingAddress1, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(m => m.ShippingAddress2, new { @placeholder = "Address2*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingAddress2, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.ShippingCity, new { @placeholder = "City*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingCity, "")</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.ShippingCountry, new { @placeholder = "Country*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingCompany, "")</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.ShippingZipCode, new { @placeholder = "ZipCode*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ShippingZipCode, "")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container content">
+                    <div class="row">
+                        <div class="col-md-12 col-centered col-md-offset-3 col-sm-8 col-sm-offset-2">
+                            <div class="reg-page">
+                                <div class="reg-header">
+                                    <h2 style=" margin-bottom: 20px;">Billing Details</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.BillingName, new { @placeholder = "FullName*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingName, "")</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.BillingCompany, new { @placeholder = "Company*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingCompany, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(m => m.BillingAddress1, new { @placeholder = "Address1*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingAddress1, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-12">
+                                        @Html.TextBoxFor(m => m.BillingAddress2, new { @placeholder = "Address2*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingAddress2, "")</span>
+                                    </div>
+                                </div>
+                                <div class="row sky-space-20">
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.BillingCity, new { @placeholder = "City*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingCity, "")</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.BillingCountry, new { @placeholder = "Country*",@id= "autocomplete", @onFocus= "geolocate()", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingCountry, "")</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(m => m.BillingZipCode, new { @placeholder = "ZipCode*", @class = "form-control margin-bottom-5" })
+                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.BillingZipCode, "")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                </div>
+                                <div class="col-md-3 text-right">
+
+
+                                    <script src="//checkout.stripe.com/v2/checkout.js"
+                                            class="stripe-button"
+                                            data-key="@Stripe.Value.PublishableKey"
+                                            data-description="Checkout"
+                                            data-amount="">
+                                    </script>
+
+
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@{
+    <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuvmA6K2UJ2o-xYy2flqy2-43aLmsgjQg&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <script src="~/js/location.js"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            var validator = $("#ChargeForm").validate();
+    </script>}
+

@@ -103,12 +103,7 @@
 
                                     <form action="/Buyer/Charge">
 
-                                        <script src="//checkout.stripe.com/v2/checkout.js"
-                                                class="stripe-button"
-                                                data-key="@Stripe.Value.PublishableKey"
-                                                data-description="Checkout"
-                                                data-amount="@((Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() + Model.Select(o => o.SpGetVehicleDetail.SalesPrice).Sum() * 4 / 100)*100)">
-                                        </script>
+                                        <a href="@Url.Action("OrderAddresses","Buyer")"> <button type="button" class="btn btn-success">Pay with card</button></a>
 
                                     </form>
                                 </div>

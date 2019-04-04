@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border text-right">
+                    <div class="container" style="margin-top:10px">
+                        <div class="row" style="">
+                            <label>From:</label>
+                            <input type='text' name="StartDate" id="datetimepicker" class="k-textbox" />
+                            <label>To:</label>
+                            <input type='text' name="EndDate" id="datetimepicker1" class="k-textbox" />
+
+                            <input type="button" id="searchBtn" class="btn btn-primary" value="Search" />
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div id="grid"></div>
+                </div>
+
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!--/.col (left) -->
+    </div>
+
+    <!-- /.row -->
+</section>
+
+<div id="PopupWarning" style="display: none;">
+    <table>
+        <tr>
+            <td>
+                <p>Do you want to delete?</p>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <button class="k-button k-primary" id="btnYes">Yes</button>
+                <button class="k-button k-primary" id="btnNo">No</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#searchBtn").click(function () {
+            var startDate = $("#datetimepicker").val();
+            var endDate = $("#datetimepicker1").val();
+            $("#grid").data("kendoGrid").dataSource.transport.options.read.url = "@Url.Action("GetAllReports", "Admin")?StartDate=" + startDate + "&EndDate=" + endDate;
+            $("#grid").data("kendoGrid").dataSource.transport.read();
+            $("#grid").data("kendoGrid").dataSource.read();
+            $("#grid").data("kendoGrid").refresh();
+
+        })
+        $("#grid").kendoGrid({
+           dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "@Url.Action("GetAllReports", "Admin")?StartDate=" + $("#datetimepicker").val() + "&EndDate=" + $("#datetimepicker1").val()
+                    },
+                    pageSize: 20
+                },
+                height: 550,
+                sortable: true,
+                filterable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [
+                    {
+                        field: "Id",
+                        title: "#",
+                        width:150
+                    },
+                    {
+                        template: "<span class='btn btn-link' >#: VehicleTypeName # </span>",
+                    field: "VehicleTypeName",
+                        title: "Vehicle Name"
+                    },
+                    {
+                        template: "#= kendo.toString(kendo.parseDate(CreatedDate),  'dd-MMM-yyyy hh:mm tt') #",
+                        field: "CreatedDate",
+                        title: "Buy Date",
+                    },
+                    {
+                        field: "StripeCustomerId",
+                        title: "Stripe Customer"
+                    },
+                    {
+                        field: "SalesPrice",
+                        title: "Sale Price"
+                    },
+                    {
+                        field: "FullName",
+                        title: "By"
+                    }
+                    @*{
+                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteBlog' />",
+                        width:100
+                    }*@
+                ]
+        });
+
+    });
+    $(document).ready(function () {
+        $("#datetimepicker").kendoDatePicker({
+            dateInput: true,
+            format: "yyyy-MM-dd"
+        });
+
+    });
+    $(document).ready(function () {
+        $("#datetimepicker1").kendoDatePicker({
+            dateInput: true,
+            format:"yyyy-MM-dd"
+        });
+
+    });
+
+</script>

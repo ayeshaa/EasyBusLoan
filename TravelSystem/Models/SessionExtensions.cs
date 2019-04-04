@@ -20,5 +20,11 @@ namespace TravelSystem.Models
             var list = new List<VehiclesCarts>();
             return value == null ? list : JsonConvert.DeserializeObject<List<VehiclesCarts>>(value);
         }
+        public static List<OrderAddresses> GetObject<T>(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            var list = new List<OrderAddresses>();
+            return value == null ? list : JsonConvert.DeserializeObject<List<OrderAddresses>>(value);
+        }
     }
 }

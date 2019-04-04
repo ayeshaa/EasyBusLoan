@@ -94,7 +94,7 @@
                         width:150
                     },
                     {
-                        template: "<span class='btn btn-link' onclick='Edit(#:Id#)'>#: VehicleTypeName # </span>",
+                        template: "<span>#: VehicleTypeName # </span>",
                     field: "VehicleTypeName",
                         title: "VehicleTypeName"
                     },
@@ -104,8 +104,8 @@
                     },
 
                     {
-                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicleType' />",
-                        width:100
+                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicleType' />&nbsp;<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'>Edit</button>",
+                        
                     }
                 ]
         });

@@ -33,6 +33,7 @@ namespace TravelSystem.Models
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<HowItWorks> HowItWorks { get; set; }
         public virtual DbSet<PrivacyPolicy> PrivacyPolicy { get; set; }
+        public virtual DbSet<OrderAddresses> OrderAddresses { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<AboutUs> About { get; set; }
         public virtual DbSet<TermsAndConditions> TermsAndConditions { get; set; }
