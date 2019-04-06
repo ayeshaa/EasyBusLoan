@@ -40,6 +40,26 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-v4" href="#collapseFive">
+                                Search
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <form></form>
+                            <input type="text" id="searchModel" value="@ViewBag.SearchModel" class="form-control" style="width:100%" />&nbsp;
+                            <input type="text" id="searchYear" value="@ViewBag.SearchYear" class="form-control" style="width:100%" />&nbsp;
+                           
+                        </div>
+                    </div>
+                </div>
+            </div><!--/end panel group-->
+            <div class="panel-group" id="accordion-v4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-v4" href="#collapseFour">
                                 Price
                                 <i class="fa fa-angle-down"></i>
@@ -56,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-            </div><!--/end panel group-->
+            </div>
         </div>
         <div class="col-md-9">
             <div class="row margin-bottom-5">
@@ -66,10 +86,11 @@
                 </div>
                 <div class="col-sm-8">
                     <ul class="list-inline clear-both">
-                            <li class="sort-list-btn">
-                                <h3>Search :</h3>
-                                <input type="text" id="searchText" value="@ViewBag.SearchText" class="form-control" style="width:70%"/>
-                            </li>
+                        <li class="sort-list-btn">
+                            <h3>Search :</h3>
+                            <input type="text" id="searchText" value="@ViewBag.SearchText" class="form-control" style="width:70%" />
+                           
+                        </li>
                         </ul>
                 </div>
             </div><!--/end result category-->
@@ -95,7 +116,12 @@
        
         $(document).ready(function () {
             var Checked = [];
-            $("#inventory").load('/Vehicles/InventoryGrid?searchText=' + $("#searchText").val());
+            var selectedDate = $("#searchYear").val();
+            var date = moment(selectedDate).format("YYYY-MM-DD"); 
+            
+            var url = '/Vehicles/InventoryGrid?searchText=' + $("#searchText").val() + "&searchModel=" + $("#searchModel").val();
+            console.log(url)
+            $("#inventory").load(url);
             $(".FilterCheck").change(function () {
                 if ($(this).prop("checked")) {
                     Checked.push(parseInt($(this).val()));
@@ -113,13 +139,24 @@
             });
             $(document).on("keydown","#searchText",function () {
                 loadInventory();
+            }); 
+            $(document).on("keydown", "#searchModel", function () {
+                loadInventory();
             });
+            $(document).on("keydown", "#searchYear", function () {
+                loadInventory();
+            });
+
+         
             function loadInventory() {
                 var searchText = $("#searchText").val();
+                var searchModel = $("#searchModel").val();
+                var searchYear = $("#searchYear").val();
+                var date = moment(searchYear).format("YYYY-MM-DD"); 
                 var fromPrice = $(".slider-snap-value-lower").html();
                 var toPrice = $(".slider-snap-value-upper").html();
                 var vehicleIds = Checked.join(",");
-                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice + "&searchText=" + searchText);
+                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice + "&searchText=" + searchText + "&searchModel=" + searchModel);
             }
             
         });

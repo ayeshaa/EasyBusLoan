@@ -39,8 +39,14 @@
                      data-captionhidden="off"
                      style="z-index: 6">
                     <div class="row">
-                        <div class="col-md-10" style="padding:0px 4px">
+                        <div class="col-md-6" style="padding:0px 4px">
                             <input type="text" id="searchText" class="form-control input-lg" placeholder="Search Keyword,Vehicle" />
+                        </div>
+                        <div class="col-md-2" style="padding:0px 4px">
+                            <input type="text" id="searchModel" class="form-control input-lg" placeholder="Model" />
+                        </div>
+                        <div class="col-md-2" style="padding:0px 4px">
+                            <input type="text" id="searchYear" class="form-control input-lg" placeholder="Year" />
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-lg btn-primary searchBtn"><span class="fa fa-search margin-right-10"></span>Search</button>
@@ -167,7 +173,10 @@
     $(document).ready(function(){
         $(".searchBtn").click(function () {
             var searchText = $("#searchText").val();
-            window.location.href = "@Url.Action("Inventory","Vehicles")?searchText=" + searchText;
+            var searchModel = $("#searchModel").val();
+            var searchYear = $("#searchYear").val();
+            var date = moment(searchYear).format("YYYY-MM-DD"); 
+            window.location.href = "@Url.Action("Inventory","Vehicles")?searchText=" + searchText + "&searchModel=" + searchModel + "&searchYear=" + date;
         })
     })
 </script>
