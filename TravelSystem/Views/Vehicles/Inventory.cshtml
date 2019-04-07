@@ -104,7 +104,7 @@
             </div><!--/end filter resilts-->
             <div class="text-center">
 
-                @if (totalVehicles > 5)
+                @if (totalVehicles > 12)
                 {
 
 
@@ -114,7 +114,7 @@
                             <li><a href="@Url.Action("Inventory","Vehicles")?page=@(pageNumber-1)">«</a></li>
                         }
 
-                        @for (var i = 1; i <= Convert.ToInt32(totalVehicles / 5) + 1; i++)
+                        @for (var i = 1; i <= Convert.ToInt32(totalVehicles / 12) + 1; i++)
                         {
                             <li>
                                 <a @if (i == pageNumber) { @: class="active"
@@ -122,7 +122,7 @@
                                    href="@Url.Action("Inventory","Vehicles")?page=@i">@i</a>
                             </li>
                         }
-                        @if (pageNumber < (totalVehicles / 5))
+                        @if (pageNumber < (totalVehicles / 12))
                         {
                             <li><a href="@Url.Action("Inventory","Vehicles")?page=@(pageNumber+1)">»</a></li>
                         }

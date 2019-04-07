@@ -116,7 +116,7 @@ namespace TravelSystem.Controllers
         public ActionResult Inventory(int? page,string searchText, string searchModel, DateTime? searchYear)
         {
             int skip = 0;
-            int take = 5;
+            int take = 12;
             if (!page.HasValue)
             {
                 page = 1;

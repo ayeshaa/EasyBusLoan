@@ -104,7 +104,7 @@
                     },
 
                     {
-                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicleType' />&nbsp;<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'>Edit</button>",
+                        template: "<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'><span class='fa fa-edit'></span></button>&nbsp;<button type='button' id='#: Id #'  class='deleteVehicleType mr-1 btn btn-danger'><span class='fa fa-trash'></span></button>&nbsp;",
                         
                     }
                 ]
@@ -115,6 +115,3 @@
         window.location.href = "@Url.Action("AddVehicleType", "Admin")?id=" + e;
     }
 </script>
-
-
-    </section>

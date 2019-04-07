@@ -1,32 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Blog";
+﻿
+@{
+    ViewData["Title"] = "Sellers";
     Layout = "/Views/Shared/_AdminLayout.cshtml";
 }
 
 <section class="content">
-    <form method="post" action="@Url.Action("SaveBlog","Admin")">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <button type="button" class="btn btn-primary btn-xl float-right" id="btnAdd" title="Add Blog Categories">Add</button>
-                    </div>
-                    <!-- /.box-header -->
-                    <!-- form start -->
-                    <div class="box-body">
-                        <div id="grid"></div>
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+
                 </div>
-                <!-- /.box -->
-
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div id="grid"></div>
+                </div>
             </div>
-            <!--/.col (left) -->
-        </div>
-        <!-- /.row -->
-    </form>
-</section>
+            <!-- /.box -->
 
+        </div>
+        <!--/.col (left) -->
+    </div>
+</section>
 <div id="PopupWarning" style="display: none;">
     <table>
         <tr>
@@ -43,10 +40,19 @@
         </tr>
     </table>
 </div>
+
 <script type="text/javascript">
-    $(document).on("click", "#btnAdd", function () {
-        window.location.href="@Url.Action("AddBlog","Admin")"
-    })
+    function blockUser(id) {
+        $.ajax({
+            url: "@Url.Action("BlockUser","Admin")",
+            data: { id: id },
+            type: "GET",
+            success: function (data) {
+                $("#grid").data("kendoGrid").dataSource.read();
+                $("#grid").data("kendoGrid").dataSource.refresh();
+            }
+        });
+    }
      $(document).on("click", ".deleteBlog", function () {
         var id = $(this)[0].id;
         var kendoWindow = $("#PopupWarning").kendoWindow({
@@ -70,14 +76,16 @@
         });
         $(this).off(event);
     });
-    $(document).ready(function () {
-     $("#grid").kendoGrid({
+        $(document).ready(function () {
+            var grid = $("#grid").kendoGrid({
                 dataSource: {
                     type: "json",
                     transport: {
-                        read: "@Url.Action("GetAllBlogs", "Admin")"
+
+                        read: "@Url.Action("GetAllSellers", "Admin")"
+
                     },
-                    pageSize: 20
+                    pageSize: 50
                 },
                 height: 550,
                 sortable: true,
@@ -87,27 +95,28 @@
                     pageSizes: true,
                     buttonCount: 5
                 },
+
                 columns: [
                     {
                         field: "Id",
                         title: "#",
-                        width:150
+                        width: 150
                     },
                     {
-                        template: "<span>#: Title # </span>",
-                    field: "Title",
-                        title: "Title",
-                    width:700,
+                        template: "<span class='btn btn-link'>#: FullName # </span>",
+                        field: "FullName",
+                        title: "Full Name"
                     },
                     {
-                        template: "<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'><span class='fa fa-edit'></span></button>&nbsp;<button type='button' id='#: Id #'  class='deleteBlog mr-1 btn btn-danger'><span class='fa fa-trash'></span></button>&nbsp;",
-                        
+                        template: "<span class=''>#: Email # </span>",
+                        field: "Email",
+                        title: "Email"
+                    },
+                    {
+                        template: "<button type='button' onclick='blockUser(#:Id#)' class='blockUser btn #if(IsBlock) {#btn-primary#} else{#btn-danger#}#'>#if(IsBlock) {#Block#} else{#Unblock#}#</span>",
                     }
-                ]
-        });
+                    ]
+            });
 
-    });
-     function Edit(e) {
-        window.location.href = "@Url.Action("AddBlog","Admin")?id=" + e;
-    }
+        });
 </script>

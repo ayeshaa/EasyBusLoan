@@ -107,10 +107,11 @@
                     },
                     {
                         field: "MakeYear",
-                        title: "MakeYear"
+                        title: "MakeYear",
+                        template: "#= kendo.toString(kendo.parseDate(MakeYear),  'dd-MMM-yyyy hh:mm tt') #",
                     },
                     {
-                        template: "<img style='cursor:pointer;' src='@Url.Content("~/images/delete.png")' id='#: Id #'  class='deleteVehicle mr-1' />&nbsp;<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'>Edit</button>",
+                        template: "<button type='button' onclick='Edit(#:Id#)' class='btn btn-success'><span class='fa fa-edit'></span></button>&nbsp;<button type='button' id='#: Id #'  class='deleteVehicle mr-1 btn btn-danger'><span class='fa fa-trash'></span></button>&nbsp;",
                         
                     }
                 ]

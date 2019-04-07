@@ -618,7 +618,103 @@ namespace TravelSystem.Controllers
             return RedirectToAction("LogIn", "Admin");
         }
     }
-    public ActionResult AddWorking()
+        public ActionResult Buyers()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public IActionResult GetAllBuyers()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var result = _context.Users.ToList();
+                var list = new List<ApplicationUser>();
+
+                foreach (var item in result)
+                {
+                    var find = _context.UserRoles.FirstOrDefault(o => o.UserId == item.Id);
+                    if (find.RoleId == (int)Role.Buyer)
+                    {
+                        switch (find.RoleId)
+                        {
+                            case (int)Role.Lendor:
+                                item.IsLendor = true;
+                                break;
+                            case (int)Role.Buyer:
+                                item.IsBuyer = true;
+                                break;
+                            case (int)Role.Seller:
+                                item.IsSeller = true;
+                                break;
+                        }
+                        list.Add(item);
+                    }
+
+                }
+                return Json(list);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult Sellers()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public IActionResult GetAllSellers()
+        {
+            var adminId = HttpContext.Session.GetInt32("Id");
+            if (adminId.HasValue)
+            {
+                var result = _context.Users.ToList();
+                var list = new List<ApplicationUser>();
+
+                foreach (var item in result)
+                {
+                    var find = _context.UserRoles.FirstOrDefault(o => o.UserId == item.Id);
+                    if (find.RoleId == (int)Role.Seller)
+                    {
+                        switch (find.RoleId)
+                        {
+                            case (int)Role.Lendor:
+                                item.IsLendor = true;
+                                break;
+                            case (int)Role.Buyer:
+                                item.IsBuyer = true;
+                                break;
+                            case (int)Role.Seller:
+                                item.IsSeller = true;
+                                break;
+                        }
+                        list.Add(item);
+                    }
+
+                }
+                return Json(list);
+            }
+            else
+            {
+                return RedirectToAction("LogIn", "Admin");
+            }
+        }
+        public ActionResult AddWorking()
     {
         var adminId = HttpContext.Session.GetInt32("Id");
         if (adminId.HasValue)

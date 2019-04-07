@@ -10,7 +10,7 @@
             placeholder: "Select Vehicle Type",
             dataTextField: "VehicleTypeName",
             dataValueField: "Id",
-            select: onSelect,
+            //select: onSelect,
             dataSource: {
                 type: "json",
                 transport: {
@@ -20,7 +20,7 @@
                 }
             },
             value: [
-
+                @Model.VehicleTypeId
             ]
         });
     });
@@ -146,17 +146,19 @@
             });
         </script>
         <script>
-    function onSelect(e) {
+    //function onSelect(e) {
 
-        var dataItem = e.dataItem;
-      var multiselect = $("#categories").data("kendoMultiSelect");
-        var selectedData = [];
-        var value = multiselect.value();
-        var selectedCategories = value;
-        selectedCategories.push(dataItem.Id);
-        $("#blogCat").val(selectedCategories.join(","));
+    //    var dataItem = e.dataItem;
+    //    var multiselect = $("#vehicleTypes").data("kendoDropDownList");
+    //    var selectedData = [];
+    //    var value = multiselect.value();
+    //    console.log(dataItem)
+    //    console.log(multiselect)
+    //    //var selectedCategories = value;
+    //    //selectedCategories.push(dataItem.Id);
+    //    //$("#blogCat").val(selectedCategories.join(","));
 
-    };
+    //};
     $(document).ready(function () {
         $("#btnBack").click(function () {
             window.location.href = "@Url.Action("Vehicles","Admin")";
