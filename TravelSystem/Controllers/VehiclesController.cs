@@ -61,7 +61,7 @@ namespace TravelSystem.Controllers
                 TempData["IsApplication"] = _context.ApplicantDetails.Any(o => o.UserId == userId);
             }
 
-            var result = _context.Vehicles.Include(o=>o.User).Include(o => o.VehicleTypes).Include(o => o.VehicleImages)
+            var result = _context.Vehicles.Include(o => o.User).Include(o => o.VehicleTypes).Include(o => o.VehicleImages)
                 .Include(o => o.VehicleRatings).ThenInclude(o => o.User).FirstOrDefault(o => o.Id == id);
             if (result != null)
             {
@@ -111,39 +111,58 @@ namespace TravelSystem.Controllers
                 return RedirectToAction("VehicleDetail", "Vehicles", new { id = vehicleRatings.VehicleId });
             }
             ViewBag.VehicleId = vehicleRatings.VehicleId;
-            return RedirectToAction("LogIn", "User",new { vehicleId = vehicleRatings.VehicleId});
+            return RedirectToAction("LogIn", "User", new { vehicleId = vehicleRatings.VehicleId });
         }
-        public ActionResult Inventory(string searchText,string searchModel,DateTime? searchYear)
+        public ActionResult Inventory(int? page,string searchText, string searchModel, DateTime? searchYear)
         {
+            int skip = 0;
+            int take = 5;
+            if (!page.HasValue)
+            {
+                page = 1;
+            }
+            else
+            {
+                if (page == 1)
+                {
+                    skip = 0;
+                }
+                else
+                {
+                    skip = (page.Value * take) - take;
+                }
+            }
+            ViewBag.TotalVehicles = _context.Vehicles.Count();
             ViewBag.SearchText = searchText;
             ViewBag.SearchModel = searchModel;
             ViewBag.SearchYear = searchYear;
+            ViewBag.TakeVehicles = take;
+            ViewBag.SkipVehicles = skip;
             TempData["TotalVehicles"] = _context.Vehicles.Where(o => o.IsSold == false).Count();
             TempData["VehicleTypes"] = _context.VehicleTypes.ToList();
             return View();
         }
-        public ActionResult InventoryGrid(string vehicleIds, decimal fromPrice, decimal toPrice, string searchText,string searchModel,DateTime? searchYear)
+        public ActionResult InventoryGrid(string vehicleIds, decimal fromPrice, decimal toPrice, string searchText, string searchModel, DateTime? searchYear,int take,int skip)
         {
             string[] selectedVehicles = new string[] { };
+            
+            ViewBag.TotalVehicles = _context.Vehicles.Count();
             if (!string.IsNullOrEmpty(vehicleIds))
             {
                 selectedVehicles = vehicleIds.Split(",");
             }
             ViewBag.SearchText = searchText;
-            ViewBag.SearchModel = searchModel;
-            ViewBag.SearchYear = searchYear;
             var result = new List<Vehicles>();
-            if (!string.IsNullOrEmpty(searchText))
-            {
-                result = _context.Vehicles.Include(o => o.VehicleTypes)
+            searchText = searchText == null ? string.Empty : searchText;
+             result = _context.Vehicles.Include(o => o.VehicleTypes)
                .Include(o => o.VehicleImages).Include(o => o.VehicleRatings)
-               .Where(o => (o.VehicleTypes.VehicleTypeName.Contains(searchText) && o.Model.Contains(searchModel)) && (o.IsSold == false) && (o.SalesPrice > fromPrice && o.SalesPrice < (toPrice == 0 ? 1000000 : toPrice))).ToList();
-            }
-            else
+               .Where(o => (o.VehicleTypes.VehicleTypeName.Contains(searchText) || o.Vinnumber.Contains(searchText) 
+               || o.Location.Contains(searchText) || o.Mileage.Contains(searchText) || o.CityOrState.Contains(searchText) || o.SalesPrice.Equals(searchText)) 
+               && (o.Model.Contains(string.IsNullOrEmpty(searchModel) ? string.Empty : searchModel))
+               && (o.IsSold == false) && (o.SalesPrice > fromPrice && o.SalesPrice < (toPrice == 0 ? 1000000 : toPrice))).Skip(skip).Take(take).ToList();
+            if (searchYear.HasValue)
             {
-                result = _context.Vehicles.Include(o => o.VehicleTypes)
-                .Include(o => o.VehicleImages).Include(o => o.VehicleRatings)
-                .Where(o => o.IsSold == false && (o.SalesPrice > fromPrice && o.SalesPrice < (toPrice == 0 ? 1000000 : toPrice))).ToList();
+                result = result.Where(o => o.MakeYear.Year == searchYear.Value.Year).ToList();
             }
             TempData["TotalVehicles"] = result.Count();
             foreach (var item in result)

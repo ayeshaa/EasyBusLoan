@@ -19,6 +19,7 @@ namespace TravelSystem.Models
         [Required(ErrorMessage = "Required")]
         public string CategoryIds { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Image { get; set; }
         [ForeignKey(nameof(Admins))]
         public int AdminId { get; set; }
         public virtual Admins Admins { get; set; }

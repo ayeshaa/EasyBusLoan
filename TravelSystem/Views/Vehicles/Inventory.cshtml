@@ -1,12 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Inventory";
+    var totalVehicles = Convert.ToInt32(ViewBag.TotalVehicles);
+    int pageNumber = !string.IsNullOrEmpty(Context.Request.Query["page"].ToString()) ? Convert.ToInt32(Context.Request.Query["page"].ToString()) : 1;
+
 }
 <!--=== Content Part ===-->
 <div class="content container">
     <div class="row">
         <div class="col-md-3 filter-by-block md-margin-bottom-60">
             <h1>Filter By</h1>
-
+            <div class="panel-group" id="accordion-v4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-v" href="#collapseFive">
+                                Search
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <form>
+                                <input type="hidden" value="@ViewBag.TakeVehicles" id="take" />
+                                <input type="hidden" value="@ViewBag.SkipVehicles" id="skip" />
+                                <input type="text" id="searchText" value="@ViewBag.SearchText" class="form-control" placeholder="Keyword" style="width:100%" />&nbsp;
+                                <input type="text" id="searchModel" value="@ViewBag.SearchModel" class="form-control" placeholder="Model" style="width:100%" />&nbsp;
+                                <input type="date" id="searchYear" value="@ViewBag.SearchYear" class="form-control" placeholder="Year" style="width:100%" />&nbsp;
+                                <input type="button" class="btn btn-primary margin-top-20" id="searchBtn" value="Search" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/end panel group-->
             <div class="panel-group" id="accordion-v2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -40,26 +66,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-v4" href="#collapseFive">
-                                Search
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                        </h2>
-                    </div>
-                    <div id="collapseFive" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <form></form>
-                            <input type="text" id="searchModel" value="@ViewBag.SearchModel" class="form-control" style="width:100%" />&nbsp;
-                            <input type="text" id="searchYear" value="@ViewBag.SearchYear" class="form-control" style="width:100%" />&nbsp;
-                           
-                        </div>
-                    </div>
-                </div>
-            </div><!--/end panel group-->
-            <div class="panel-group" id="accordion-v4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-v4" href="#collapseFour">
                                 Price
                                 <i class="fa fa-angle-down"></i>
@@ -76,52 +82,67 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!--/end panel group-->
         </div>
         <div class="col-md-9">
             <div class="row margin-bottom-5">
-                <div class="col-sm-4 result-category">
+                <div class="col-sm-8 result-category">
                     <h2>Car For You</h2>
                     @*<small class="shop-bg-green badge-results"></small>*@
                 </div>
-                <div class="col-sm-8">
-                    <ul class="list-inline clear-both">
-                        <li class="sort-list-btn">
-                            <h3>Search :</h3>
-                            <input type="text" id="searchText" value="@ViewBag.SearchText" class="form-control" style="width:70%" />
-                           
-                        </li>
-                        </ul>
-                </div>
+                @* <div class="col-sm-8">
+                <ul class="list-inline clear-both">
+                    <li class="sort-list-btn">
+                        <h3>Search :</h3>
+
+                    </li>
+                </ul>
+            </div>*@
             </div><!--/end result category-->
             <div class="filter-results" id="inventory">
 
             </div><!--/end filter resilts-->
-            @*<div class="text-center">
-                    <ul class="pagination pagination-v2">
-                        <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            <div class="text-center">
+
+                @if (totalVehicles > 5)
+                {
+
+
+                    <ul class="pagination">
+                        @if (pageNumber > 1)
+                        {
+                            <li><a href="@Url.Action("Inventory","Vehicles")?page=@(pageNumber-1)">«</a></li>
+                        }
+
+                        @for (var i = 1; i <= Convert.ToInt32(totalVehicles / 5) + 1; i++)
+                        {
+                            <li>
+                                <a @if (i == pageNumber) { @: class="active"
+                                   }
+                                   href="@Url.Action("Inventory","Vehicles")?page=@i">@i</a>
+                            </li>
+                        }
+                        @if (pageNumber < (totalVehicles / 5))
+                        {
+                            <li><a href="@Url.Action("Inventory","Vehicles")?page=@(pageNumber+1)">»</a></li>
+                        }
+
+
                     </ul>
-                </div>*@<!--/end pagination-->
+                }
+
+            </div>
         </div>
     </div><!--/end row-->
 </div><!--/end container-->
 <!--=== End Content Part ===-->
 
 @section Scripts{
-<script>
-       
+    <script>
+
         $(document).ready(function () {
             var Checked = [];
-            var selectedDate = $("#searchYear").val();
-            var date = moment(selectedDate).format("YYYY-MM-DD"); 
-            
-            var url = '/Vehicles/InventoryGrid?searchText=' + $("#searchText").val() + "&searchModel=" + $("#searchModel").val();
-            console.log(url)
-            $("#inventory").load(url);
+            $("#inventory").load('/Vehicles/InventoryGrid?searchText=' + $("#searchText").val() + "&searchModel=" + $("#searchModel").val() + "&searchYear=" + $("#searchYear").val() + "&take=" + $("#take").val() + "&skip=" + $("#skip").val());
             $(".FilterCheck").change(function () {
                 if ($(this).prop("checked")) {
                     Checked.push(parseInt($(this).val()));
@@ -137,30 +158,21 @@
             $(".slider-snap").change(function () {
                 loadInventory();
             });
-            $(document).on("keydown","#searchText",function () {
-                loadInventory();
-            }); 
-            $(document).on("keydown", "#searchModel", function () {
+            $(document).on("click", "#searchBtn", function () {
                 loadInventory();
             });
-            $(document).on("keydown", "#searchYear", function () {
-                loadInventory();
-            });
-
-         
             function loadInventory() {
                 var searchText = $("#searchText").val();
                 var searchModel = $("#searchModel").val();
                 var searchYear = $("#searchYear").val();
-                var date = moment(searchYear).format("YYYY-MM-DD"); 
                 var fromPrice = $(".slider-snap-value-lower").html();
                 var toPrice = $(".slider-snap-value-upper").html();
                 var vehicleIds = Checked.join(",");
-                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice + "&searchText=" + searchText + "&searchModel=" + searchModel);
+                $("#inventory").load('/Vehicles/InventoryGrid?vehicleIds=' + vehicleIds + "&fromPrice=" + fromPrice + "&toPrice=" + toPrice + "&searchText=" + searchText + "&searchModel=" + searchModel + "&searchYear=" + searchYear + "&take=" + $("#take").val() + "&skip=" + $("#skip").val());
             }
-            
+
         });
-     
+
     </script>
 
 }

@@ -17,7 +17,22 @@
                 <div class="overflow-h margin-bottom-5">
                     <div class="pull-left">
                         <h4 class="title-price"><a href="@Url.Action("VehicleDetail","Vehicles",new{id=item.Id})">@item.VehicleTypes.VehicleTypeName</a></h4>
-                        <span class="gender text-uppercase">@item.CityOrState</span>
+                        @if (item.CityOrState != null && item.CityOrState.Length > 9)
+                        {
+                            string description = item.CityOrState.Substring(0, 9);
+                            int index = description.LastIndexOf(' ');
+                            string outputdescription = description.Substring(0, index);
+                            <span class="gender text-uppercase">
+                                @outputdescription...
+                            </span>
+
+                        }
+                        else if (item.CityOrState != null && item.CityOrState.Length < 9)
+                        {
+                            <span class="gender text-uppercase">
+                                @item.CityOrState
+                            </span>
+                        }
                         <span class="gender">Make Year - @item.MakeYear.ToString("yyyy")</span>
                     </div>
                     <div class="product-price">

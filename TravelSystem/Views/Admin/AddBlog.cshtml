@@ -9,7 +9,7 @@
             placeholder: "Select Categories",
             dataTextField: "CategoryName",
             dataValueField: "Id",
-           
+
             select: onSelect,
             dataSource: {
                 type: "json",
@@ -80,11 +80,31 @@
                             </div>
                             <input type="hidden" id="blogCat" name="CategoryIds" />
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input name="files" id="files" type="file" aria-label="files" />
+                            </div>
+                        </div>
+                        <div class="row margin-top-20">
+                            <div class="col-md-1">
+                                <img style="margin-top:20px" src="~/VehicleImages/@Model.Image" width="50" height="50" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    <script>
+        $(document).ready(function () {
+            $("#files").kendoUpload({ multiple:false });
+            $("#datetimepicker").kendoDateTimePicker({
+                value: new Date(),
+                dateInput: true
+            });
+
+        });
+    </script>
     <script>
     $(document).ready(function () {
         $("#blogCat").val('@Model.CategoryIds');

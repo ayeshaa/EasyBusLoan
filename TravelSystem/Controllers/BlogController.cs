@@ -39,6 +39,7 @@ namespace TravelSystem.Controllers
                 }
             }
             ViewBag.TotalBlogs = _context.Blogs.Count();
+            TempData["Blog"] = _context.Blogs.Where(o => o.Id == 1 || o.Id == 2 || o.Id == 3 || o.Id == 5).ToList();
             var result = await _context.Blogs.Skip(skip).Take(take).ToListAsync();
             return View(result);
         }

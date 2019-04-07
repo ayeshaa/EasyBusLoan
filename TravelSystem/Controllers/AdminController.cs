@@ -91,7 +91,7 @@ namespace TravelSystem.Controllers
         if (adminId.HasValue)
         {
             var blog = new Blogs();
-            if (id.HasValue)
+                if (id.HasValue)
             {
                 blog = _context.Blogs.FirstOrDefault(o => o.Id == id);
             }
@@ -102,13 +102,27 @@ namespace TravelSystem.Controllers
             return RedirectToAction("LogIn", "Admin");
         }
     }
-    public ActionResult SaveBlog(Blogs blogs)
+    public ActionResult SaveBlog(Blogs blogs, List<IFormFile> files)
     {
         var adminId = HttpContext.Session.GetInt32("Id");
         if (adminId.HasValue)
         {
             blogs.AdminId = adminId.Value;
-            blogs.CreatedDate = blogs.Id > 0 ? blogs.CreatedDate : DateTime.Now;
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "VehicleImages");
+                foreach (var file in files)
+                {
+                    if (file.Length > 0)
+                    {
+                        var filePath = Path.Combine(uploads, file.FileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+
+                        blogs.Image = file.FileName;
+                    }
+                }
+                blogs.CreatedDate = blogs.Id > 0 ? blogs.CreatedDate : DateTime.Now;
             _context.Entry(blogs).State = blogs.Id > 0 ? EntityState.Modified : EntityState.Added;
             _context.SaveChanges();
             return RedirectToAction("Blogs");
